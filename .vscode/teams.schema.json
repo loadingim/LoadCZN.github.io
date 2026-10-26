@@ -1,0 +1,91 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/team"
+    },
+    "definitions": {
+        "charId": {
+            "enum": [
+                "adelheid",
+                "amir",
+                "anika",
+                "arabella",
+                "beryl",
+                "cassius",
+                "chizuru",
+                "diana",
+                "fei",
+                "haru",
+                "heidemarie",
+                "hilde",
+                "hugo",
+                "kayron",
+                "khalipe",
+                "lucas",
+                "luke",
+                "magna",
+                "maribell",
+                "meilin",
+                "mika",
+                "narja",
+                "nia",
+                "nine",
+                "olga",
+                "orlea",
+                "owen",
+                "rei",
+                "renoa",
+                "rin",
+                "rita",
+                "rossweisse",
+                "selena",
+                "sereniel",
+                "tenebria",
+                "tiphera",
+                "tressa",
+                "veronica",
+                "yuki"
+            ]
+        },
+        "deckCode": {
+            "enum": []
+        },
+        "team": {
+            "type": "object",
+            "properties": {
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "enum": [
+                            "보스",
+                            "일반",
+                            "입문",
+                            "고난도"
+                        ]
+                    }
+                },
+                "slots": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "$ref": "#/definitions/charId"
+                            },
+                            "deck": {
+                                "$ref": "#/definitions/deckCode"
+                            },
+                            "alts": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/charId"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

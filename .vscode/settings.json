@@ -1,0 +1,10 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/data/teams.json"
+            ],
+            "url": "./.vscode/teams.schema.json"
+        }
+    ]
+}
