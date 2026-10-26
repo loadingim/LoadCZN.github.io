@@ -9,74 +9,111 @@
   header { padding: 20px; background: #1c1f28; }
   h1 { margin: 0 0 4px; font-size: 22px; }
   .sub { color: #8a8fa3; font-size: 13px; }
-  .bar { padding: 14px 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .bar { padding: 8px 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .label { font-size: 12px; color: #8a8fa3; width: 40px; }
   input { padding: 8px 10px; border-radius: 6px; border: 1px solid #333; background: #1c1f28; color: #fff; }
-  .tag { padding: 6px 12px; border-radius: 16px; background: #262a36; cursor: pointer; font-size: 13px; border: 1px solid transparent; }
+  .tag { padding: 6px 12px; border-radius: 16px; background: #262a36; cursor: pointer; font-size: 13px; border: 1px solid transparent; user-select: none; }
   .tag.on { background: #3b5bdb; }
   .reset { background: #444; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; padding: 0 20px 30px; }
-  .card { background: #1c1f28; border-radius: 10px; padding: 14px; }
-  .card h2 { margin: 0 0 6px; font-size: 18px; }
-  .meta { font-size: 13px; color: #aab; margin: 4px 0; }
+  .count { padding: 4px 20px; font-size: 13px; color: #8a8fa3; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; padding: 8px 20px 30px; }
+  .card { background: #1c1f28; border-radius: 10px; padding: 12px; }
+  .card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 8px; margin-bottom: 8px; background: #262a36; }
+  .card h2 { margin: 0 0 2px; font-size: 18px; }
+  .en { font-size: 12px; color: #8a8fa3; margin-bottom: 6px; }
+  .badges { margin: 4px 0; }
+  .badge { display: inline-block; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 4px 2px 0; background: #2b3250; }
+  .badge.job { background: #35405f; }
+  .badge.a-열정 { background: #7a2d2d; }
+  .badge.a-공허 { background: #55307a; }
+  .badge.a-본능 { background: #7a5a22; }
+  .badge.a-정의 { background: #24507a; }
+  .badge.a-질서 { background: #2a6a3a; }
   .kw { display: inline-block; background: #2b3250; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 2px 0 0; }
-      .card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 8px; margin-bottom: 8px; background: #262a36; }
+  .meta { font-size: 13px; color: #aab; margin: 4px 0; }
+  .empty { padding: 20px; color: #8a8fa3; }
   footer { padding: 16px 20px; color: #666; font-size: 12px; }
 </style>
 </head>
 <body>
 <header>
   <h1>CZN 전투원 레퍼런스</h1>
-  <div class="sub">비공식 팬 사이트 · 데이터는 샘플이며 검증이 필요합니다</div>
+  <div class="sub">비공식 팬 사이트 · 일부 데이터는 검증 중입니다</div>
 </header>
 
 <div class="bar">
-  <input id="q" placeholder="이름 검색">
+  <input id="q" placeholder="이름 검색 (한글/영문)">
   <span class="tag reset" id="reset">초기화</span>
 </div>
-<div class="bar" id="roleBar"></div>
-<div class="bar" id="kwBar"></div>
+<div class="bar"><span class="label">직업</span><span id="jobBar"></span></div>
+<div class="bar"><span class="label">속성</span><span id="attrBar"></span></div>
+<div class="bar"><span class="label">역할</span><span id="roleBar"></span></div>
+<div class="bar"><span class="label">키워드</span><span id="kwBar"></span></div>
+<div class="count" id="count"></div>
 <div class="grid" id="grid"></div>
 <footer>Chaos Zero Nightmare 관련 저작권은 스마일게이트에 있습니다.</footer>
 
 <script>
 let data = [];
-const sel = { role: null, kw: null, q: "" };
+const sel = { job: null, attr: null, role: null, kw: null, q: "" };
+const JOB_ORDER = ["스트라이커", "뱅가드", "레인저", "헌터", "사이오닉", "컨트롤러"];
+const ATTR_ORDER = ["열정", "공허", "본능", "정의", "질서"];
 
 function esc(s) {
   return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 }
 
-function unique(list) { return [...new Set(list)].filter(Boolean); }
+function sortedBy(order, items) {
+  return [...items].sort((a, b) => {
+    const ia = order.indexOf(a), ib = order.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+  });
+}
 
-function makeTags(el, items, key) {
+function unique(list) { return [...new Set(list)].filter(v => v && v !== "-" && v !== "미정"); }
+
+function makeTags(id, items, key, prefix) {
+  const el = document.getElementById(id);
   el.innerHTML = "";
   items.forEach(v => {
     const t = document.createElement("span");
     t.className = "tag" + (sel[key] === v ? " on" : "");
-    t.textContent = (key === "kw" ? "#" : "") + v;
+    t.textContent = (prefix || "") + v;
     t.onclick = () => { sel[key] = sel[key] === v ? null : v; render(); };
     el.appendChild(t);
   });
 }
 
 function render() {
-  makeTags(document.getElementById("roleBar"), unique(data.map(d => d.role)), "role");
-  makeTags(document.getElementById("kwBar"), unique(data.flatMap(d => d.keywords || [])), "kw");
+  makeTags("jobBar", sortedBy(JOB_ORDER, unique(data.map(d => d.job))), "job");
+  makeTags("attrBar", sortedBy(ATTR_ORDER, unique(data.map(d => d.attr))), "attr");
+  makeTags("roleBar", unique(data.map(d => d.role)), "role");
+  makeTags("kwBar", unique(data.flatMap(d => d.keywords || [])), "kw", "#");
 
+  const q = sel.q.toLowerCase();
   const list = data.filter(d =>
+    (!sel.job || d.job === sel.job) &&
+    (!sel.attr || d.attr === sel.attr) &&
     (!sel.role || d.role === sel.role) &&
     (!sel.kw || (d.keywords || []).includes(sel.kw)) &&
-    (!sel.q || d.name.includes(sel.q))
+    (!q || (d.name_ko || "").includes(sel.q) || (d.name || "").toLowerCase().includes(q))
   );
+
+  document.getElementById("count").textContent = list.length + " / " + data.length + "명";
 
   const grid = document.getElementById("grid");
   if (!list.length) { grid.innerHTML = '<div class="empty">조건에 맞는 전투원이 없습니다.</div>'; return; }
 
   grid.innerHTML = list.map(d => `
     <div class="card">
-      <img src="${encodeURI(d.image || '')}" alt="${esc(d.name)}" loading="lazy" onerror="this.style.display='none'">
-      <h2>${esc(d.name)}</h2>
-      <div class="meta">역할: ${esc(d.role)} · ${esc(d.target || "-")}</div>
+      <img src="${encodeURI(d.image || '')}" alt="${esc(d.name_ko || d.name)}" loading="lazy" onerror="this.style.display='none'">
+      <h2>${esc(d.name_ko || d.name)}</h2>
+      <div class="en">${esc(d.name || "")}</div>
+      <div class="badges">
+        ${d.job ? `<span class="badge job">${esc(d.job)}</span>` : ""}
+        ${d.attr ? `<span class="badge a-${esc(d.attr)}">${esc(d.attr)}</span>` : ""}
+      </div>
+      <div class="meta">역할: ${esc(d.role || "-")}${d.target && d.target !== "-" ? " · " + esc(d.target) : ""}</div>
       <div>${(d.keywords || []).map(k => `<span class="kw">#${esc(k)}</span>`).join("")}</div>
       <div class="meta">추천 파트너: ${(d.partners || []).length ? esc(d.partners.join(", ")) : "-"}</div>
       <div class="meta">${esc(d.note || "")}</div>
@@ -85,7 +122,7 @@ function render() {
 
 document.getElementById("q").oninput = e => { sel.q = e.target.value.trim(); render(); };
 document.getElementById("reset").onclick = () => {
-  sel.role = null; sel.kw = null; sel.q = "";
+  sel.job = sel.attr = sel.role = sel.kw = null; sel.q = "";
   document.getElementById("q").value = "";
   render();
 };
