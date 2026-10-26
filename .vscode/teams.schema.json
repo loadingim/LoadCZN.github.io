@@ -50,10 +50,8 @@
         },
         "deckCode": {
             "enum": [
-                "fei-rossweissedraw",
                 "hilde-normal",
                 "olga-normal",
-                "tiphera-rossweissepoint",
                 "arabella-normal",
                 "amir-metal",
                 "beryl-followup",
