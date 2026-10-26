@@ -2,35 +2,35 @@
   {
     "code": "fei-rossweissedraw",
     "char": "fei",
-    "name": "fei-rossweissedraw",
+    "name": "페이-정의-드로우",
     "image": "decks/fei-rossweisseDraw.png",
     "note": ""
   },
   {
     "code": "hilde-normal",
     "char": "hilde",
-    "name": "hilde-normal",
+    "name": "힐데-BASE",
     "image": "decks/hilde-normal.png",
     "note": ""
   },
   {
     "code": "olga-normal",
     "char": "olga",
-    "name": "olga-normal",
+    "name": "올가-BASE",
     "image": "decks/olga-normal.png",
     "note": ""
   },
   {
     "code": "tiphera-rossweissepoint",
     "char": "tiphera",
-    "name": "tiphera-rossweissepoint",
+    "name": "티페라-정의-드로우",
     "image": "decks/tiphera-rossweissePoint.png",
     "note": ""
   },
   {
     "code": "arabella-normal",
     "char": "arabella",
-    "name": "arabella-normal",
+    "name": "아라벨라-BASE",
     "image": "decks/arabella-normal.png",
     "note": ""
   }
