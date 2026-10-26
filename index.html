@@ -5,96 +5,159 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CZN 전투원 레퍼런스</title>
 <style>
+  :root {
+    --bg: #0e0f13;
+    --panel: #16181f;
+    --panel2: #1d2029;
+    --line: #2a2e39;
+    --text: #e8e8ee;
+    --muted: #8a8fa3;
+    --accent: #ff7a1a;
+    --accent-soft: rgba(255, 122, 26, .14);
+  }
   * { box-sizing: border-box; }
-  body { font-family: sans-serif; margin: 0; background: #14161c; color: #e8e8ee; }
-  header { padding: 20px; background: #1c1f28; }
-  h1 { margin: 0 0 4px; font-size: 22px; }
-  .sub { color: #8a8fa3; font-size: 13px; }
-  .bar { padding: 6px 20px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-  .label { font-size: 12px; color: #8a8fa3; width: 44px; flex-shrink: 0; }
-  input { padding: 8px 10px; border-radius: 6px; border: 1px solid #333; background: #1c1f28; color: #fff; width: 240px; max-width: 100%; }
-  .tag { padding: 5px 11px; border-radius: 16px; background: #262a36; cursor: pointer; font-size: 13px; user-select: none; }
-  .tag.on { background: #3b5bdb; }
-  .reset { background: #444; }
-  details { padding: 4px 20px; }
-  summary { cursor: pointer; font-size: 13px; color: #8a8fa3; padding: 4px 0; }
-  .tagwrap { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 0; }
-  .count { padding: 6px 20px; font-size: 13px; color: #8a8fa3; }
+  body { font-family: sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+
+  /* 상단 메뉴 */
+  .topnav { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 24px; padding: 0 20px; height: 56px; background: rgba(14, 15, 19, .92); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
+  .brand { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 17px; color: var(--text); text-decoration: none; white-space: nowrap; }
+  .brand .logo { width: 22px; height: 22px; border-radius: 5px; border: 2px solid var(--accent); box-shadow: 0 0 8px rgba(255, 122, 26, .5); }
+  .menu { display: flex; gap: 4px; height: 100%; }
+  .menu a { display: flex; align-items: center; padding: 0 12px; color: #c9cde0; text-decoration: none; font-size: 15px; border-bottom: 2px solid transparent; }
+  .menu a:hover { color: #fff; }
+  .menu a.on { color: var(--accent); border-bottom-color: var(--accent); font-weight: bold; }
+
+  /* 페이지 제목 */
+  .page-head { padding: 28px 20px 16px; }
+  .eyebrow { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .eyebrow::before { content: ""; width: 22px; height: 3px; border-radius: 2px; background: var(--accent); }
+  h1 { margin: 0 0 6px; font-size: 28px; }
+  .sub { color: var(--muted); font-size: 13px; }
+
+  /* 필터 영역 */
+  .filters { margin: 0 20px; padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+  .bar { padding: 4px 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .label { font-size: 12px; color: var(--muted); width: 44px; flex-shrink: 0; }
+  .bar > .tagwrap { flex: 1; min-width: 0; }
+  input { padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel2); color: #fff; flex: 0 1 320px; min-width: 0; }
+  input:focus { outline: none; border-color: var(--accent); }
+  .tag { padding: 5px 12px; border-radius: 16px; background: transparent; border: 1px solid var(--line); cursor: pointer; font-size: 13px; user-select: none; color: #d6d9e6; }
+  .tag:hover { border-color: #4a4f5e; }
+  .tag.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+  .reset { background: var(--panel2); }
+  details { padding: 4px 0 0; }
+  summary { cursor: pointer; font-size: 13px; color: var(--muted); padding: 4px 0; }
+  .tagwrap { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 0; }
+  .count { padding: 14px 20px 6px; font-size: 13px; color: var(--muted); }
+
+  /* 전투원 카드 */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding: 8px 20px 30px; }
-  .card { background: #1c1f28; border-radius: 10px; padding: 10px; cursor: pointer; border: 1px solid transparent; transition: border-color .15s; }
-  .card:hover { border-color: #3b5bdb; }
-  .card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 8px; margin-bottom: 8px; background: #262a36; display: block; }
+  .card { background: var(--panel); border-radius: 10px; padding: 10px; cursor: pointer; border: 1px solid var(--line); transition: border-color .15s, box-shadow .15s; }
+  .card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 6px 18px rgba(255, 122, 26, .12); }
+  .card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 8px; margin-bottom: 8px; background: var(--panel2); display: block; }
   .card h2 { margin: 0; font-size: 17px; }
-  .en { font-size: 12px; color: #8a8fa3; margin-bottom: 4px; }
-  .badge { display: inline-block; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 4px 2px 0; background: #2b3250; }
-  .badge.job { background: #35405f; }
+  .en { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .badge { display: inline-block; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 4px 2px 0; background: #2b2f3b; }
+  .badge.job { background: #30343f; }
   .badge.lim { background: #8a6d1f; }
-  .badge.pend { background: #444; }
+  .badge.pend { background: #3a3d47; }
   .a-열정 { background: #7a2d2d !important; }
   .a-공허 { background: #55307a !important; }
   .a-본능 { background: #7a5a22 !important; }
   .a-정의 { background: #24507a !important; }
   .a-질서 { background: #2a6a3a !important; }
   .role { font-size: 13px; color: #c9cde0; margin: 4px 0; }
-  .kw { display: inline-block; background: #262a36; border-radius: 10px; padding: 2px 7px; font-size: 11px; margin: 2px 2px 0 0; color: #b8bdd6; }
-  .empty { padding: 20px; color: #8a8fa3; }
-  footer { padding: 16px 20px; color: #666; font-size: 12px; }
+  .kw { display: inline-block; background: var(--panel2); border-radius: 10px; padding: 2px 7px; font-size: 11px; margin: 2px 2px 0 0; color: #b8bdd6; }
+  .empty { padding: 20px; color: var(--muted); }
+  .soon { margin: 0 20px 30px; padding: 40px 20px; text-align: center; color: var(--muted); background: var(--panel); border: 1px dashed var(--line); border-radius: 12px; }
+  footer { padding: 16px 20px; color: #666; font-size: 12px; border-top: 1px solid var(--line); }
 
-  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 10; }
+  /* 상세 창 */
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 10; }
   .modal.open { display: flex; }
-  .panel { background: #1c1f28; border-radius: 12px; max-width: 920px; width: 100%; padding: 20px; position: relative; }
-  .close { position: absolute; top: 10px; right: 14px; font-size: 26px; cursor: pointer; color: #8a8fa3; background: none; border: none; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 12px; max-width: 920px; width: 100%; padding: 20px; position: relative; }
+  .close { position: absolute; top: 10px; right: 14px; font-size: 26px; cursor: pointer; color: var(--muted); background: none; border: none; }
+  .close:hover { color: var(--accent); }
   .top { display: grid; grid-template-columns: 220px 1fr; gap: 20px; }
-  .top img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 10px; background: #262a36; }
+  .top img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 10px; background: var(--panel2); }
   .panel h2 { margin: 0 0 4px; font-size: 24px; }
   .desc { line-height: 1.6; font-size: 14px; margin: 10px 0; color: #dfe2ee; }
   .sec { margin-top: 18px; }
-  .sec h3 { font-size: 15px; margin: 0 0 8px; color: #9fb0ff; border-bottom: 1px solid #2b3040; padding-bottom: 4px; }
+  .sec h3 { font-size: 15px; margin: 0 0 8px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 4px; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip { background: #262a36; border-radius: 8px; padding: 5px 10px; font-size: 13px; }
+  .chip { background: var(--panel2); border-radius: 8px; padding: 5px 10px; font-size: 13px; }
   .chip.click { cursor: pointer; }
-  .chip.click:hover { background: #33384a; }
-  .chip.first { background: #5a2f4a; }
+  .chip.click:hover { background: #2a2e39; }
+  .chip.first { background: var(--accent-soft); box-shadow: inset 0 0 0 1px rgba(255, 122, 26, .55); }
   .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
-  .lbl { font-size: 11px; background: #3b5bdb; border-radius: 6px; padding: 2px 6px; }
+  .lbl { font-size: 11px; background: var(--accent); color: #fff; border-radius: 6px; padding: 2px 6px; }
   .opt { font-size: 13px; margin: 3px 0; }
-  .opt b { color: #9fb0ff; font-weight: normal; display: inline-block; min-width: 64px; }
+  .opt b { color: #ffb070; font-weight: normal; display: inline-block; min-width: 64px; }
   .optgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
-  .box { background: #232736; border-radius: 8px; padding: 10px; }
+  .box { background: var(--panel2); border-radius: 8px; padding: 10px; }
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
-  .gc { background: #232736; border-radius: 8px; padding: 10px; }
+  .gc { background: var(--panel2); border-radius: 8px; padding: 10px; }
   .gc .hd { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .cost { width: 26px; height: 26px; border-radius: 50%; background: #3b5bdb; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; flex-shrink: 0; }
+  .cost { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; flex-shrink: 0; }
   .gc .nm { font-size: 14px; font-weight: bold; }
-  .gc .ty { font-size: 11px; color: #8a8fa3; }
+  .gc .ty { font-size: 11px; color: var(--muted); }
   .gc .ef { font-size: 12px; line-height: 1.5; color: #cfd3e3; }
   .gear { display: grid; grid-template-columns: 64px 1fr; gap: 6px 10px; font-size: 13px; align-items: start; }
-  .gear .k { color: #8a8fa3; padding-top: 5px; }
-  .note { color: #8a8fa3; font-size: 13px; }
+  .gear .k { color: var(--muted); padding-top: 5px; }
+  .note { color: var(--muted); font-size: 13px; }
   @media (max-width: 640px) {
+    .topnav { gap: 12px; padding: 0 12px; }
+    .menu a { padding: 0 8px; }
+    .page-head { padding: 20px 12px 12px; }
+    h1 { font-size: 24px; }
+    .filters { margin: 0 12px; padding: 12px; }
     .top { grid-template-columns: 1fr; }
     .top img { max-width: 220px; margin: 0 auto; display: block; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 8px 12px 30px; }
-    .bar, details, .count { padding-left: 12px; padding-right: 12px; }
+    .count { padding-left: 12px; padding-right: 12px; }
+    .soon { margin: 0 12px 30px; }
   }
 </style>
 </head>
 <body>
-<header>
-  <h1>CZN 전투원 레퍼런스</h1>
-  <div class="sub">비공식 팬 사이트 · 카드를 누르면 상세 정보가 열립니다</div>
-</header>
+<nav class="topnav">
+  <a class="brand" href="#combatants"><span class="logo"></span>CZN 레퍼런스</a>
+  <div class="menu">
+    <a href="#combatants" data-page="combatants">전투원</a>
+    <a href="#teams" data-page="teams">조합</a>
+  </div>
+</nav>
 
-<div class="bar">
-  <input id="q" placeholder="이름·태그·파트너·카드 검색">
-  <span class="tag reset" id="reset">초기화</span>
-</div>
-<div class="bar"><span class="label">직업</span><span id="jobBar" class="tagwrap"></span></div>
-<div class="bar"><span class="label">속성</span><span id="attrBar" class="tagwrap"></span></div>
-<div class="bar"><span class="label">역할</span><span id="roleBar" class="tagwrap"></span></div>
-<details id="tagDetails"><summary>태그로 찾기</summary><div id="tagBar" class="tagwrap"></div></details>
-<div class="count" id="count"></div>
-<div class="grid" id="grid"></div>
+<section id="page-combatants">
+  <div class="page-head">
+    <div class="eyebrow">전투원 데이터</div>
+    <h1>전투원</h1>
+    <div class="sub">비공식 팬 사이트 · 카드를 누르면 상세 정보가 열립니다</div>
+  </div>
+
+  <div class="filters">
+    <div class="bar">
+      <input id="q" placeholder="이름·태그·파트너·카드 검색">
+      <span class="tag reset" id="reset">초기화</span>
+    </div>
+    <div class="bar"><span class="label">직업</span><span id="jobBar" class="tagwrap"></span></div>
+    <div class="bar"><span class="label">속성</span><span id="attrBar" class="tagwrap"></span></div>
+    <div class="bar"><span class="label">역할</span><span id="roleBar" class="tagwrap"></span></div>
+    <details id="tagDetails"><summary>태그로 찾기</summary><div id="tagBar" class="tagwrap"></div></details>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="page-teams" hidden>
+  <div class="page-head">
+    <div class="eyebrow">추천 조합</div>
+    <h1>조합</h1>
+    <div class="sub">콘텐츠별 추천 조합을 정리할 예정입니다</div>
+  </div>
+  <div class="soon">조합 페이지는 준비 중입니다.</div>
+</section>
+
 <footer>Chaos Zero Nightmare 관련 저작권은 스마일게이트에 있습니다.</footer>
 
 <div class="modal" id="modal"><div class="panel" id="panel"></div></div>
@@ -105,6 +168,7 @@ const sel = { job: null, attr: null, role: null, tag: null, q: "" };
 const JOB_ORDER = ["스트라이커", "뱅가드", "레인저", "헌터", "사이오닉", "컨트롤러"];
 const ATTR_ORDER = ["열정", "공허", "본능", "정의", "질서"];
 const ROLE_ORDER = ["딜러", "서브 딜러", "서포터"];
+const PAGES = ["combatants", "teams"];
 
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -257,6 +321,15 @@ function openDetail(id) {
   document.getElementById("modal").scrollTop = 0;
 }
 function closeDetail() { document.getElementById("modal").classList.remove("open"); }
+
+function showPage() {
+  const page = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "combatants";
+  PAGES.forEach(p => { document.getElementById("page-" + p).hidden = p !== page; });
+  document.querySelectorAll(".menu a").forEach(a => a.classList.toggle("on", a.dataset.page === page));
+  closeDetail();
+}
+window.addEventListener("hashchange", showPage);
+showPage();
 
 document.getElementById("modal").onclick = e => { if (e.target.id === "modal") closeDetail(); };
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeDetail(); });
