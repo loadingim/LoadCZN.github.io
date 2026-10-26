@@ -104,7 +104,7 @@ let data = [];
 const sel = { job: null, attr: null, role: null, tag: null, q: "" };
 const JOB_ORDER = ["스트라이커", "뱅가드", "레인저", "헌터", "사이오닉", "컨트롤러"];
 const ATTR_ORDER = ["열정", "공허", "본능", "정의", "질서"];
-const ROLE_ORDER = ["딜러", "서브 딜러", "서포터", "실더", "드로우"];
+const ROLE_ORDER = ["딜러", "서브 딜러", "서포터"];
 
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -179,8 +179,6 @@ function rolesOf(role) {
     if (p.includes("서브 딜러") || p.includes("보조 딜러")) k = "서브 딜러";
     else if (p.includes("서포터") || p.includes("행포")) k = "서포터";
     else if (p.includes("딜러")) k = "딜러";
-    else if (p.includes("실드") || p.includes("실더")) k = "실더";
-    else if (p.includes("드로우")) k = "드로우";
     if (k && !out.includes(k)) out.push(k);
   });
   return out;
