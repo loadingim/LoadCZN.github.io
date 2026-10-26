@@ -3,173 +3,278 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CZN 전투원 레퍼런스</title>
+<title>CZN 레퍼런스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e0f13;
-    --panel: #16181f;
-    --panel2: #1d2029;
-    --line: #2a2e39;
-    --text: #e8e8ee;
-    --muted: #8a8fa3;
-    --accent: #ff7a1a;
-    --accent-soft: rgba(255, 122, 26, .14);
+    --bg: #0b0b0e;
+    --panel: #15151a;
+    --panel2: #1d1c23;
+    --line: #2b2930;
+    --gold: #d4a24c;
+    --gold-hi: #f0c977;
+    --gold-soft: rgba(212, 162, 76, .14);
+    --red: #b3262e;
+    --text: #ece8e1;
+    --muted: #8f8a96;
+    --serif: "Noto Serif KR", serif;
   }
   * { box-sizing: border-box; }
-  body { font-family: sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+  html { scroll-behavior: auto; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Noto Sans KR", system-ui, sans-serif; }
+  body.lock { overflow: hidden; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
-  /* 상단 메뉴 */
-  .topnav { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 24px; padding: 0 20px; height: 56px; background: rgba(14, 15, 19, .92); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
-  .brand { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 17px; color: var(--text); text-decoration: none; white-space: nowrap; }
-  .brand .logo { width: 22px; height: 22px; border-radius: 5px; border: 2px solid var(--accent); box-shadow: 0 0 8px rgba(255, 122, 26, .5); }
-  .menu { display: flex; gap: 4px; height: 100%; }
-  .menu a { display: flex; align-items: center; padding: 0 12px; color: #c9cde0; text-decoration: none; font-size: 15px; border-bottom: 2px solid transparent; }
-  .menu a:hover { color: #fff; }
-  .menu a.on { color: var(--accent); border-bottom-color: var(--accent); font-weight: bold; }
+  /* 공통 헤더 */
+  .hd { position: sticky; top: 0; z-index: 20; background: linear-gradient(180deg, #121116, #0d0c10); border-bottom: 1px solid var(--line); }
+  .hd::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: .5; }
+  .hd .wrap { display: flex; align-items: center; gap: 28px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-weight: 900; font-size: 18px; letter-spacing: .5px; white-space: nowrap; }
+  .sigil { width: 20px; height: 20px; transform: rotate(45deg); border: 2px solid var(--gold); box-shadow: 0 0 10px rgba(212, 162, 76, .45), inset 0 0 6px rgba(212, 162, 76, .4); }
+  .tabs { display: flex; height: 100%; }
+  .tabs a { display: flex; align-items: center; padding: 0 16px; color: #bdb7c2; font-weight: 500; border-bottom: 2px solid transparent; }
+  .tabs a:hover { color: var(--text); }
+  .tabs a.on { color: var(--gold-hi); border-bottom-color: var(--gold); }
+  .search { position: relative; margin-left: auto; width: 280px; }
+  .search input { width: 100%; padding: 9px 12px 9px 34px; border-radius: 8px; border: 1px solid var(--line); background: #0f0e12 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238f8a96' stroke-width='2'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cpath d='M11 11l4 4'/%3E%3C/svg%3E") no-repeat 11px center; color: var(--text); }
+  .search input:focus { outline: none; border-color: var(--gold); }
+  .results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 12px 30px rgba(0, 0, 0, .6); }
+  .results a { display: flex; align-items: center; gap: 10px; padding: 8px 10px; }
+  .results a:hover, .results a.hl { background: var(--panel2); }
+  .results img { width: 34px; height: 34px; object-fit: cover; object-position: top; border-radius: 6px; background: var(--panel2); }
+  .results .rn { font-weight: 700; }
+  .results .rm { font-size: 12px; color: var(--muted); }
+  .results .none { padding: 12px; color: var(--muted); font-size: 13px; }
 
-  /* 페이지 제목 */
-  .page-head { padding: 28px 20px 16px; }
-  .eyebrow { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-  .eyebrow::before { content: ""; width: 22px; height: 3px; border-radius: 2px; background: var(--accent); }
-  h1 { margin: 0 0 6px; font-size: 28px; }
-  .sub { color: var(--muted); font-size: 13px; }
+  /* 페이지 공통 */
+  .page { padding: 28px 0 48px; }
+  .eyebrow { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gold); letter-spacing: 1px; margin-bottom: 6px; }
+  .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--gold); }
+  h1 { font-family: var(--serif); font-weight: 900; font-size: 30px; margin: 0 0 18px; }
+  h1 .stars { font-family: inherit; font-size: 18px; color: var(--gold-hi); margin-left: 8px; vertical-align: middle; }
+  .note { color: var(--muted); font-size: 13px; }
+  .empty { padding: 40px 20px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 12px; grid-column: 1 / -1; }
+  .btn { padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel2); cursor: pointer; font-size: 13px; }
+  .btn:hover { border-color: #47434f; }
+  .btn.gold { background: var(--gold); border-color: var(--gold); color: #1a1406; font-weight: 700; }
+  .btn b { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 4px; border-radius: 9px; background: var(--red); color: #fff; font-size: 12px; }
+  .am { color: var(--ac, var(--gold)); margin-right: 3px; }
 
-  /* 필터 영역 */
-  .filters { margin: 0 20px; padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
-  .bar { padding: 4px 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-  .label { font-size: 12px; color: var(--muted); width: 44px; flex-shrink: 0; }
-  .bar > .tagwrap { flex: 1; min-width: 0; }
-  input { padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel2); color: #fff; flex: 0 1 320px; min-width: 0; }
-  input:focus { outline: none; border-color: var(--accent); }
-  .tag { padding: 5px 12px; border-radius: 16px; background: transparent; border: 1px solid var(--line); cursor: pointer; font-size: 13px; user-select: none; color: #d6d9e6; }
-  .tag:hover { border-color: #4a4f5e; }
-  .tag.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
-  .reset { background: var(--panel2); }
-  details { padding: 4px 0 0; }
-  summary { cursor: pointer; font-size: 13px; color: var(--muted); padding: 4px 0; }
-  .tagwrap { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 0; }
-  .count { padding: 14px 20px 6px; font-size: 13px; color: var(--muted); }
+  /* 필터 */
+  .filters { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; }
+  .frow { display: flex; align-items: flex-start; gap: 12px; padding: 5px 0; }
+  .fl { width: 48px; flex-shrink: 0; padding-top: 6px; font-size: 13px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; min-width: 0; }
+  .chip { padding: 5px 12px; border-radius: 16px; border: 1px solid var(--line); background: transparent; font-size: 13px; color: #d4cfd8; cursor: pointer; user-select: none; }
+  .chip:hover { border-color: #4a4652; }
+  .chip.on { border-color: var(--gold); background: var(--gold-soft); color: var(--gold-hi); font-weight: 700; }
+  .tagrow summary { cursor: pointer; font-size: 13px; color: var(--muted); padding: 6px 0; }
+  .tagrow .frow { padding-top: 0; }
+  .foot { align-items: center; border-top: 1px solid var(--line); margin-top: 8px; padding-top: 12px; }
+  .sort { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .sort select { background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+  .cnt { margin-left: auto; font-size: 13px; color: var(--muted); }
+  .sheet-hd, .sheet-close, .mfbar, .backdrop { display: none; }
 
   /* 전투원 카드 */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding: 8px 20px 30px; }
-  .card { background: var(--panel); border-radius: 10px; padding: 10px; cursor: pointer; border: 1px solid var(--line); transition: border-color .15s, box-shadow .15s; }
-  .card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 6px 18px rgba(255, 122, 26, .12); }
-  .card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 8px; margin-bottom: 8px; background: var(--panel2); display: block; }
-  .card h2 { margin: 0; font-size: 17px; }
-  .en { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
-  .badge { display: inline-block; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 4px 2px 0; background: #2b2f3b; }
-  .badge.job { background: #30343f; }
-  .badge.lim { background: #8a6d1f; }
-  .badge.pend { background: #3a3d47; }
-  .a-열정 { background: #7a2d2d !important; }
-  .a-공허 { background: #55307a !important; }
-  .a-본능 { background: #7a5a22 !important; }
-  .a-정의 { background: #24507a !important; }
-  .a-질서 { background: #2a6a3a !important; }
-  .role { font-size: 13px; color: #c9cde0; margin: 4px 0; }
-  .kw { display: inline-block; background: var(--panel2); border-radius: 10px; padding: 2px 7px; font-size: 11px; margin: 2px 2px 0 0; color: #b8bdd6; }
-  .empty { padding: 20px; color: var(--muted); }
-  .soon { margin: 0 20px 30px; padding: 40px 20px; text-align: center; color: var(--muted); background: var(--panel); border: 1px dashed var(--line); border-radius: 12px; }
-  footer { padding: 16px 20px; color: #666; font-size: 12px; border-top: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .card { display: block; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); overflow: hidden; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .card:hover { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 162, 76, .5), 0 8px 24px rgba(0, 0, 0, .5); transform: translateY(-2px); }
+  .pf { position: relative; aspect-ratio: 3 / 4; background: #121116; background: radial-gradient(120% 70% at 50% 100%, color-mix(in srgb, var(--ac) 32%, transparent), transparent 70%), #121116; }
+  .pf img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .pf .pend { position: absolute; top: 6px; left: 6px; font-size: 11px; padding: 2px 6px; border-radius: 6px; background: rgba(0, 0, 0, .6); color: var(--muted); }
+  .card .nm { padding: 8px 10px 2px; font-weight: 700; font-size: 15px; border-top: 2px solid var(--ac); }
+  .card .meta { padding: 0 10px 10px; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dot { margin: 0 4px; }
 
-  /* 상세 창 */
-  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 10; }
-  .modal.open { display: flex; }
-  .panel { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 12px; max-width: 920px; width: 100%; padding: 20px; position: relative; }
-  .close { position: absolute; top: 10px; right: 14px; font-size: 26px; cursor: pointer; color: var(--muted); background: none; border: none; }
-  .close:hover { color: var(--accent); }
-  .top { display: grid; grid-template-columns: 220px 1fr; gap: 20px; }
-  .top img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 10px; background: var(--panel2); }
-  .panel h2 { margin: 0 0 4px; font-size: 24px; }
-  .desc { line-height: 1.6; font-size: 14px; margin: 10px 0; color: #dfe2ee; }
-  .sec { margin-top: 18px; }
-  .sec h3 { font-size: 15px; margin: 0 0 8px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 4px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip { background: var(--panel2); border-radius: 8px; padding: 5px 10px; font-size: 13px; }
-  .chip.click { cursor: pointer; }
-  .chip.click:hover { background: #2a2e39; }
-  .chip.first { background: var(--accent-soft); box-shadow: inset 0 0 0 1px rgba(255, 122, 26, .55); }
+  /* 전투원 상세 */
+  .back { display: inline-block; margin-bottom: 16px; font-size: 13px; color: var(--muted); }
+  .back:hover { color: var(--gold-hi); }
+  .dtop { display: grid; grid-template-columns: 300px 1fr; gap: 28px; }
+  .dpf { border-radius: 12px; border: 1px solid var(--line); aspect-ratio: 3 / 4; overflow: hidden; background: #121116; background: radial-gradient(120% 70% at 50% 100%, color-mix(in srgb, var(--ac) 35%, transparent), transparent 70%), #121116; }
+  .dpf img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .dinfo h1 { margin-bottom: 2px; }
+  .en { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  .badge { display: inline-flex; align-items: center; gap: 2px; padding: 3px 10px; border-radius: 12px; background: var(--panel2); border: 1px solid var(--line); font-size: 13px; margin: 0 6px 6px 0; }
+  .badge.red { background: rgba(179, 38, 46, .25); border-color: var(--red); color: #f2a0a5; }
+  .rtags { margin: 8px 0 6px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .rtext { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .sec { margin-top: 26px; }
+  .sec h3 { font-family: var(--serif); font-size: 17px; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line); color: var(--gold-hi); }
+  .desc { line-height: 1.7; margin: 0 0 10px; }
+  .mates { display: flex; flex-wrap: wrap; gap: 10px; }
+  .mate { display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 24px; background: var(--panel2); border: 1px solid var(--line); font-size: 13px; }
+  .mate:hover { border-color: var(--gold); }
+  .mate img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; object-position: top; background: #121116; }
+  .mate em { font-style: normal; font-size: 11px; color: var(--gold); }
+  .pchip { padding: 5px 12px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line); font-size: 13px; cursor: pointer; }
+  .pchip:hover { border-color: #4a4652; }
+  .pchip.first, .ichip.first { border-color: rgba(212, 162, 76, .6); background: var(--gold-soft); }
+  .ichip { padding: 5px 10px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line); font-size: 13px; }
   .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
-  .lbl { font-size: 11px; background: var(--accent); color: #fff; border-radius: 6px; padding: 2px 6px; }
-  .opt { font-size: 13px; margin: 3px 0; }
-  .opt b { color: #ffb070; font-weight: normal; display: inline-block; min-width: 64px; }
+  .lbl { font-size: 11px; padding: 2px 7px; border-radius: 6px; background: var(--red); color: #fff; }
   .optgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
-  .box { background: var(--panel2); border-radius: 8px; padding: 10px; }
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
-  .gc { background: var(--panel2); border-radius: 8px; padding: 10px; }
-  .gc .hd { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .cost { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; flex-shrink: 0; }
-  .gc .nm { font-size: 14px; font-weight: bold; }
-  .gc .ty { font-size: 11px; color: var(--muted); }
-  .gc .ef { font-size: 12px; line-height: 1.5; color: #cfd3e3; }
-  .gear { display: grid; grid-template-columns: 64px 1fr; gap: 6px 10px; font-size: 13px; align-items: start; }
+  .box { background: var(--panel2); border-radius: 8px; padding: 12px; border: 1px solid var(--line); }
+  .opt { font-size: 13px; margin: 4px 0; }
+  .opt b { display: inline-block; min-width: 66px; font-weight: 500; color: var(--gold); }
+  .kcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+  .kc { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .kc .hd2 { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .cost { width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: #1a1406; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0; }
+  .kc .kn { font-weight: 700; font-size: 14px; }
+  .kc .kt { font-size: 11px; color: var(--muted); }
+  .kc .ke { font-size: 12px; line-height: 1.55; color: #d5d0d9; }
+  .gear { display: grid; grid-template-columns: 64px 1fr; gap: 8px 12px; align-items: start; font-size: 13px; }
   .gear .k { color: var(--muted); padding-top: 5px; }
-  .note { color: var(--muted); font-size: 13px; }
-  @media (max-width: 640px) {
-    .topnav { gap: 12px; padding: 0 12px; }
-    .menu a { padding: 0 8px; }
-    .page-head { padding: 20px 12px 12px; }
-    h1 { font-size: 24px; }
-    .filters { margin: 0 12px; padding: 12px; }
-    .top { grid-template-columns: 1fr; }
-    .top img { max-width: 220px; margin: 0 auto; display: block; }
-    .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 8px 12px 30px; }
-    .count { padding-left: 12px; padding-right: 12px; }
-    .soon { margin: 0 12px 30px; }
+
+  /* 조합 */
+  .slots { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .slot { width: 64px; height: 64px; border-radius: 10px; border: 1px dashed #4a4652; background: #121116; display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--muted); cursor: pointer; position: relative; overflow: hidden; }
+  .slot:hover { border-color: var(--gold); color: var(--gold); }
+  .slot.filled { border-style: solid; border-color: var(--gold); }
+  .slot img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .slot .rm { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(0, 0, 0, .75); color: #fff; font-size: 12px; line-height: 18px; text-align: center; }
+  .tlist { display: flex; flex-direction: column; gap: 10px; }
+  .tcard { display: flex; align-items: center; gap: 18px; padding: 12px 16px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); }
+  .tcard:hover { border-color: var(--gold); }
+  .tps { display: flex; gap: 6px; flex-shrink: 0; }
+  .tps img, .tps .unk { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; object-position: top; background: #121116; border: 1px solid var(--line); }
+  .tps .unk { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 11px; }
+  .tb { flex: 1; min-width: 0; }
+  .tn { font-family: var(--serif); font-weight: 700; font-size: 17px; }
+  .tr { font-size: 12px; color: var(--gold); margin: 2px 0; }
+  .ts { font-size: 13px; color: #cbc6cf; }
+  .ttags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 200px; }
+  .ttag { font-size: 12px; color: var(--muted); }
+  .tmini { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line); margin-bottom: 8px; }
+  .tmini:hover { border-color: var(--gold); }
+  .tmini .tps img, .tmini .tps .unk { width: 36px; height: 36px; }
+  .tmini .alt { font-size: 11px; color: var(--muted); margin-left: auto; }
+  .tslots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tslot { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .tslot .pf { aspect-ratio: 3 / 4; }
+  .tslot .sb { padding: 10px 12px; border-top: 2px solid var(--ac); }
+  .tslot .sn { font-weight: 700; }
+  .tslot .sr { color: var(--gold); font-size: 13px; margin: 2px 0 6px; }
+  .tslot .sa { font-size: 12px; color: var(--muted); }
+  .tslot .sa a { color: #d4cfd8; text-decoration: underline; text-underline-offset: 2px; }
+  .ttext { line-height: 1.7; white-space: pre-line; margin: 0; }
+
+  /* 역할별 보기 */
+  .mx-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+  .mx { width: 100%; border-collapse: collapse; min-width: 720px; }
+  .mx th, .mx td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 10px; vertical-align: top; }
+  .mx tr > *:last-child { border-right: none; }
+  .mx tbody tr:last-child > * { border-bottom: none; }
+  .mx thead th { background: var(--panel); font-weight: 700; }
+  .mx tbody th { background: var(--panel); width: 100px; text-align: left; font-family: var(--serif); color: var(--gold-hi); }
+  .mx td { background: #101014; }
+  .mx .cell { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mx .cell a { display: flex; flex-direction: column; align-items: center; width: 56px; font-size: 11px; text-align: center; }
+  .mx .cell img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; object-position: top; background: var(--panel2); border: 1px solid var(--line); margin-bottom: 2px; }
+  .mx .cell a:hover img { border-color: var(--gold); }
+  .mx .gap { color: #4a4652; }
+
+  /* 선택 창 (조합 슬롯) */
+  .overlay { position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, .7); display: flex; align-items: flex-start; justify-content: center; padding: 60px 16px; overflow-y: auto; }
+  .overlay[hidden] { display: none; }
+  .picker { width: 100%; max-width: 760px; background: var(--panel); border: 1px solid var(--line); border-top: 2px solid var(--gold); border-radius: 12px; padding: 16px; }
+  .picker .ph { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .picker input { flex: 1; min-width: 0; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: #0f0e12; color: var(--text); }
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; }
+  .pgrid button { background: none; border: 1px solid var(--line); border-radius: 8px; padding: 4px; cursor: pointer; font-size: 11px; }
+  .pgrid button:hover { border-color: var(--gold); }
+  .pgrid button:disabled { opacity: .35; cursor: default; }
+  .pgrid img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; border-radius: 6px; background: #121116; display: block; margin-bottom: 2px; }
+
+  footer { border-top: 1px solid var(--line); padding: 16px 0; color: #5f5a66; font-size: 12px; }
+  .bottombar { display: none; }
+
+  /* 태블릿 */
+  @media (max-width: 1099px) {
+    .grid { grid-template-columns: repeat(4, 1fr); }
+    .dtop { grid-template-columns: 240px 1fr; }
+  }
+  /* 모바일 */
+  @media (max-width: 699px) {
+    .wrap { padding: 0 12px; }
+    .hd .wrap { gap: 12px; height: 54px; }
+    .tabs { display: none; }
+    .brand { font-size: 16px; }
+    .search { width: auto; flex: 1; min-width: 0; }
+    body { padding-bottom: 60px; }
+    .bottombar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; height: 58px; background: #0e0d11; border-top: 1px solid var(--line); }
+    .bottombar a { flex: 1; display: flex; align-items: center; justify-content: center; color: #bdb7c2; font-size: 14px; border-top: 2px solid transparent; }
+    .bottombar a.on { color: var(--gold-hi); border-top-color: var(--gold); }
+    .page { padding: 18px 0 32px; }
+    h1 { font-size: 24px; margin-bottom: 12px; }
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .card .nm { font-size: 13px; padding: 6px 6px 0; }
+    .card .meta { font-size: 11px; padding: 0 6px 8px; }
+    .mfbar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .filters { display: none; }
+    .filters.open { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; max-height: 80vh; overflow-y: auto; margin: 0; border-radius: 16px 16px 0 0; border-top: 2px solid var(--gold); padding-bottom: 20px; }
+    .backdrop.open { display: block; position: fixed; inset: 0; z-index: 45; background: rgba(0, 0, 0, .6); }
+    .sheet-hd { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; margin-bottom: 4px; border-bottom: 1px solid var(--line); }
+    .sheet-hd button { background: none; border: none; font-size: 24px; color: var(--muted); cursor: pointer; }
+    .sheet-close { display: inline-block; }
+    .foot { flex-wrap: wrap; }
+    .foot .cnt { display: none; }
+    .dtop { grid-template-columns: 1fr; gap: 16px; }
+    .dpf { max-width: 260px; margin: 0 auto; width: 100%; }
+    .tcard { flex-wrap: wrap; gap: 10px; }
+    .tps img, .tps .unk { width: 48px; height: 48px; }
+    .ttags { justify-content: flex-start; max-width: none; }
+    .tslots { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .tslot .sb { padding: 6px 8px; font-size: 12px; }
   }
 </style>
 </head>
 <body>
-<nav class="topnav">
-  <a class="brand" href="#combatants"><span class="logo"></span>CZN 레퍼런스</a>
-  <div class="menu">
-    <a href="#combatants" data-page="combatants">전투원</a>
-    <a href="#teams" data-page="teams">조합</a>
+<header class="hd">
+  <div class="wrap">
+    <a class="brand" href="#/"><span class="sigil"></span>CZN 레퍼런스</a>
+    <nav class="tabs">
+      <a href="#/" data-tab="list">전투원</a>
+      <a href="#/teams" data-tab="teams">조합</a>
+      <a href="#/roles" data-tab="roles">역할</a>
+    </nav>
+    <div class="search">
+      <input id="q" type="search" placeholder="전투원 이름 검색" autocomplete="off" aria-label="전투원 이름 검색">
+      <div class="results" id="results" hidden></div>
+    </div>
   </div>
+</header>
+
+<main class="wrap" id="app"><div class="page"><div class="empty">불러오는 중…</div></div></main>
+
+<footer><div class="wrap">비공식 팬 사이트 · Chaos Zero Nightmare 관련 저작권은 스마일게이트에 있습니다.</div></footer>
+
+<nav class="bottombar">
+  <a href="#/" data-tab="list">전투원</a>
+  <a href="#/teams" data-tab="teams">조합</a>
+  <a href="#/roles" data-tab="roles">역할</a>
 </nav>
 
-<section id="page-combatants">
-  <div class="page-head">
-    <div class="eyebrow">전투원 데이터</div>
-    <h1>전투원</h1>
-    <div class="sub">비공식 팬 사이트 · 카드를 누르면 상세 정보가 열립니다</div>
-  </div>
-
-  <div class="filters">
-    <div class="bar">
-      <input id="q" placeholder="이름·태그·파트너·카드 검색">
-      <span class="tag reset" id="reset">초기화</span>
-    </div>
-    <div class="bar"><span class="label">직업</span><span id="jobBar" class="tagwrap"></span></div>
-    <div class="bar"><span class="label">속성</span><span id="attrBar" class="tagwrap"></span></div>
-    <div class="bar"><span class="label">역할</span><span id="roleBar" class="tagwrap"></span></div>
-    <details id="tagDetails"><summary>태그로 찾기</summary><div id="tagBar" class="tagwrap"></div></details>
-  </div>
-  <div class="count" id="count"></div>
-  <div class="grid" id="grid"></div>
-</section>
-
-<section id="page-teams" hidden>
-  <div class="page-head">
-    <div class="eyebrow">추천 조합</div>
-    <h1>조합</h1>
-    <div class="sub">콘텐츠별 추천 조합을 정리할 예정입니다</div>
-  </div>
-  <div class="soon">조합 페이지는 준비 중입니다.</div>
-</section>
-
-<footer>Chaos Zero Nightmare 관련 저작권은 스마일게이트에 있습니다.</footer>
-
-<div class="modal" id="modal"><div class="panel" id="panel"></div></div>
+<div class="overlay" id="overlay" hidden></div>
 
 <script>
-let data = [];
-const sel = { job: null, attr: null, role: null, tag: null, q: "" };
-const JOB_ORDER = ["스트라이커", "뱅가드", "레인저", "헌터", "사이오닉", "컨트롤러"];
-const ATTR_ORDER = ["열정", "공허", "본능", "정의", "질서"];
-const ROLE_ORDER = ["딜러", "서브 딜러", "서포터"];
-const PAGES = ["combatants", "teams"];
+const ATTRS = ["열정", "질서", "정의", "공허", "본능"];
+const JOBS = ["스트라이커", "뱅가드", "헌터", "레인저", "사이오닉", "컨트롤러"];
+const ROLES = ["딜러", "서브 딜러", "서포터"];
+const TEAM_TAGS = ["보스", "일반", "입문", "고난도"];
+const ATTR_COLOR = { "열정": "#e0434c", "공허": "#9b5de5", "본능": "#e09a2c", "정의": "#3d8fd6", "질서": "#3fae6a" };
 
+let chars = [], teams = [], byId = {};
+const sel = { attr: new Set(), job: new Set(), grade: new Set(), role: new Set(), tag: new Set(), partner: null, sort: "name" };
+const teamSel = { members: [], tag: new Set() };
+let sheetOpen = false, listScroll = 0, curView = "";
+
+/* ---------- 공통 ---------- */
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
@@ -179,63 +284,6 @@ function sortedBy(order, items) {
     return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
   });
 }
-function makeTags(id, items, key, prefix) {
-  const el = document.getElementById(id);
-  el.innerHTML = "";
-  items.forEach(v => {
-    const t = document.createElement("span");
-    t.className = "tag" + (sel[key] === v ? " on" : "");
-    t.textContent = (prefix || "") + v;
-    t.onclick = () => { sel[key] = sel[key] === v ? null : v; render(); };
-    el.appendChild(t);
-  });
-}
-function tagCounts() {
-  const m = {};
-  data.forEach(d => (d.tags || []).forEach(t => m[t] = (m[t] || 0) + 1));
-  return Object.keys(m).sort((a, b) => m[b] - m[a] || a.localeCompare(b, "ko"));
-}
-function haystack(d) {
-  return [d.name_ko, d.name, d.role, d.desc, ...(d.tags || []), ...(d.partners || []), ...(d.cards || []).map(c => c.name)]
-    .join(" ").toLowerCase();
-}
-
-function render() {
-  makeTags("jobBar", sortedBy(JOB_ORDER, data.map(d => d.job)), "job");
-  makeTags("attrBar", sortedBy(ATTR_ORDER, data.map(d => d.attr)), "attr");
-  makeTags("roleBar", sortedBy(ROLE_ORDER, data.flatMap(d => d.roles || [])), "role");
-  makeTags("tagBar", tagCounts(), "tag", "#");
-  if (sel.tag) document.getElementById("tagDetails").open = true;
-
-  const q = sel.q.toLowerCase();
-  const list = data.filter(d =>
-    (!sel.job || d.job === sel.job) &&
-    (!sel.attr || d.attr === sel.attr) &&
-    (!sel.role || (d.roles || []).includes(sel.role)) &&
-    (!sel.tag || (d.tags || []).includes(sel.tag)) &&
-    (!q || haystack(d).includes(q))
-  );
-
-  document.getElementById("count").textContent = list.length + " / " + data.length + "명";
-  const grid = document.getElementById("grid");
-  if (!list.length) { grid.innerHTML = '<div class="empty">조건에 맞는 전투원이 없습니다.</div>'; return; }
-
-  grid.innerHTML = list.map(d => `
-    <div class="card" data-id="${esc(d.id)}">
-      <img src="${encodeURI(d.image || "")}" alt="${esc(d.name_ko)}" loading="lazy" onerror="this.style.visibility='hidden'">
-      <h2>${esc(d.name_ko)}</h2>
-      <div class="en">${esc(d.name)}</div>
-      <div>
-        <span class="badge job">${esc(d.job)}</span><span class="badge a-${esc(d.attr)}">${esc(d.attr)}</span>
-        ${d.limited ? '<span class="badge lim">한정</span>' : ""}
-        ${d.pending ? '<span class="badge pend">자료 준비 중</span>' : ""}
-      </div>
-      <div class="role">${esc(d.role)}</div>
-      <div>${(d.tags || []).slice(0, 4).map(t => `<span class="kw">#${esc(t)}</span>`).join("")}</div>
-    </div>`).join("");
-  grid.querySelectorAll(".card").forEach(el => el.onclick = () => openDetail(el.dataset.id));
-}
-
 function rolesOf(role) {
   const out = [];
   (role || "").split(/[,()]/).map(s => s.trim()).filter(Boolean).forEach(p => {
@@ -247,105 +295,412 @@ function rolesOf(role) {
   });
   return out;
 }
+function releaseKey(r) {
+  if (!r) return -1;
+  if (r.includes("오픈")) return 0;
+  const m = r.match(/(\d{2})\/(\d{2})\/(\d{2})/);
+  return m ? Number("20" + m[1] + m[2] + m[3]) : -1;
+}
 function prep(d) {
   d.image = d.image || "images/" + d.name + ".png";
   d.roles = rolesOf(d.role);
   d.limited = (d.release || "").includes("한정");
+  d.relKey = releaseKey(d.release);
   return d;
 }
-
+function acOf(d) { return ATTR_COLOR[d && d.attr] || "#8f8a96"; }
+function img(d, cls) {
+  return `<img${cls ? ` class="${cls}"` : ""} src="${encodeURI(d.image)}" alt="${esc(d.name_ko)}" loading="lazy" onerror="this.style.visibility='hidden'">`;
+}
+function charLink(id) { return "#/char/" + encodeURIComponent(id); }
+function teamIds(t) { return (t.slots || []).map(s => s.id); }
+function portraitOrUnknown(id) {
+  const c = byId[id];
+  return c ? img(c) : `<span class="unk">${esc(id || "?")}</span>`;
+}
 function labelHtml(l) { return l ? `<span class="lbl">${esc(l)}</span>` : ""; }
 
-function openDetail(id) {
-  const d = data.find(x => x.id === id);
-  if (!d) return;
-  let h = `<button class="close" id="closeBtn" aria-label="닫기">×</button>
-  <div class="top">
-    <img src="${encodeURI(d.image || "")}" alt="${esc(d.name_ko)}" onerror="this.style.visibility='hidden'">
-    <div>
-      <h2>${esc(d.name_ko)} <span class="en">${esc(d.name)}</span></h2>
-      <div>
-        <span class="badge job">${esc(d.job)}</span><span class="badge a-${esc(d.attr)}">${esc(d.attr)}</span>
-        ${d.limited ? '<span class="badge lim">한정</span>' : ""}
+/* ---------- 전투원 목록 ---------- */
+function tagCounts() {
+  const m = {};
+  chars.forEach(d => (d.tags || []).forEach(t => m[t] = (m[t] || 0) + 1));
+  return Object.keys(m).sort((a, b) => m[b] - m[a] || a.localeCompare(b, "ko"));
+}
+function filtered() {
+  const list = chars.filter(d =>
+    (!sel.attr.size || sel.attr.has(d.attr)) &&
+    (!sel.job.size || sel.job.has(d.job)) &&
+    (!sel.grade.size || sel.grade.has(String(d.grade))) &&
+    (!sel.role.size || d.roles.some(r => sel.role.has(r))) &&
+    (!sel.tag.size || (d.tags || []).some(t => sel.tag.has(t))) &&
+    (!sel.partner || (d.partners || []).includes(sel.partner))
+  );
+  const byName = (a, b) => a.name_ko.localeCompare(b.name_ko, "ko");
+  if (sel.sort === "name") return list.sort(byName);
+  const dir = sel.sort === "new" ? -1 : 1;
+  return list.sort((a, b) => {
+    if (a.relKey < 0 && b.relKey < 0) return byName(a, b);
+    if (a.relKey < 0) return 1;
+    if (b.relKey < 0) return -1;
+    return (a.relKey - b.relKey) * dir || byName(a, b);
+  });
+}
+function activeCount() {
+  return sel.attr.size + sel.job.size + sel.grade.size + sel.role.size + sel.tag.size + (sel.partner ? 1 : 0);
+}
+function chipRow(label, key, items, fmt) {
+  fmt = fmt || (v => v);
+  const s = sel[key];
+  return `<div class="frow">${label ? `<span class="fl">${label}</span>` : ""}<div class="chips">
+    <button class="chip${s.size ? "" : " on"}" data-k="${key}" data-v="">전체</button>
+    ${items.map(v => `<button class="chip${s.has(String(v)) ? " on" : ""}" data-k="${key}" data-v="${esc(v)}">${esc(fmt(v))}</button>`).join("")}
+  </div></div>`;
+}
+function charCard(d) {
+  return `<a class="card" href="${charLink(d.id)}" style="--ac:${acOf(d)}">
+    <div class="pf">${img(d)}${d.pending ? '<span class="pend">준비 중</span>' : ""}</div>
+    <div class="nm">${esc(d.name_ko)}</div>
+    <div class="meta"><span class="am">◆</span>${esc(d.attr)}<span class="dot">·</span>${esc(d.job)}</div>
+  </a>`;
+}
+function viewList() {
+  const grades = [...new Set(chars.map(d => d.grade).filter(Boolean))].sort((a, b) => b - a);
+  const list = filtered();
+  const active = activeCount();
+  return `<section class="page">
+    <div class="eyebrow">전투원 데이터베이스</div>
+    <h1>전투원</h1>
+    <div class="mfbar"><button class="btn" data-act="openSheet">필터${active ? `<b>${active}</b>` : ""}</button><span class="cnt">${list.length}명 표시 중</span></div>
+    <div class="backdrop${sheetOpen ? " open" : ""}" data-act="closeSheet"></div>
+    <div class="filters${sheetOpen ? " open" : ""}">
+      <div class="sheet-hd"><b>필터</b><button data-act="closeSheet" aria-label="닫기">×</button></div>
+      ${chipRow("속성", "attr", ATTRS)}
+      ${chipRow("클래스", "job", JOBS)}
+      ${grades.length ? chipRow("등급", "grade", grades, g => "★" + g) : ""}
+      ${chipRow("역할", "role", ROLES)}
+      <details class="tagrow"${sel.tag.size ? " open" : ""}><summary>태그로 찾기${sel.tag.size ? ` (${sel.tag.size})` : ""}</summary>${chipRow("", "tag", tagCounts(), t => "#" + t)}</details>
+      ${sel.partner ? `<div class="frow"><span class="fl">파트너</span><div class="chips"><button class="chip on" data-act="clearPartner">${esc(sel.partner)} ×</button></div></div>` : ""}
+      <div class="frow foot">
+        <label class="sort">정렬
+          <select id="sort">
+            <option value="name"${sel.sort === "name" ? " selected" : ""}>이름순</option>
+            <option value="new"${sel.sort === "new" ? " selected" : ""}>출시 최신순</option>
+            <option value="old"${sel.sort === "old" ? " selected" : ""}>출시 오래된순</option>
+          </select>
+        </label>
+        <button class="btn" data-act="resetFilters">초기화</button>
+        <span class="cnt">${list.length}명 표시 중</span>
+        <button class="btn gold sheet-close" data-act="closeSheet">${list.length}명 보기</button>
       </div>
-      <div class="role" style="font-size:15px;margin-top:8px">역할: ${esc(d.role)}</div>
-      ${d.release ? `<div class="note">출시: ${esc(d.release)}</div>` : ""}
-      <div class="desc">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</div>
-      <div class="chips">${(d.tags || []).map(t => `<span class="chip click" data-tag="${esc(t)}">#${esc(t)}</span>`).join("")}</div>
     </div>
-  </div>`;
+    <div class="grid">${list.length ? list.map(charCard).join("") : '<div class="empty">조건에 맞는 전투원이 없습니다.</div>'}</div>
+  </section>`;
+}
+
+/* ---------- 전투원 상세 ---------- */
+function matesOf(id) {
+  const count = {};
+  teams.filter(t => teamIds(t).includes(id)).forEach(t =>
+    teamIds(t).forEach(o => { if (o !== id && byId[o]) count[o] = (count[o] || 0) + 1; }));
+  return Object.keys(count).sort((a, b) => count[b] - count[a] || byId[a].name_ko.localeCompare(byId[b].name_ko, "ko"))
+    .map(o => ({ c: byId[o], n: count[o] }));
+}
+function teamMini(t, altLabel) {
+  return `<a class="tmini" href="#/team/${encodeURIComponent(t.id)}">
+    <span class="tps">${teamIds(t).map(portraitOrUnknown).join("")}</span>
+    <span><b>${esc(t.name)}</b></span>${altLabel ? `<span class="alt">${altLabel}</span>` : ""}
+  </a>`;
+}
+function viewChar(id) {
+  const d = byId[id];
+  if (!d) return `<section class="page"><a class="back" href="#/">← 전투원 목록</a><div class="empty">전투원을 찾을 수 없습니다.</div></section>`;
+  const inTeams = teams.filter(t => teamIds(t).includes(d.id));
+  const asAlt = teams.filter(t => !teamIds(t).includes(d.id) && (t.slots || []).some(s => (s.alts || []).includes(d.id)));
+  const mates = matesOf(d.id);
+  let h = `<section class="page" style="--ac:${acOf(d)}">
+    <a class="back" href="#/">← 전투원 목록</a>
+    <div class="dtop">
+      <div class="dpf">${img(d)}</div>
+      <div class="dinfo">
+        <div class="eyebrow">전투원</div>
+        <h1>${esc(d.name_ko)}${d.grade ? `<span class="stars">★${esc(d.grade)}</span>` : ""}</h1>
+        <div class="en">${esc(d.name)}</div>
+        <div>
+          <span class="badge"><span class="am">◆</span>${esc(d.attr)}</span><span class="badge">⚔ ${esc(d.job)}</span>
+          ${d.limited ? '<span class="badge red">한정</span>' : ""}${d.pending ? '<span class="badge">자료 준비 중</span>' : ""}
+        </div>
+        <div class="rtags">${d.roles.map(r => `<button class="chip on" data-act="goRole" data-v="${esc(r)}">${esc(r)}</button>`).join("")}</div>
+        ${d.role && d.role !== "미정" ? `<div class="rtext">시트 역할: ${esc(d.role)}</div>` : ""}
+        ${d.release ? `<div class="rtext">출시: ${esc(d.release)}</div>` : ""}
+        ${(d.tags || []).length ? `<div class="chips" style="margin-top:10px">${d.tags.map(t => `<button class="chip" data-act="goTag" data-v="${esc(t)}">#${esc(t)}</button>`).join("")}</div>` : ""}
+      </div>
+    </div>
+    <div class="sec"><h3>역할 요약</h3><p class="desc">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</p></div>
+    <div class="sec"><h3>이 전투원이 들어간 조합</h3>${inTeams.length || asAlt.length
+      ? inTeams.map(t => teamMini(t)).join("") + asAlt.map(t => teamMini(t, "대체 멤버")).join("")
+      : '<p class="note">아직 등록된 조합이 없습니다.</p>'}</div>
+    <div class="sec"><h3>잘 맞는 전투원</h3>${mates.length
+      ? `<div class="mates">${mates.map(m => `<a class="mate" href="${charLink(m.c.id)}">${img(m.c)}<span>${esc(m.c.name_ko)}</span>${m.n > 1 ? `<em>${m.n}회</em>` : ""}</a>`).join("")}</div>`
+      : '<p class="note">조합이 등록되면 같은 조합에 함께 들어간 전투원이 자동으로 표시됩니다.</p>'}</div>`;
 
   if ((d.partners || []).length) {
     h += `<div class="sec"><h3>파트너</h3><div class="chips">${d.partners.map((p, i) =>
-      `<span class="chip click${i === 0 ? " first" : ""}" data-q="${esc(p)}">${esc(p)}</span>`).join("")}</div>
-      <div class="note" style="margin-top:6px">파트너를 누르면 같은 파트너를 쓰는 전투원을 찾습니다.</div></div>`;
+      `<button class="pchip${i === 0 ? " first" : ""}" data-act="goPartner" data-v="${esc(p)}">${esc(p)}</button>`).join("")}</div>
+      <p class="note" style="margin-top:8px">파트너를 누르면 같은 파트너를 쓰는 전투원을 목록에서 보여 줍니다.</p></div>`;
   }
   if ((d.sets || []).length) {
     h += `<div class="sec"><h3>기억의 조각</h3>${d.sets.map((s, i) =>
-      `<div class="row">${labelHtml(s.label)}${s.items.map(it => `<span class="chip${i === 0 ? " first" : ""}">${esc(it)}</span>`).join("")}</div>`).join("")}</div>`;
+      `<div class="row">${labelHtml(s.label)}${s.items.map(it => `<span class="ichip${i === 0 ? " first" : ""}">${esc(it)}</span>`).join("")}</div>`).join("")}</div>`;
   }
   if ((d.main || []).length || (d.sub || []).length) {
-    h += `<div class="sec"><h3>주 옵션 / 부 옵션</h3><div class="optgrid">`;
-    (d.main || []).forEach(m => {
-      h += `<div class="box">${m.label ? `<div style="margin-bottom:6px">${labelHtml(m.label)}</div>` : ""}${
-        Object.entries(m.opts).map(([k, v]) => `<div class="opt"><b>${esc(k)}</b>${esc(v)}</div>`).join("")}</div>`;
-    });
-    h += `</div>`;
-    (d.sub || []).forEach(s => {
-      h += `<div class="opt" style="margin-top:8px">${labelHtml(s.label)} <b>부 옵션</b>${esc(s.text)}</div>`;
-    });
-    h += `</div>`;
+    h += `<div class="sec"><h3>주 옵션 / 부 옵션</h3><div class="optgrid">${(d.main || []).map(m =>
+      `<div class="box">${m.label ? `<div style="margin-bottom:6px">${labelHtml(m.label)}</div>` : ""}${
+        Object.entries(m.opts).map(([k, v]) => `<div class="opt"><b>${esc(k)}</b>${esc(v)}</div>`).join("")}</div>`).join("")}</div>
+      ${(d.sub || []).map(s => `<div class="opt" style="margin-top:8px">${labelHtml(s.label)} <b>부 옵션</b>${esc(s.text)}</div>`).join("")}</div>`;
   }
   if ((d.cards || []).length) {
-    h += `<div class="sec"><h3>핵심 카드</h3><div class="cards">${d.cards.map(c => `
-      <div class="gc"><div class="hd"><div class="cost">${c.cost == null ? "Ø" : esc(c.cost)}</div>
-      <div><div class="nm">${esc(c.name)}</div><div class="ty">${esc(c.type)}</div></div></div>
-      <div class="ef">${esc(c.effect)}</div></div>`).join("")}</div></div>`;
+    h += `<div class="sec"><h3>핵심 카드</h3><div class="kcards">${d.cards.map(c => `
+      <div class="kc"><div class="hd2"><div class="cost">${c.cost == null ? "Ø" : esc(c.cost)}</div>
+      <div><div class="kn">${esc(c.name)}</div><div class="kt">${esc(c.type)}</div></div></div>
+      <div class="ke">${esc(c.effect)}</div></div>`).join("")}</div></div>`;
   }
   const g = d.gear || {};
   if (Object.keys(g).length) {
     h += `<div class="sec"><h3>추천 공용 장비</h3><div class="gear">${["무기", "방어구", "장신구"].filter(k => g[k]).map(k =>
-      `<div class="k">${k}</div><div class="chips">${g[k].map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div>`).join("")}</div></div>`;
+      `<div class="k">${k}</div><div class="chips">${g[k].map(x => `<span class="ichip">${esc(x)}</span>`).join("")}</div>`).join("")}</div></div>`;
   }
-
-  const panel = document.getElementById("panel");
-  panel.innerHTML = h;
-  panel.querySelector("#closeBtn").onclick = closeDetail;
-  panel.querySelectorAll("[data-tag]").forEach(el => el.onclick = () => {
-    sel.tag = el.dataset.tag; closeDetail(); render(); window.scrollTo(0, 0);
-  });
-  panel.querySelectorAll("[data-q]").forEach(el => el.onclick = () => {
-    sel.q = el.dataset.q; document.getElementById("q").value = sel.q; closeDetail(); render(); window.scrollTo(0, 0);
-  });
-  document.getElementById("modal").classList.add("open");
-  document.getElementById("modal").scrollTop = 0;
+  return h + `</section>`;
 }
-function closeDetail() { document.getElementById("modal").classList.remove("open"); }
 
-function showPage() {
-  const page = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "combatants";
-  PAGES.forEach(p => { document.getElementById("page-" + p).hidden = p !== page; });
-  document.querySelectorAll(".menu a").forEach(a => a.classList.toggle("on", a.dataset.page === page));
-  closeDetail();
+/* ---------- 조합 목록 ---------- */
+function teamFiltered() {
+  return teams.filter(t =>
+    teamSel.members.every(id => teamIds(t).includes(id)) &&
+    (!teamSel.tag.size || (t.tags || []).some(x => teamSel.tag.has(x))));
 }
-window.addEventListener("hashchange", showPage);
-showPage();
+function viewTeams() {
+  const tags = sortedBy(TEAM_TAGS, [...TEAM_TAGS, ...teams.flatMap(t => t.tags || [])]);
+  const list = teamFiltered();
+  const slots = [0, 1, 2].map(i => {
+    const id = teamSel.members[i];
+    return id && byId[id]
+      ? `<div class="slot filled" title="${esc(byId[id].name_ko)}">${img(byId[id])}<span class="rm" data-act="removeMember" data-v="${i}" aria-label="빼기">×</span></div>`
+      : `<button class="slot" data-act="openPicker" aria-label="전투원 추가">＋</button>`;
+  }).join("");
+  return `<section class="page">
+    <div class="eyebrow">추천 조합</div>
+    <h1>조합</h1>
+    <div class="filters" style="display:block;position:static">
+      <div class="frow"><span class="fl">전투원</span><div><div class="slots">${slots}</div>
+        <p class="note" style="margin:8px 0 0">최대 3명. 고른 전투원이 모두 들어간 조합만 남깁니다.</p></div></div>
+      <div class="frow"><span class="fl">태그</span><div class="chips">
+        <button class="chip${teamSel.tag.size ? "" : " on"}" data-tk="">전체</button>
+        ${tags.map(t => `<button class="chip${teamSel.tag.has(t) ? " on" : ""}" data-tk="${esc(t)}">#${esc(t)}</button>`).join("")}
+      </div></div>
+      <div class="frow foot"><button class="btn" data-act="resetTeams">초기화</button><span class="cnt" style="display:inline">${list.length}개 조합</span></div>
+    </div>
+    <div class="tlist">${list.length ? list.map(t => `
+      <a class="tcard" href="#/team/${encodeURIComponent(t.id)}">
+        <span class="tps">${teamIds(t).map(portraitOrUnknown).join("")}</span>
+        <span class="tb"><span class="tn">${esc(t.name)}</span>
+          <div class="tr">${(t.slots || []).map(s => esc(s.role || "-")).join(" / ")}</div>
+          <div class="ts">${esc(t.summary || "")}</div></span>
+        <span class="ttags">${(t.tags || []).map(x => `<span class="ttag">#${esc(x)}</span>`).join("")}</span>
+      </a>`).join("")
+      : `<div class="empty">${teams.length ? "조건에 맞는 조합이 없습니다." : "아직 등록된 조합이 없습니다.<br>data.json의 teams에 조합을 추가하면 여기에 표시됩니다."}</div>`}</div>
+  </section>`;
+}
+function openPicker() {
+  const ov = document.getElementById("overlay");
+  ov.innerHTML = `<div class="picker" role="dialog" aria-label="전투원 선택">
+    <div class="ph"><input id="pq" placeholder="이름으로 찾기" autocomplete="off"><button class="btn" data-act="closePicker">닫기</button></div>
+    <div class="pgrid" id="pgrid"></div></div>`;
+  ov.hidden = false;
+  document.body.classList.add("lock");
+  drawPicker("");
+  const pq = document.getElementById("pq");
+  pq.oninput = () => drawPicker(pq.value.trim().toLowerCase());
+  pq.focus();
+}
+function drawPicker(q) {
+  const list = chars.filter(d => !q || d.name_ko.includes(q) || d.name.toLowerCase().includes(q))
+    .sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko"));
+  document.getElementById("pgrid").innerHTML = list.map(d =>
+    `<button data-act="pick" data-v="${esc(d.id)}"${teamSel.members.includes(d.id) ? " disabled" : ""}>${img(d)}${esc(d.name_ko)}</button>`).join("")
+    || '<p class="note">찾는 전투원이 없습니다.</p>';
+}
+function closePicker() {
+  const ov = document.getElementById("overlay");
+  ov.hidden = true; ov.innerHTML = "";
+  document.body.classList.remove("lock");
+}
 
-document.getElementById("modal").onclick = e => { if (e.target.id === "modal") closeDetail(); };
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeDetail(); });
-document.getElementById("q").oninput = e => { sel.q = e.target.value.trim(); render(); };
-document.getElementById("reset").onclick = () => {
-  sel.job = sel.attr = sel.role = sel.tag = null; sel.q = "";
-  document.getElementById("q").value = "";
-  document.getElementById("tagDetails").open = false;
-  render();
-};
+/* ---------- 조합 상세 ---------- */
+function viewTeam(id) {
+  const t = teams.find(x => x.id === id);
+  if (!t) return `<section class="page"><a class="back" href="#/teams">← 조합 목록</a><div class="empty">조합을 찾을 수 없습니다.</div></section>`;
+  const slots = (t.slots || []).map(s => {
+    const c = byId[s.id];
+    const alts = (s.alts || []).map(a => byId[a] ? `<a href="${charLink(a)}">${esc(byId[a].name_ko)}</a>` : esc(a)).join(", ");
+    return `<div class="tslot" style="--ac:${acOf(c)}">
+      ${c ? `<a href="${charLink(c.id)}"><div class="pf">${img(c)}</div></a>` : `<div class="pf"></div>`}
+      <div class="sb"><div class="sn">${c ? esc(c.name_ko) : esc(s.id)}</div>
+      <div class="sr">${esc(s.role || "-")}</div>
+      <div class="sa">대체: ${alts || "-"}</div></div>
+    </div>`;
+  }).join("");
+  const sec = (title, text) => text ? `<div class="sec"><h3>${title}</h3><p class="ttext">${esc(text)}</p></div>` : "";
+  return `<section class="page">
+    <a class="back" href="#/teams">← 조합 목록</a>
+    <div class="eyebrow">조합</div>
+    <h1>${esc(t.name)}</h1>
+    ${(t.tags || []).length ? `<div class="chips" style="margin:-8px 0 18px">${t.tags.map(x => `<span class="ttag">#${esc(x)}</span>`).join("")}</div>` : ""}
+    <div class="tslots">${slots}</div>
+    ${t.summary ? `<p class="desc" style="margin-top:18px">${esc(t.summary)}</p>` : ""}
+    ${sec("운용 방식", t.howto)}${sec("핵심 시너지", t.synergy)}${sec("주의점", t.caution)}
+  </section>`;
+}
 
+/* ---------- 역할별 보기 ---------- */
+function viewRoles() {
+  const rows = ROLES.map(r => `<tr><th>${esc(r)}</th>${ATTRS.map(a => {
+    const list = chars.filter(d => d.attr === a && d.roles.includes(r)).sort((x, y) => x.name_ko.localeCompare(y.name_ko, "ko"));
+    return `<td>${list.length ? `<div class="cell">${list.map(d => `<a href="${charLink(d.id)}">${img(d)}${esc(d.name_ko)}</a>`).join("")}</div>` : '<span class="gap">—</span>'}</td>`;
+  }).join("")}</tr>`).join("");
+  const none = chars.filter(d => !d.roles.length).sort((x, y) => x.name_ko.localeCompare(y.name_ko, "ko"));
+  return `<section class="page">
+    <div class="eyebrow">역할 × 속성</div>
+    <h1>역할별 보기</h1>
+    <div class="mx-wrap"><table class="mx">
+      <thead><tr><th></th>${ATTRS.map(a => `<th style="color:${ATTR_COLOR[a]}">◆ ${esc(a)}</th>`).join("")}</tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <p class="note" style="margin-top:10px">역할이 두 개인 전투원은 두 줄에 모두 나옵니다.${none.length ? ` 역할 미정: ${none.map(d => esc(d.name_ko)).join(", ")}` : ""}</p>
+  </section>`;
+}
+
+/* ---------- 라우팅 ---------- */
+function parseRoute() {
+  const h = location.hash.replace(/^#\/?/, "");
+  const [a, b] = h.split("/");
+  const id = b ? decodeURIComponent(b) : "";
+  if (a === "char" && id) return { view: "char", id };
+  if (a === "team" && id) return { view: "team", id };
+  if (a === "teams") return { view: "teams" };
+  if (a === "roles") return { view: "roles" };
+  return { view: "list" };
+}
+function render() {
+  const r = parseRoute();
+  const app = document.getElementById("app");
+  if (r.view === "char") app.innerHTML = viewChar(r.id);
+  else if (r.view === "team") app.innerHTML = viewTeam(r.id);
+  else if (r.view === "teams") app.innerHTML = viewTeams();
+  else if (r.view === "roles") app.innerHTML = viewRoles();
+  else app.innerHTML = viewList();
+  const tab = r.view === "char" || r.view === "list" ? "list" : r.view === "team" ? "teams" : r.view;
+  document.querySelectorAll("[data-tab]").forEach(a => a.classList.toggle("on", a.dataset.tab === tab));
+  document.body.classList.toggle("lock", r.view === "list" && sheetOpen);
+  const sort = document.getElementById("sort");
+  if (sort) sort.onchange = () => { sel.sort = sort.value; render(); };
+  return r.view;
+}
+function onRouteChange() {
+  if (curView === "list") listScroll = window.scrollY;
+  sheetOpen = false;
+  closePicker();
+  const v = render();
+  window.scrollTo(0, v === "list" ? listScroll : 0);
+  curView = v;
+}
+function goList() {
+  if (parseRoute().view === "list") { render(); window.scrollTo(0, 0); }
+  else { listScroll = 0; location.hash = "#/"; }
+}
+function resetListFilters() {
+  ["attr", "job", "grade", "role", "tag"].forEach(k => sel[k].clear());
+  sel.partner = null;
+}
+
+/* ---------- 이벤트 ---------- */
+document.addEventListener("click", e => {
+  const chip = e.target.closest("[data-k]");
+  if (chip) {
+    const s = sel[chip.dataset.k], v = chip.dataset.v;
+    if (!v) s.clear(); else if (s.has(v)) s.delete(v); else s.add(v);
+    render();
+    return;
+  }
+  const tchip = e.target.closest("[data-tk]");
+  if (tchip) {
+    const v = tchip.dataset.tk;
+    if (!v) teamSel.tag.clear(); else if (teamSel.tag.has(v)) teamSel.tag.delete(v); else teamSel.tag.add(v);
+    render();
+    return;
+  }
+  const act = e.target.closest("[data-act]");
+  if (!act) return;
+  const v = act.dataset.v;
+  switch (act.dataset.act) {
+    case "openSheet": sheetOpen = true; render(); break;
+    case "closeSheet": sheetOpen = false; render(); break;
+    case "resetFilters": resetListFilters(); render(); break;
+    case "clearPartner": sel.partner = null; render(); break;
+    case "goRole": resetListFilters(); sel.role.add(v); goList(); break;
+    case "goTag": resetListFilters(); sel.tag.add(v); goList(); break;
+    case "goPartner": resetListFilters(); sel.partner = v; goList(); break;
+    case "openPicker": openPicker(); break;
+    case "closePicker": closePicker(); break;
+    case "pick":
+      if (teamSel.members.length < 3 && !teamSel.members.includes(v)) teamSel.members.push(v);
+      closePicker(); render(); break;
+    case "removeMember": e.preventDefault(); teamSel.members.splice(Number(v), 1); render(); break;
+    case "resetTeams": teamSel.members = []; teamSel.tag.clear(); render(); break;
+  }
+});
+document.getElementById("overlay").addEventListener("click", e => { if (e.target.id === "overlay") closePicker(); });
+
+/* 헤더 검색 */
+const q = document.getElementById("q"), results = document.getElementById("results");
+let hits = [], hl = 0;
+function drawResults() {
+  const s = q.value.trim().toLowerCase();
+  if (!s) { results.hidden = true; return; }
+  hits = chars.filter(d => d.name_ko.includes(s) || d.name.toLowerCase().includes(s)).slice(0, 8);
+  hl = Math.min(hl, Math.max(hits.length - 1, 0));
+  results.innerHTML = hits.length ? hits.map((d, i) => `<a href="${charLink(d.id)}" class="${i === hl ? "hl" : ""}">${img(d)}
+    <span><span class="rn">${esc(d.name_ko)}</span><br><span class="rm">◆${esc(d.attr)} · ${esc(d.job)}</span></span></a>`).join("")
+    : '<div class="none">찾는 전투원이 없습니다.</div>';
+  results.hidden = false;
+}
+q.addEventListener("input", () => { hl = 0; drawResults(); });
+q.addEventListener("focus", drawResults);
+q.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown") { e.preventDefault(); hl = Math.min(hl + 1, hits.length - 1); drawResults(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); hl = Math.max(hl - 1, 0); drawResults(); }
+  else if (e.key === "Enter" && hits[hl]) { location.hash = charLink(hits[hl].id); q.value = ""; results.hidden = true; q.blur(); }
+  else if (e.key === "Escape") { results.hidden = true; q.blur(); }
+});
+results.addEventListener("click", e => { if (e.target.closest("a")) { q.value = ""; results.hidden = true; } });
+document.addEventListener("click", e => { if (!e.target.closest(".search")) results.hidden = true; });
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  if (!document.getElementById("overlay").hidden) closePicker();
+  else if (sheetOpen) { sheetOpen = false; render(); }
+});
+window.addEventListener("hashchange", onRouteChange);
+
+/* 데이터 불러오기 */
 fetch("data.json")
-  .then(r => r.json())
-  .then(j => { data = j.combatants.map(prep); render(); })
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(j => {
+    chars = (j.combatants || []).map(prep);
+    teams = Array.isArray(j.teams) ? j.teams : [];
+    byId = Object.fromEntries(chars.map(d => [d.id, d]));
+    curView = render();
+  })
   .catch(() => {
-    document.getElementById("grid").innerHTML = '<div class="empty">data.json을 불러오지 못했습니다.</div>';
+    document.getElementById("app").innerHTML = '<section class="page"><div class="empty">data.json을 불러오지 못했습니다. 파일 이름과 JSON 형식(따옴표, 쉼표)을 확인해 주세요.</div></section>';
   });
 </script>
 </body>
