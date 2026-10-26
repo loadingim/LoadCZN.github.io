@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CZN 전투원 레퍼런스</title>
+<style>
+  body { font-family: sans-serif; margin: 0; background: #14161c; color: #e8e8ee; }
+  header { padding: 20px; background: #1c1f28; }
+  h1 { margin: 0 0 4px; font-size: 22px; }
+  .sub { color: #8a8fa3; font-size: 13px; }
+  .bar { padding: 14px 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  input { padding: 8px 10px; border-radius: 6px; border: 1px solid #333; background: #1c1f28; color: #fff; }
+  .tag { padding: 6px 12px; border-radius: 16px; background: #262a36; cursor: pointer; font-size: 13px; border: 1px solid transparent; }
+  .tag.on { background: #3b5bdb; }
+  .reset { background: #444; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; padding: 0 20px 30px; }
+  .card { background: #1c1f28; border-radius: 10px; padding: 14px; }
+  .card h2 { margin: 0 0 6px; font-size: 18px; }
+  .meta { font-size: 13px; color: #aab; margin: 4px 0; }
+  .kw { display: inline-block; background: #2b3250; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 2px 0 0; }
+  .empty { padding: 20px; color: #8a8fa3; }
+  footer { padding: 16px 20px; color: #666; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>CZN 전투원 레퍼런스</h1>
+  <div class="sub">비공식 팬 사이트 · 데이터는 샘플이며 검증이 필요합니다</div>
+</header>
+
+<div class="bar">
+  <input id="q" placeholder="이름 검색">
+  <span class="tag reset" id="reset">초기화</span>
+</div>
+<div class="bar" id="roleBar"></div>
+<div class="bar" id="kwBar"></div>
+<div class="grid" id="grid"></div>
+<footer>Chaos Zero Nightmare 관련 저작권은 스마일게이트에 있습니다.</footer>
+
+<script>
+let data = [];
+const sel = { role: null, kw: null, q: "" };
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+function unique(list) { return [...new Set(list)].filter(Boolean); }
+
+function makeTags(el, items, key) {
+  el.innerHTML = "";
+  items.forEach(v => {
+    const t = document.createElement("span");
+    t.className = "tag" + (sel[key] === v ? " on" : "");
+    t.textContent = (key === "kw" ? "#" : "") + v;
+    t.onclick = () => { sel[key] = sel[key] === v ? null : v; render(); };
+    el.appendChild(t);
+  });
+}
+
+function render() {
+  makeTags(document.getElementById("roleBar"), unique(data.map(d => d.role)), "role");
+  makeTags(document.getElementById("kwBar"), unique(data.flatMap(d => d.keywords || [])), "kw");
+
+  const list = data.filter(d =>
+    (!sel.role || d.role === sel.role) &&
+    (!sel.kw || (d.keywords || []).includes(sel.kw)) &&
+    (!sel.q || d.name.includes(sel.q))
+  );
+
+  const grid = document.getElementById("grid");
+  if (!list.length) { grid.innerHTML = '<div class="empty">조건에 맞는 전투원이 없습니다.</div>'; return; }
+
+  grid.innerHTML = list.map(d => `
+    <div class="card">
+      <h2>${esc(d.name)}</h2>
+      <div class="meta">역할: ${esc(d.role)} · ${esc(d.target || "-")}</div>
+      <div>${(d.keywords || []).map(k => `<span class="kw">#${esc(k)}</span>`).join("")}</div>
+      <div class="meta">추천 파트너: ${(d.partners || []).length ? esc(d.partners.join(", ")) : "-"}</div>
+      <div class="meta">${esc(d.note || "")}</div>
+    </div>`).join("");
+}
+
+document.getElementById("q").oninput = e => { sel.q = e.target.value.trim(); render(); };
+document.getElementById("reset").onclick = () => {
+  sel.role = null; sel.kw = null; sel.q = "";
+  document.getElementById("q").value = "";
+  render();
+};
+
+fetch("data.json")
+  .then(r => r.json())
+  .then(j => { data = j.combatants; render(); })
+  .catch(() => {
+    document.getElementById("grid").innerHTML = '<div class="empty">data.json을 불러오지 못했습니다.</div>';
+  });
+</script>
+</body>
+</html>
