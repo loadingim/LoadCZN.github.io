@@ -131,6 +131,17 @@
   .gear { display: grid; grid-template-columns: 64px 1fr; gap: 8px 12px; align-items: start; font-size: 13px; }
   .gear .k { color: var(--muted); padding-top: 5px; }
 
+  /* 덱 */
+  .dgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .dcard { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
+  .dn { font-weight: 700; font-size: 14px; margin-top: 8px; }
+  .dt { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+  .dthumb { display: block; width: 100%; margin-top: 6px; padding: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #121116; cursor: zoom-in; }
+  .dthumb:hover { border-color: var(--gold); }
+  .dthumb img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; }
+  .dnone { margin-top: 6px; aspect-ratio: 16 / 10; border: 1px dashed var(--line); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted); }
+  .dcard .dthumb, .dcard .dnone { margin-top: 0; }
+
   /* 조합 */
   .mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 6px; }
   .mpick { position: relative; padding: 3px; border-radius: 8px; border: 1px solid var(--line); background: #121116; cursor: pointer; font-size: 11px; color: #bdb7c2; text-align: center; }
@@ -140,15 +151,22 @@
   .mpick.on { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); background: var(--gold-soft); color: var(--gold-hi); font-weight: 700; }
   .mpick:disabled { opacity: .35; cursor: default; }
   .mpick b { position: absolute; top: 5px; left: 5px; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); color: #1a1406; font-size: 11px; line-height: 18px; }
-  .tlist { display: flex; flex-direction: column; gap: 10px; }
-  .tcard { display: flex; align-items: center; gap: 18px; padding: 12px 16px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); }
-  .tcard:hover { border-color: var(--gold); }
+  .tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 14px; }
+  .tcard2 { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+  .tcard2:hover { border-color: #47434f; }
+  .thd { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+  .thd .tn:hover { color: var(--gold-hi); }
+  .thd .ttags { margin-left: auto; }
+  .tmem { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .tm { min-width: 0; text-align: center; }
+  .tm .pf { aspect-ratio: 1; border-radius: 10px; overflow: hidden; }
+  .tm .pf img { object-fit: cover; object-position: top; }
+  .tm .mn { font-weight: 700; font-size: 13px; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tm .md { font-size: 12px; color: var(--gold); min-height: 1.5em; overflow-wrap: anywhere; }
   .tps { display: flex; gap: 6px; flex-shrink: 0; }
   .tps img, .tps .unk { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; object-position: top; background: #121116; border: 1px solid var(--line); }
   .tps .unk { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 11px; }
-  .tb { flex: 1; min-width: 0; }
   .tn { font-family: var(--serif); font-weight: 700; font-size: 17px; }
-  .tr { font-size: 12px; color: var(--gold); margin: 2px 0; }
   .ts { font-size: 13px; color: #cbc6cf; }
   .ttags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 200px; }
   .ttag { font-size: 12px; color: var(--muted); }
@@ -162,7 +180,7 @@
   .tslot .sb { padding: 10px 12px; border-top: 2px solid var(--ac); }
   .tslot .sn { font-weight: 700; }
   .tslot .sr { color: var(--gold); font-size: 13px; margin: 2px 0 6px; }
-  .tslot .sa { font-size: 12px; color: var(--muted); }
+  .tslot .sa { font-size: 12px; color: var(--muted); margin-top: 6px; }
   .tslot .sa a { color: #d4cfd8; text-decoration: underline; text-underline-offset: 2px; }
   .ttext { line-height: 1.7; white-space: pre-line; margin: 0; }
 
@@ -180,6 +198,12 @@
   .mx .cell img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; object-position: top; background: var(--panel2); border: 1px solid var(--line); margin-bottom: 2px; }
   .mx .cell a:hover img { border-color: var(--gold); }
   .mx .gap { color: #4a4652; }
+
+  /* 확대 보기 */
+  .lb { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .85); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; cursor: zoom-out; }
+  .lb[hidden] { display: none; }
+  .lb img { max-width: 100%; max-height: calc(100vh - 90px); max-height: calc(100dvh - 90px); object-fit: contain; border-radius: 8px; cursor: default; }
+  .lb .lbc { margin-top: 10px; display: flex; gap: 12px; align-items: center; font-size: 14px; cursor: default; }
 
   footer { border-top: 1px solid var(--line); padding: 16px 0; color: #5f5a66; font-size: 12px; }
   .bottombar { display: none; }
@@ -216,12 +240,12 @@
     .foot .cnt { display: none; }
     .dtop { grid-template-columns: 1fr; gap: 16px; }
     .dpf { max-width: 260px; margin: 0 auto; width: 100%; }
-    .tcard { flex-wrap: wrap; gap: 10px; }
     .tps img, .tps .unk { width: 48px; height: 48px; }
     .ttags { justify-content: flex-start; max-width: none; }
     .tslots { grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .tslot .sb { padding: 6px 8px; font-size: 12px; }
     .mgrid { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 4px; }
+    .dgrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   }
 </style>
 </head>
@@ -251,6 +275,11 @@
   <a href="#/roles" data-tab="roles">역할</a>
 </nav>
 
+<div class="lb" id="lb" hidden>
+  <img id="lbImg" alt="덱 확대 이미지">
+  <div class="lbc"><span id="lbCap"></span><button class="btn" data-act="closeLb">닫기</button></div>
+</div>
+
 <script>
 const ATTRS = ["열정", "질서", "정의", "공허", "본능"];
 const JOBS = ["스트라이커", "뱅가드", "헌터", "레인저", "사이오닉", "컨트롤러"];
@@ -258,7 +287,7 @@ const ROLES = ["딜러", "서브 딜러", "서포터"];
 const TEAM_TAGS = ["보스", "일반", "입문", "고난도"];
 const ATTR_COLOR = { "열정": "#e0434c", "공허": "#9b5de5", "본능": "#e09a2c", "정의": "#3d8fd6", "질서": "#3fae6a" };
 
-let chars = [], teams = [], byId = {};
+let chars = [], teams = [], byId = {}, decks = [], deckByCode = {};
 const sel = { attr: new Set(), job: new Set(), grade: new Set(), role: new Set(), tag: new Set(), partner: null, sort: "name" };
 const teamSel = { members: [], tag: new Set() };
 let sheetOpen = false, listScroll = 0, curView = "";
@@ -308,6 +337,30 @@ function portraitOrUnknown(id) {
   return c ? img(c) : `<span class="unk">${esc(id || "?")}</span>`;
 }
 function labelHtml(l) { return l ? `<span class="lbl">${esc(l)}</span>` : ""; }
+
+/* ---------- 덱 ---------- */
+function decksOf(id) { return decks.filter(k => k.char === id); }
+function slotDeck(s) {
+  const k = s.deck ? deckByCode[s.deck] : null;
+  return k && k.char === s.id ? k : null; // 다른 전투원의 덱 코드가 잘못 들어간 경우 무시
+}
+function deckThumb(k, c, show) {
+  if (!k || !k.image) return show ? '<div class="dnone">덱 이미지 없음</div>' : "";
+  const cap = (c ? c.name_ko : k.char) + " · " + (k.name || k.code);
+  return `<button class="dthumb" data-act="zoom" data-src="${esc(k.image)}" data-cap="${esc(cap)}" aria-label="${esc(cap)} 덱 확대">
+    <img src="${encodeURI(k.image)}" alt="${esc(cap)} 덱" loading="lazy"></button>`;
+}
+function deckSection(d) {
+  const list = decksOf(d.id);
+  if (!list.length) return `<div class="sec"><h3>덱 목록</h3><p class="note">아직 등록된 덱이 없습니다.</p></div>`;
+  return `<div class="sec"><h3>덱 목록</h3><div class="dgrid">${list.map(k => {
+    const used = teams.filter(t => (t.slots || []).some(s => s.deck === k.code)).length;
+    return `<div class="dcard">${deckThumb(k, d, true)}
+      <div class="dn">${esc(k.name || k.code)}</div>
+      ${k.note ? `<div class="dt">${esc(k.note)}</div>` : ""}
+      ${used ? `<div class="dt">${used}개 조합에서 사용</div>` : ""}</div>`;
+  }).join("")}</div></div>`;
+}
 
 /* ---------- 전투원 목록 ---------- */
 function tagCounts() {
@@ -425,6 +478,7 @@ function viewChar(id) {
       </div>
     </div>
     <div class="sec"><h3>역할 요약</h3><p class="desc">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</p></div>
+    ${deckSection(d)}
     <div class="sec"><h3>이 전투원이 들어간 조합</h3>${inTeams.length || asAlt.length
       ? inTeams.map(t => teamMini(t)).join("") + asAlt.map(t => teamMini(t, "대체 멤버")).join("")
       : '<p class="note">아직 등록된 조합이 없습니다.</p>'}</div>
@@ -467,6 +521,22 @@ function teamFiltered() {
     teamSel.members.every(id => teamIds(t).includes(id)) &&
     (!teamSel.tag.size || (t.tags || []).some(x => teamSel.tag.has(x))));
 }
+function teamCard(t) {
+  const show = (t.slots || []).some(s => { const k = slotDeck(s); return k && k.image; });
+  return `<article class="tcard2">
+    <div class="thd"><a class="tn" href="#/team/${encodeURIComponent(t.id)}">${esc(t.name)}</a>
+      <span class="ttags">${(t.tags || []).map(x => `<span class="ttag">#${esc(x)}</span>`).join("")}</span></div>
+    ${t.summary ? `<div class="ts" style="margin:-4px 0 10px">${esc(t.summary)}</div>` : ""}
+    <div class="tmem">${(t.slots || []).map(s => {
+      const c = byId[s.id], k = slotDeck(s);
+      return `<div class="tm" style="--ac:${acOf(c)}">
+        ${c ? `<a href="${charLink(c.id)}"><div class="pf">${img(c)}</div></a>` : '<div class="pf"></div>'}
+        <div class="mn">${c ? esc(c.name_ko) : esc(s.id)}</div>
+        <div class="md">${esc(k ? k.name : s.role || "")}</div>
+        ${deckThumb(k, c, show)}</div>`;
+    }).join("")}</div>
+  </article>`;
+}
 function viewTeams() {
   const tags = sortedBy(TEAM_TAGS, [...TEAM_TAGS, ...teams.flatMap(t => t.tags || [])]);
   const list = teamFiltered();
@@ -487,14 +557,7 @@ function viewTeams() {
       </div></div>
       <div class="frow foot"><button class="btn" data-act="resetTeams">초기화</button><span class="cnt" style="display:inline">${list.length}개 조합</span></div>
     </div>
-    <div class="tlist">${list.length ? list.map(t => `
-      <a class="tcard" href="#/team/${encodeURIComponent(t.id)}">
-        <span class="tps">${teamIds(t).map(portraitOrUnknown).join("")}</span>
-        <span class="tb"><span class="tn">${esc(t.name)}</span>
-          <div class="tr">${(t.slots || []).map(s => esc(s.role || "-")).join(" / ")}</div>
-          <div class="ts">${esc(t.summary || "")}</div></span>
-        <span class="ttags">${(t.tags || []).map(x => `<span class="ttag">#${esc(x)}</span>`).join("")}</span>
-      </a>`).join("")
+    <div class="tgrid">${list.length ? list.map(teamCard).join("")
       : `<div class="empty">${teams.length ? "조건에 맞는 조합이 없습니다." : "아직 등록된 조합이 없습니다.<br>data.json의 teams에 조합을 추가하면 여기에 표시됩니다."}</div>`}</div>
   </section>`;
 }
@@ -504,12 +567,13 @@ function viewTeam(id) {
   const t = teams.find(x => x.id === id);
   if (!t) return `<section class="page"><a class="back" href="#/teams">← 조합 목록</a><div class="empty">조합을 찾을 수 없습니다.</div></section>`;
   const slots = (t.slots || []).map(s => {
-    const c = byId[s.id];
+    const c = byId[s.id], k = slotDeck(s);
     const alts = (s.alts || []).map(a => byId[a] ? `<a href="${charLink(a)}">${esc(byId[a].name_ko)}</a>` : esc(a)).join(", ");
     return `<div class="tslot" style="--ac:${acOf(c)}">
       ${c ? `<a href="${charLink(c.id)}"><div class="pf">${img(c)}</div></a>` : `<div class="pf"></div>`}
       <div class="sb"><div class="sn">${c ? esc(c.name_ko) : esc(s.id)}</div>
-      <div class="sr">${esc(s.role || "-")}</div>
+      <div class="sr">${esc(s.role || "-")}${k ? ` · ${esc(k.name)}` : ""}</div>
+      ${k && k.image ? deckThumb(k, c, true) : ""}
       <div class="sa">대체: ${alts || "-"}</div></div>
     </div>`;
   }).join("");
@@ -543,6 +607,21 @@ function viewRoles() {
   </section>`;
 }
 
+/* ---------- 확대 보기 ---------- */
+const lb = document.getElementById("lb");
+function openLb(src, cap) {
+  document.getElementById("lbImg").src = encodeURI(src);
+  document.getElementById("lbCap").textContent = cap || "";
+  lb.hidden = false;
+  document.body.classList.add("lock");
+}
+function closeLb() {
+  if (lb.hidden) return;
+  lb.hidden = true;
+  document.getElementById("lbImg").removeAttribute("src");
+  document.body.classList.toggle("lock", parseRoute().view === "list" && sheetOpen);
+}
+
 /* ---------- 라우팅 ---------- */
 function parseRoute() {
   const h = location.hash.replace(/^#\/?/, "");
@@ -572,6 +651,7 @@ function render() {
 function onRouteChange() {
   if (curView === "list") listScroll = window.scrollY;
   sheetOpen = false;
+  closeLb();
   const v = render();
   window.scrollTo(0, v === "list" ? listScroll : 0);
   curView = v;
@@ -619,8 +699,11 @@ document.addEventListener("click", e => {
       render(); break;
     }
     case "resetTeams": teamSel.members = []; teamSel.tag.clear(); render(); break;
+    case "zoom": openLb(act.dataset.src, act.dataset.cap); break;
+    case "closeLb": closeLb(); break;
   }
 });
+lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
 
 /* 헤더 검색 */
 const q = document.getElementById("q"), results = document.getElementById("results");
@@ -646,7 +729,9 @@ q.addEventListener("keydown", e => {
 results.addEventListener("click", e => { if (e.target.closest("a")) { q.value = ""; results.hidden = true; } });
 document.addEventListener("click", e => { if (!e.target.closest(".search")) results.hidden = true; });
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape" && sheetOpen) { sheetOpen = false; render(); }
+  if (e.key !== "Escape") return;
+  if (!lb.hidden) closeLb();
+  else if (sheetOpen) { sheetOpen = false; render(); }
 });
 window.addEventListener("hashchange", onRouteChange);
 
@@ -656,6 +741,8 @@ fetch("data.json")
   .then(j => {
     chars = (j.combatants || []).map(prep);
     teams = Array.isArray(j.teams) ? j.teams : [];
+    decks = Array.isArray(j.decks) ? j.decks : [];
+    deckByCode = Object.fromEntries(decks.map(k => [k.code, k]));
     byId = Object.fromEntries(chars.map(d => [d.id, d]));
     curView = render();
   })
