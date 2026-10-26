@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "code": "fei-rossweissedraw",
+    "char": "fei",
+    "name": "fei-rossweissedraw",
+    "image": "decks/fei-rossweisseDraw.png",
+    "note": ""
+  },
+  {
+    "code": "hilde-normal",
+    "char": "hilde",
+    "name": "hilde-normal",
+    "image": "decks/hilde-normal.png",
+    "note": ""
+  },
+  {
+    "code": "olga-normal",
+    "char": "olga",
+    "name": "olga-normal",
+    "image": "decks/olga-normal.png",
+    "note": ""
+  },
+  {
+    "code": "tiphera-rossweissepoint",
+    "char": "tiphera",
+    "name": "tiphera-rossweissepoint",
+    "image": "decks/tiphera-rossweissePoint.png",
+    "note": ""
+  },
+  {
+    "code": "arabella-normal",
+    "char": "arabella",
+    "name": "arabella-normal",
+    "image": "decks/arabella-normal.png",
+    "note": ""
+  }
+]
