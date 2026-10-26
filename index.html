@@ -5,73 +5,116 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CZN 전투원 레퍼런스</title>
 <style>
+  * { box-sizing: border-box; }
   body { font-family: sans-serif; margin: 0; background: #14161c; color: #e8e8ee; }
   header { padding: 20px; background: #1c1f28; }
   h1 { margin: 0 0 4px; font-size: 22px; }
   .sub { color: #8a8fa3; font-size: 13px; }
-  .bar { padding: 8px 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .label { font-size: 12px; color: #8a8fa3; width: 40px; }
-  input { padding: 8px 10px; border-radius: 6px; border: 1px solid #333; background: #1c1f28; color: #fff; }
-  .tag { padding: 6px 12px; border-radius: 16px; background: #262a36; cursor: pointer; font-size: 13px; border: 1px solid transparent; user-select: none; }
+  .bar { padding: 6px 20px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .label { font-size: 12px; color: #8a8fa3; width: 44px; flex-shrink: 0; }
+  input { padding: 8px 10px; border-radius: 6px; border: 1px solid #333; background: #1c1f28; color: #fff; width: 240px; max-width: 100%; }
+  .tag { padding: 5px 11px; border-radius: 16px; background: #262a36; cursor: pointer; font-size: 13px; user-select: none; }
   .tag.on { background: #3b5bdb; }
   .reset { background: #444; }
-  .count { padding: 4px 20px; font-size: 13px; color: #8a8fa3; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; padding: 8px 20px 30px; }
-  .card { background: #1c1f28; border-radius: 10px; padding: 12px; }
-  .card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 8px; margin-bottom: 8px; background: #262a36; }
-  .card h2 { margin: 0 0 2px; font-size: 18px; }
-  .en { font-size: 12px; color: #8a8fa3; margin-bottom: 6px; }
-  .badges { margin: 4px 0; }
+  details { padding: 4px 20px; }
+  summary { cursor: pointer; font-size: 13px; color: #8a8fa3; padding: 4px 0; }
+  .tagwrap { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 0; }
+  .count { padding: 6px 20px; font-size: 13px; color: #8a8fa3; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding: 8px 20px 30px; }
+  .card { background: #1c1f28; border-radius: 10px; padding: 10px; cursor: pointer; border: 1px solid transparent; transition: border-color .15s; }
+  .card:hover { border-color: #3b5bdb; }
+  .card img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 8px; margin-bottom: 8px; background: #262a36; display: block; }
+  .card h2 { margin: 0; font-size: 17px; }
+  .en { font-size: 12px; color: #8a8fa3; margin-bottom: 4px; }
   .badge { display: inline-block; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 4px 2px 0; background: #2b3250; }
   .badge.job { background: #35405f; }
-  .badge.a-열정 { background: #7a2d2d; }
-  .badge.a-공허 { background: #55307a; }
-  .badge.a-본능 { background: #7a5a22; }
-  .badge.a-정의 { background: #24507a; }
-  .badge.a-질서 { background: #2a6a3a; }
-  .kw { display: inline-block; background: #2b3250; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 2px 0 0; }
-  .meta { font-size: 13px; color: #aab; margin: 4px 0; }
+  .badge.lim { background: #8a6d1f; }
+  .badge.pend { background: #444; }
+  .a-열정 { background: #7a2d2d !important; }
+  .a-공허 { background: #55307a !important; }
+  .a-본능 { background: #7a5a22 !important; }
+  .a-정의 { background: #24507a !important; }
+  .a-질서 { background: #2a6a3a !important; }
+  .role { font-size: 13px; color: #c9cde0; margin: 4px 0; }
+  .kw { display: inline-block; background: #262a36; border-radius: 10px; padding: 2px 7px; font-size: 11px; margin: 2px 2px 0 0; color: #b8bdd6; }
   .empty { padding: 20px; color: #8a8fa3; }
   footer { padding: 16px 20px; color: #666; font-size: 12px; }
+
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: none; align-items: flex-start; justify-content: center; padding: 30px 12px; overflow-y: auto; z-index: 10; }
+  .modal.open { display: flex; }
+  .panel { background: #1c1f28; border-radius: 12px; max-width: 920px; width: 100%; padding: 20px; position: relative; }
+  .close { position: absolute; top: 10px; right: 14px; font-size: 26px; cursor: pointer; color: #8a8fa3; background: none; border: none; }
+  .top { display: grid; grid-template-columns: 220px 1fr; gap: 20px; }
+  .top img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 10px; background: #262a36; }
+  .panel h2 { margin: 0 0 4px; font-size: 24px; }
+  .desc { line-height: 1.6; font-size: 14px; margin: 10px 0; color: #dfe2ee; }
+  .sec { margin-top: 18px; }
+  .sec h3 { font-size: 15px; margin: 0 0 8px; color: #9fb0ff; border-bottom: 1px solid #2b3040; padding-bottom: 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { background: #262a36; border-radius: 8px; padding: 5px 10px; font-size: 13px; }
+  .chip.click { cursor: pointer; }
+  .chip.click:hover { background: #33384a; }
+  .chip.first { background: #5a2f4a; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
+  .lbl { font-size: 11px; background: #3b5bdb; border-radius: 6px; padding: 2px 6px; }
+  .opt { font-size: 13px; margin: 3px 0; }
+  .opt b { color: #9fb0ff; font-weight: normal; display: inline-block; min-width: 64px; }
+  .optgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .box { background: #232736; border-radius: 8px; padding: 10px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+  .gc { background: #232736; border-radius: 8px; padding: 10px; }
+  .gc .hd { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .cost { width: 26px; height: 26px; border-radius: 50%; background: #3b5bdb; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; flex-shrink: 0; }
+  .gc .nm { font-size: 14px; font-weight: bold; }
+  .gc .ty { font-size: 11px; color: #8a8fa3; }
+  .gc .ef { font-size: 12px; line-height: 1.5; color: #cfd3e3; }
+  .gear { display: grid; grid-template-columns: 64px 1fr; gap: 6px 10px; font-size: 13px; align-items: start; }
+  .gear .k { color: #8a8fa3; padding-top: 5px; }
+  .note { color: #8a8fa3; font-size: 13px; }
+  @media (max-width: 640px) {
+    .top { grid-template-columns: 1fr; }
+    .top img { max-width: 220px; margin: 0 auto; display: block; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 8px 12px 30px; }
+    .bar, details, .count { padding-left: 12px; padding-right: 12px; }
+  }
 </style>
 </head>
 <body>
 <header>
   <h1>CZN 전투원 레퍼런스</h1>
-  <div class="sub">비공식 팬 사이트 · 일부 데이터는 검증 중입니다</div>
+  <div class="sub">비공식 팬 사이트 · 카드를 누르면 상세 정보가 열립니다</div>
 </header>
 
 <div class="bar">
-  <input id="q" placeholder="이름 검색 (한글/영문)">
+  <input id="q" placeholder="이름·태그·파트너·카드 검색">
   <span class="tag reset" id="reset">초기화</span>
 </div>
-<div class="bar"><span class="label">직업</span><span id="jobBar"></span></div>
-<div class="bar"><span class="label">속성</span><span id="attrBar"></span></div>
-<div class="bar"><span class="label">역할</span><span id="roleBar"></span></div>
-<div class="bar"><span class="label">키워드</span><span id="kwBar"></span></div>
+<div class="bar"><span class="label">직업</span><span id="jobBar" class="tagwrap"></span></div>
+<div class="bar"><span class="label">속성</span><span id="attrBar" class="tagwrap"></span></div>
+<div class="bar"><span class="label">역할</span><span id="roleBar" class="tagwrap"></span></div>
+<details id="tagDetails"><summary>태그로 찾기</summary><div id="tagBar" class="tagwrap"></div></details>
 <div class="count" id="count"></div>
 <div class="grid" id="grid"></div>
 <footer>Chaos Zero Nightmare 관련 저작권은 스마일게이트에 있습니다.</footer>
 
+<div class="modal" id="modal"><div class="panel" id="panel"></div></div>
+
 <script>
 let data = [];
-const sel = { job: null, attr: null, role: null, kw: null, q: "" };
+const sel = { job: null, attr: null, role: null, tag: null, q: "" };
 const JOB_ORDER = ["스트라이커", "뱅가드", "레인저", "헌터", "사이오닉", "컨트롤러"];
 const ATTR_ORDER = ["열정", "공허", "본능", "정의", "질서"];
+const ROLE_ORDER = ["딜러", "서브 딜러", "서포터", "실더", "드로우"];
 
 function esc(s) {
-  return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
-
 function sortedBy(order, items) {
-  return [...items].sort((a, b) => {
+  return [...new Set(items)].filter(Boolean).sort((a, b) => {
     const ia = order.indexOf(a), ib = order.indexOf(b);
     return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
   });
 }
-
-function unique(list) { return [...new Set(list)].filter(v => v && v !== "-" && v !== "미정"); }
-
 function makeTags(id, items, key, prefix) {
   const el = document.getElementById(id);
   el.innerHTML = "";
@@ -83,53 +126,153 @@ function makeTags(id, items, key, prefix) {
     el.appendChild(t);
   });
 }
+function tagCounts() {
+  const m = {};
+  data.forEach(d => (d.tags || []).forEach(t => m[t] = (m[t] || 0) + 1));
+  return Object.keys(m).sort((a, b) => m[b] - m[a] || a.localeCompare(b, "ko"));
+}
+function haystack(d) {
+  return [d.name_ko, d.name, d.role, d.desc, ...(d.tags || []), ...(d.partners || []), ...(d.cards || []).map(c => c.name)]
+    .join(" ").toLowerCase();
+}
 
 function render() {
-  makeTags("jobBar", sortedBy(JOB_ORDER, unique(data.map(d => d.job))), "job");
-  makeTags("attrBar", sortedBy(ATTR_ORDER, unique(data.map(d => d.attr))), "attr");
-  makeTags("roleBar", unique(data.map(d => d.role)), "role");
-  makeTags("kwBar", unique(data.flatMap(d => d.keywords || [])), "kw", "#");
+  makeTags("jobBar", sortedBy(JOB_ORDER, data.map(d => d.job)), "job");
+  makeTags("attrBar", sortedBy(ATTR_ORDER, data.map(d => d.attr)), "attr");
+  makeTags("roleBar", sortedBy(ROLE_ORDER, data.flatMap(d => d.roles || [])), "role");
+  makeTags("tagBar", tagCounts(), "tag", "#");
+  if (sel.tag) document.getElementById("tagDetails").open = true;
 
   const q = sel.q.toLowerCase();
   const list = data.filter(d =>
     (!sel.job || d.job === sel.job) &&
     (!sel.attr || d.attr === sel.attr) &&
-    (!sel.role || d.role === sel.role) &&
-    (!sel.kw || (d.keywords || []).includes(sel.kw)) &&
-    (!q || (d.name_ko || "").includes(sel.q) || (d.name || "").toLowerCase().includes(q))
+    (!sel.role || (d.roles || []).includes(sel.role)) &&
+    (!sel.tag || (d.tags || []).includes(sel.tag)) &&
+    (!q || haystack(d).includes(q))
   );
 
   document.getElementById("count").textContent = list.length + " / " + data.length + "명";
-
   const grid = document.getElementById("grid");
   if (!list.length) { grid.innerHTML = '<div class="empty">조건에 맞는 전투원이 없습니다.</div>'; return; }
 
   grid.innerHTML = list.map(d => `
-    <div class="card">
-      <img src="${encodeURI(d.image || '')}" alt="${esc(d.name_ko || d.name)}" loading="lazy" onerror="this.style.display='none'">
-      <h2>${esc(d.name_ko || d.name)}</h2>
-      <div class="en">${esc(d.name || "")}</div>
-      <div class="badges">
-        ${d.job ? `<span class="badge job">${esc(d.job)}</span>` : ""}
-        ${d.attr ? `<span class="badge a-${esc(d.attr)}">${esc(d.attr)}</span>` : ""}
+    <div class="card" data-id="${esc(d.id)}">
+      <img src="${encodeURI(d.image || "")}" alt="${esc(d.name_ko)}" loading="lazy" onerror="this.style.visibility='hidden'">
+      <h2>${esc(d.name_ko)}</h2>
+      <div class="en">${esc(d.name)}</div>
+      <div>
+        <span class="badge job">${esc(d.job)}</span><span class="badge a-${esc(d.attr)}">${esc(d.attr)}</span>
+        ${d.limited ? '<span class="badge lim">한정</span>' : ""}
+        ${d.pending ? '<span class="badge pend">자료 준비 중</span>' : ""}
       </div>
-      <div class="meta">역할: ${esc(d.role || "-")}${d.target && d.target !== "-" ? " · " + esc(d.target) : ""}</div>
-      <div>${(d.keywords || []).map(k => `<span class="kw">#${esc(k)}</span>`).join("")}</div>
-      <div class="meta">추천 파트너: ${(d.partners || []).length ? esc(d.partners.join(", ")) : "-"}</div>
-      <div class="meta">${esc(d.note || "")}</div>
+      <div class="role">${esc(d.role)}</div>
+      <div>${(d.tags || []).slice(0, 4).map(t => `<span class="kw">#${esc(t)}</span>`).join("")}</div>
     </div>`).join("");
+  grid.querySelectorAll(".card").forEach(el => el.onclick = () => openDetail(el.dataset.id));
 }
 
+function rolesOf(role) {
+  const out = [];
+  (role || "").split(/[,()]/).map(s => s.trim()).filter(Boolean).forEach(p => {
+    let k = null;
+    if (p.includes("서브 딜러") || p.includes("보조 딜러")) k = "서브 딜러";
+    else if (p.includes("서포터") || p.includes("행포")) k = "서포터";
+    else if (p.includes("딜러")) k = "딜러";
+    else if (p.includes("실드") || p.includes("실더")) k = "실더";
+    else if (p.includes("드로우")) k = "드로우";
+    if (k && !out.includes(k)) out.push(k);
+  });
+  return out;
+}
+function prep(d) {
+  d.image = d.image || "images/" + d.name + ".png";
+  d.roles = rolesOf(d.role);
+  d.limited = (d.release || "").includes("한정");
+  return d;
+}
+
+function labelHtml(l) { return l ? `<span class="lbl">${esc(l)}</span>` : ""; }
+
+function openDetail(id) {
+  const d = data.find(x => x.id === id);
+  if (!d) return;
+  let h = `<button class="close" id="closeBtn" aria-label="닫기">×</button>
+  <div class="top">
+    <img src="${encodeURI(d.image || "")}" alt="${esc(d.name_ko)}" onerror="this.style.visibility='hidden'">
+    <div>
+      <h2>${esc(d.name_ko)} <span class="en">${esc(d.name)}</span></h2>
+      <div>
+        <span class="badge job">${esc(d.job)}</span><span class="badge a-${esc(d.attr)}">${esc(d.attr)}</span>
+        ${d.limited ? '<span class="badge lim">한정</span>' : ""}
+      </div>
+      <div class="role" style="font-size:15px;margin-top:8px">역할: ${esc(d.role)}</div>
+      ${d.release ? `<div class="note">출시: ${esc(d.release)}</div>` : ""}
+      <div class="desc">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</div>
+      <div class="chips">${(d.tags || []).map(t => `<span class="chip click" data-tag="${esc(t)}">#${esc(t)}</span>`).join("")}</div>
+    </div>
+  </div>`;
+
+  if ((d.partners || []).length) {
+    h += `<div class="sec"><h3>파트너</h3><div class="chips">${d.partners.map((p, i) =>
+      `<span class="chip click${i === 0 ? " first" : ""}" data-q="${esc(p)}">${esc(p)}</span>`).join("")}</div>
+      <div class="note" style="margin-top:6px">파트너를 누르면 같은 파트너를 쓰는 전투원을 찾습니다.</div></div>`;
+  }
+  if ((d.sets || []).length) {
+    h += `<div class="sec"><h3>기억의 조각</h3>${d.sets.map((s, i) =>
+      `<div class="row">${labelHtml(s.label)}${s.items.map(it => `<span class="chip${i === 0 ? " first" : ""}">${esc(it)}</span>`).join("")}</div>`).join("")}</div>`;
+  }
+  if ((d.main || []).length || (d.sub || []).length) {
+    h += `<div class="sec"><h3>주 옵션 / 부 옵션</h3><div class="optgrid">`;
+    (d.main || []).forEach(m => {
+      h += `<div class="box">${m.label ? `<div style="margin-bottom:6px">${labelHtml(m.label)}</div>` : ""}${
+        Object.entries(m.opts).map(([k, v]) => `<div class="opt"><b>${esc(k)}</b>${esc(v)}</div>`).join("")}</div>`;
+    });
+    h += `</div>`;
+    (d.sub || []).forEach(s => {
+      h += `<div class="opt" style="margin-top:8px">${labelHtml(s.label)} <b>부 옵션</b>${esc(s.text)}</div>`;
+    });
+    h += `</div>`;
+  }
+  if ((d.cards || []).length) {
+    h += `<div class="sec"><h3>핵심 카드</h3><div class="cards">${d.cards.map(c => `
+      <div class="gc"><div class="hd"><div class="cost">${c.cost == null ? "Ø" : esc(c.cost)}</div>
+      <div><div class="nm">${esc(c.name)}</div><div class="ty">${esc(c.type)}</div></div></div>
+      <div class="ef">${esc(c.effect)}</div></div>`).join("")}</div></div>`;
+  }
+  const g = d.gear || {};
+  if (Object.keys(g).length) {
+    h += `<div class="sec"><h3>추천 공용 장비</h3><div class="gear">${["무기", "방어구", "장신구"].filter(k => g[k]).map(k =>
+      `<div class="k">${k}</div><div class="chips">${g[k].map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div>`).join("")}</div></div>`;
+  }
+
+  const panel = document.getElementById("panel");
+  panel.innerHTML = h;
+  panel.querySelector("#closeBtn").onclick = closeDetail;
+  panel.querySelectorAll("[data-tag]").forEach(el => el.onclick = () => {
+    sel.tag = el.dataset.tag; closeDetail(); render(); window.scrollTo(0, 0);
+  });
+  panel.querySelectorAll("[data-q]").forEach(el => el.onclick = () => {
+    sel.q = el.dataset.q; document.getElementById("q").value = sel.q; closeDetail(); render(); window.scrollTo(0, 0);
+  });
+  document.getElementById("modal").classList.add("open");
+  document.getElementById("modal").scrollTop = 0;
+}
+function closeDetail() { document.getElementById("modal").classList.remove("open"); }
+
+document.getElementById("modal").onclick = e => { if (e.target.id === "modal") closeDetail(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDetail(); });
 document.getElementById("q").oninput = e => { sel.q = e.target.value.trim(); render(); };
 document.getElementById("reset").onclick = () => {
-  sel.job = sel.attr = sel.role = sel.kw = null; sel.q = "";
+  sel.job = sel.attr = sel.role = sel.tag = null; sel.q = "";
   document.getElementById("q").value = "";
+  document.getElementById("tagDetails").open = false;
   render();
 };
 
 fetch("data.json")
   .then(r => r.json())
-  .then(j => { data = j.combatants; render(); })
+  .then(j => { data = j.combatants.map(prep); render(); })
   .catch(() => {
     document.getElementById("grid").innerHTML = '<div class="empty">data.json을 불러오지 못했습니다.</div>';
   });
