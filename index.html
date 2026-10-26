@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CZN 레퍼런스</title>
+<title>CZN 길잡이</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
@@ -132,12 +132,14 @@
   .gear .k { color: var(--muted); padding-top: 5px; }
 
   /* 조합 */
-  .slots { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-  .slot { width: 64px; height: 64px; border-radius: 10px; border: 1px dashed #4a4652; background: #121116; display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--muted); cursor: pointer; position: relative; overflow: hidden; }
-  .slot:hover { border-color: var(--gold); color: var(--gold); }
-  .slot.filled { border-style: solid; border-color: var(--gold); }
-  .slot img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-  .slot .rm { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(0, 0, 0, .75); color: #fff; font-size: 12px; line-height: 18px; text-align: center; }
+  .mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 6px; }
+  .mpick { position: relative; padding: 3px; border-radius: 8px; border: 1px solid var(--line); background: #121116; cursor: pointer; font-size: 11px; color: #bdb7c2; text-align: center; }
+  .mpick img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; border-radius: 6px; display: block; margin-bottom: 2px; }
+  .mpick span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mpick:hover { border-color: #4a4652; }
+  .mpick.on { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); background: var(--gold-soft); color: var(--gold-hi); font-weight: 700; }
+  .mpick:disabled { opacity: .35; cursor: default; }
+  .mpick b { position: absolute; top: 5px; left: 5px; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); color: #1a1406; font-size: 11px; line-height: 18px; }
   .tlist { display: flex; flex-direction: column; gap: 10px; }
   .tcard { display: flex; align-items: center; gap: 18px; padding: 12px 16px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); }
   .tcard:hover { border-color: var(--gold); }
@@ -179,18 +181,6 @@
   .mx .cell a:hover img { border-color: var(--gold); }
   .mx .gap { color: #4a4652; }
 
-  /* 선택 창 (조합 슬롯) */
-  .overlay { position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, .7); display: flex; align-items: flex-start; justify-content: center; padding: 60px 16px; overflow-y: auto; }
-  .overlay[hidden] { display: none; }
-  .picker { width: 100%; max-width: 760px; background: var(--panel); border: 1px solid var(--line); border-top: 2px solid var(--gold); border-radius: 12px; padding: 16px; }
-  .picker .ph { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
-  .picker input { flex: 1; min-width: 0; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: #0f0e12; color: var(--text); }
-  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; }
-  .pgrid button { background: none; border: 1px solid var(--line); border-radius: 8px; padding: 4px; cursor: pointer; font-size: 11px; }
-  .pgrid button:hover { border-color: var(--gold); }
-  .pgrid button:disabled { opacity: .35; cursor: default; }
-  .pgrid img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; border-radius: 6px; background: #121116; display: block; margin-bottom: 2px; }
-
   footer { border-top: 1px solid var(--line); padding: 16px 0; color: #5f5a66; font-size: 12px; }
   .bottombar { display: none; }
 
@@ -231,6 +221,7 @@
     .ttags { justify-content: flex-start; max-width: none; }
     .tslots { grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .tslot .sb { padding: 6px 8px; font-size: 12px; }
+    .mgrid { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 4px; }
   }
 </style>
 </head>
@@ -259,8 +250,6 @@
   <a href="#/teams" data-tab="teams">조합</a>
   <a href="#/roles" data-tab="roles">역할</a>
 </nav>
-
-<div class="overlay" id="overlay" hidden></div>
 
 <script>
 const ATTRS = ["열정", "질서", "정의", "공허", "본능"];
@@ -481,18 +470,17 @@ function teamFiltered() {
 function viewTeams() {
   const tags = sortedBy(TEAM_TAGS, [...TEAM_TAGS, ...teams.flatMap(t => t.tags || [])]);
   const list = teamFiltered();
-  const slots = [0, 1, 2].map(i => {
-    const id = teamSel.members[i];
-    return id && byId[id]
-      ? `<div class="slot filled" title="${esc(byId[id].name_ko)}">${img(byId[id])}<span class="rm" data-act="removeMember" data-v="${i}" aria-label="빼기">×</span></div>`
-      : `<button class="slot" data-act="openPicker" aria-label="전투원 추가">＋</button>`;
+  const n = teamSel.members.length;
+  const picks = [...chars].sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko")).map(d => {
+    const i = teamSel.members.indexOf(d.id);
+    return `<button class="mpick${i >= 0 ? " on" : ""}" data-act="toggleMember" data-v="${esc(d.id)}"${i < 0 && n >= 3 ? " disabled" : ""} aria-pressed="${i >= 0}" title="${esc(d.name_ko)}">${i >= 0 ? `<b>${i + 1}</b>` : ""}${img(d)}<span>${esc(d.name_ko)}</span></button>`;
   }).join("");
   return `<section class="page">
     <div class="eyebrow">추천 조합</div>
     <h1>조합</h1>
     <div class="filters" style="display:block;position:static">
-      <div class="frow"><span class="fl">전투원</span><div><div class="slots">${slots}</div>
-        <p class="note" style="margin:8px 0 0">최대 3명. 고른 전투원이 모두 들어간 조합만 남깁니다.</p></div></div>
+      <div class="frow"><span class="fl">전투원</span><div style="flex:1;min-width:0"><div class="mgrid">${picks}</div>
+        <p class="note" style="margin:8px 0 0">${n ? `${n}/3명 선택 · 다시 누르면 해제됩니다.` : "최대 3명. 고른 전투원이 모두 들어간 조합만 남깁니다."}</p></div></div>
       <div class="frow"><span class="fl">태그</span><div class="chips">
         <button class="chip${teamSel.tag.size ? "" : " on"}" data-tk="">전체</button>
         ${tags.map(t => `<button class="chip${teamSel.tag.has(t) ? " on" : ""}" data-tk="${esc(t)}">#${esc(t)}</button>`).join("")}
@@ -509,30 +497,6 @@ function viewTeams() {
       </a>`).join("")
       : `<div class="empty">${teams.length ? "조건에 맞는 조합이 없습니다." : "아직 등록된 조합이 없습니다.<br>data.json의 teams에 조합을 추가하면 여기에 표시됩니다."}</div>`}</div>
   </section>`;
-}
-function openPicker() {
-  const ov = document.getElementById("overlay");
-  ov.innerHTML = `<div class="picker" role="dialog" aria-label="전투원 선택">
-    <div class="ph"><input id="pq" placeholder="이름으로 찾기" autocomplete="off"><button class="btn" data-act="closePicker">닫기</button></div>
-    <div class="pgrid" id="pgrid"></div></div>`;
-  ov.hidden = false;
-  document.body.classList.add("lock");
-  drawPicker("");
-  const pq = document.getElementById("pq");
-  pq.oninput = () => drawPicker(pq.value.trim().toLowerCase());
-  pq.focus();
-}
-function drawPicker(q) {
-  const list = chars.filter(d => !q || d.name_ko.includes(q) || d.name.toLowerCase().includes(q))
-    .sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko"));
-  document.getElementById("pgrid").innerHTML = list.map(d =>
-    `<button data-act="pick" data-v="${esc(d.id)}"${teamSel.members.includes(d.id) ? " disabled" : ""}>${img(d)}${esc(d.name_ko)}</button>`).join("")
-    || '<p class="note">찾는 전투원이 없습니다.</p>';
-}
-function closePicker() {
-  const ov = document.getElementById("overlay");
-  ov.hidden = true; ov.innerHTML = "";
-  document.body.classList.remove("lock");
 }
 
 /* ---------- 조합 상세 ---------- */
@@ -608,7 +572,6 @@ function render() {
 function onRouteChange() {
   if (curView === "list") listScroll = window.scrollY;
   sheetOpen = false;
-  closePicker();
   const v = render();
   window.scrollTo(0, v === "list" ? listScroll : 0);
   curView = v;
@@ -649,16 +612,15 @@ document.addEventListener("click", e => {
     case "goRole": resetListFilters(); sel.role.add(v); goList(); break;
     case "goTag": resetListFilters(); sel.tag.add(v); goList(); break;
     case "goPartner": resetListFilters(); sel.partner = v; goList(); break;
-    case "openPicker": openPicker(); break;
-    case "closePicker": closePicker(); break;
-    case "pick":
-      if (teamSel.members.length < 3 && !teamSel.members.includes(v)) teamSel.members.push(v);
-      closePicker(); render(); break;
-    case "removeMember": e.preventDefault(); teamSel.members.splice(Number(v), 1); render(); break;
+    case "toggleMember": {
+      const i = teamSel.members.indexOf(v);
+      if (i >= 0) teamSel.members.splice(i, 1);
+      else if (teamSel.members.length < 3) teamSel.members.push(v);
+      render(); break;
+    }
     case "resetTeams": teamSel.members = []; teamSel.tag.clear(); render(); break;
   }
 });
-document.getElementById("overlay").addEventListener("click", e => { if (e.target.id === "overlay") closePicker(); });
 
 /* 헤더 검색 */
 const q = document.getElementById("q"), results = document.getElementById("results");
@@ -684,9 +646,7 @@ q.addEventListener("keydown", e => {
 results.addEventListener("click", e => { if (e.target.closest("a")) { q.value = ""; results.hidden = true; } });
 document.addEventListener("click", e => { if (!e.target.closest(".search")) results.hidden = true; });
 document.addEventListener("keydown", e => {
-  if (e.key !== "Escape") return;
-  if (!document.getElementById("overlay").hidden) closePicker();
-  else if (sheetOpen) { sheetOpen = false; render(); }
+  if (e.key === "Escape" && sheetOpen) { sheetOpen = false; render(); }
 });
 window.addEventListener("hashchange", onRouteChange);
 
