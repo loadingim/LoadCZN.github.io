@@ -1,0 +1,31 @@
+{
+  "combatants": [
+    {
+      "id": "rin",
+      "name": "린",
+      "role": "메인딜러",
+      "target": "단일",
+      "keywords": ["다크 미스트"],
+      "partners": ["릴리안"],
+      "note": "엘리트·보스 특화 단일 딜러"
+    },
+    {
+      "id": "arabella",
+      "name": "아라벨라",
+      "role": "메인딜러",
+      "target": "단일",
+      "keywords": ["균열"],
+      "partners": ["리키니아"],
+      "note": "균열을 쌓아 턴 종료 시 피해. 시즌 한정"
+    },
+    {
+      "id": "meiling",
+      "name": "메이링",
+      "role": "메인딜러",
+      "target": "단일",
+      "keywords": ["약점"],
+      "partners": [],
+      "note": "약점 부여로 다양한 상황에 대응"
+    }
+  ]
+}
