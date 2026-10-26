@@ -5,5 +5,19 @@
     "name": "취약 호밍",
     "image": "decks/sereniel-vuln.png",
     "note": "호밍 레이저 4장(복제 3)으로 대상에게 취약 2를 쌓는 세이브 데이터"
+  },
+  {
+    "code": "anika-efficiency",
+    "char": "anika",
+    "name": "효율 활성화",
+    "image": "decks/anika-efficiency.png",
+    "note": "이그니션 슬래시 3장(복제 2)과 램페이지 트리거 2장(복제 1)으로 효율을 반복 발동하는 세이브 데이터"
+  },
+  {
+    "code": "narja-morale",
+    "char": "narja",
+    "name": "능동 제어 사기 획득",
+    "image": "decks/narja-morale.png",
+    "note": "능동 제어 4장(복제 3)으로 사기를 쌓고 완전한 식사를 핸드로 끌어오는 세이브 데이터"
   }
 ]
