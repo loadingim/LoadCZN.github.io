@@ -19,7 +19,7 @@
   .card h2 { margin: 0 0 6px; font-size: 18px; }
   .meta { font-size: 13px; color: #aab; margin: 4px 0; }
   .kw { display: inline-block; background: #2b3250; border-radius: 10px; padding: 2px 8px; font-size: 12px; margin: 2px 2px 0 0; }
-  .empty { padding: 20px; color: #8a8fa3; }
+    .card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 8px; margin-bottom: 8px; background: #262a36; }
   footer { padding: 16px 20px; color: #666; font-size: 12px; }
 </style>
 </head>
@@ -74,6 +74,7 @@ function render() {
 
   grid.innerHTML = list.map(d => `
     <div class="card">
+      <img src="${encodeURI(d.image || '')}" alt="${esc(d.name)}" loading="lazy" onerror="this.style.display='none'">
       <h2>${esc(d.name)}</h2>
       <div class="meta">역할: ${esc(d.role)} · ${esc(d.target || "-")}</div>
       <div>${(d.keywords || []).map(k => `<span class="kw">#${esc(k)}</span>`).join("")}</div>
