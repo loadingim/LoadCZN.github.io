@@ -106,6 +106,20 @@
   .sec { margin-top: 26px; }
   .sec h3 { font-family: var(--serif); font-size: 17px; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line); color: var(--gold-hi); }
   .desc { line-height: 1.7; margin: 0 0 10px; }
+  .builds { display: grid; gap: 10px; margin-top: 14px; }
+  .bld { background: var(--panel2); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 10px; padding: 14px 16px; }
+  .bld .bh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin-bottom: 8px; }
+  .bld .bn { font-family: var(--serif); font-weight: 700; font-size: 16px; color: var(--gold-hi); }
+  .bld .bc { font-size: 12px; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(212, 162, 76, .5); color: var(--gold); }
+  .bld { word-break: keep-all; overflow-wrap: anywhere; }
+  .bld .bt { line-height: 1.7; white-space: pre-line; margin: 0 0 10px; font-size: 14px; color: #d5d0d9; }
+  .bld .bpc { display: grid; gap: 4px; font-size: 13px; line-height: 1.6; }
+  .bld .bpc > div { display: grid; grid-template-columns: 40px 1fr; }
+  .bld .bpc b { font-weight: 500; color: var(--gold); }
+  .bld .bpc .con b { color: #f2a0a5; }
+  .bld .bparty { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; font-size: 13px; color: var(--muted); }
+  .bld .bparty a, .bld .bparty span.pm { padding: 3px 10px; border-radius: 8px; background: #121116; border: 1px solid var(--line); color: var(--text); }
+  .bld .bparty a:hover { border-color: var(--gold); }
   .mates { display: flex; flex-wrap: wrap; gap: 10px; }
   .mate { display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 24px; background: var(--panel2); border: 1px solid var(--line); font-size: 13px; }
   .mate:hover { border-color: var(--gold); }
@@ -338,6 +352,26 @@ function portraitOrUnknown(id) {
 }
 function labelHtml(l) { return l ? `<span class="lbl">${esc(l)}</span>` : ""; }
 
+/* ---------- 빌드 (역할 요약 아래) ---------- */
+function buildsHtml(d) {
+  const list = Array.isArray(d.builds) ? d.builds : [];
+  if (!list.length) return "";
+  const member = n => {
+    const c = chars.find(x => x.name_ko === n || x.id === n);
+    return c ? `<a href="${charLink(c.id)}">${esc(c.name_ko)}</a>` : `<span class="pm">${esc(n)}</span>`;
+  };
+  return `<div class="builds">${list.map(b => {
+    const party = b.party || {};
+    const members = party.members || [];
+    return `<div class="bld">
+      <div class="bh"><span class="bn">${esc(b.name)}</span>${b.cond ? `<span class="bc">${esc(b.cond)}</span>` : ""}</div>
+      ${b.text ? `<p class="bt">${esc(b.text)}</p>` : ""}
+      ${b.pros || b.cons ? `<div class="bpc">${b.pros ? `<div><b>장점</b>${esc(b.pros)}</div>` : ""}${b.cons ? `<div class="con"><b>단점</b>${esc(b.cons)}</div>` : ""}</div>` : ""}
+      ${members.length ? `<div class="bparty">${esc(party.label || "조합")}${members.map(member).join("")}</div>` : ""}
+    </div>`;
+  }).join("")}</div>`;
+}
+
 /* ---------- 덱 ---------- */
 function decksOf(id) { return decks.filter(k => k.char === id); }
 function slotDeck(s) {
@@ -477,7 +511,7 @@ function viewChar(id) {
         ${(d.tags || []).length ? `<div class="chips" style="margin-top:10px">${d.tags.map(t => `<button class="chip" data-act="goTag" data-v="${esc(t)}">#${esc(t)}</button>`).join("")}</div>` : ""}
       </div>
     </div>
-    <div class="sec"><h3>역할 요약</h3><p class="desc">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</p></div>
+    <div class="sec"><h3>역할 요약</h3><p class="desc">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</p>${buildsHtml(d)}</div>
     ${deckSection(d)}
     <div class="sec"><h3>이 전투원이 들어간 조합</h3>${inTeams.length || asAlt.length
       ? inTeams.map(t => teamMini(t)).join("") + asAlt.map(t => teamMini(t, "대체 멤버")).join("")
