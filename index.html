@@ -106,6 +106,7 @@
   .sec { margin-top: 26px; }
   .sec h3 { font-family: var(--serif); font-size: 17px; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line); color: var(--gold-hi); }
   .desc { line-height: 1.7; margin: 0 0 10px; }
+  .rsum { white-space: pre-line; word-break: keep-all; overflow-wrap: anywhere; }
   .builds { display: grid; gap: 10px; margin-top: 14px; }
   .bld { background: var(--panel2); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 10px; padding: 14px 16px; }
   .bld .bh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin-bottom: 8px; }
@@ -511,7 +512,7 @@ function viewChar(id) {
         ${(d.tags || []).length ? `<div class="chips" style="margin-top:10px">${d.tags.map(t => `<button class="chip" data-act="goTag" data-v="${esc(t)}">#${esc(t)}</button>`).join("")}</div>` : ""}
       </div>
     </div>
-    <div class="sec"><h3>역할 요약</h3><p class="desc">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</p>${buildsHtml(d)}</div>
+    <div class="sec"><h3>역할 요약</h3><p class="desc rsum">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</p>${buildsHtml(d)}</div>
     ${deckSection(d)}
     <div class="sec"><h3>이 전투원이 들어간 조합</h3>${inTeams.length || asAlt.length
       ? inTeams.map(t => teamMini(t)).join("") + asAlt.map(t => teamMini(t, "대체 멤버")).join("")
