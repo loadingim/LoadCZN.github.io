@@ -367,8 +367,12 @@
   .bottombar { display: none; }
 
   /* 덱 짜기 */
-  .simrows { display: grid; gap: 14px; }
-  .simrow { padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); border-left: 3px solid var(--ac); }
+  .simcols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } /* 덱 고르기 1·2·3 칸 */
+  .simcol { min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); border-left: 3px solid var(--ac); }
+  .simcol.empty { border-style: dashed; border-left-width: 1px; }
+  .simcol.empty .simhd { margin-bottom: 0; }
+  .simcnt { font-size: 12px; color: var(--muted); margin: -4px 0 6px; }
+  .simlist { display: grid; gap: 8px; max-height: 340px; overflow-y: auto; overscroll-behavior: contain; padding-right: 2px; } /* 덱이 많으면 칸 안에서 스크롤 */
   .simhd { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; min-width: 0; }
   .simhd img { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; object-position: top; background: #121116; flex-shrink: 0; }
   .simhd b { white-space: nowrap; }
@@ -435,7 +439,7 @@
     .home .grid { grid-template-columns: repeat(3, 1fr); }
     .mattr { padding-top: 0; }
     .dgrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .simres { grid-template-columns: 1fr; }
+    .simres, .simcols { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -903,8 +907,8 @@ function teamCard(t, ctx) {
 }
 function viewTeams() {
   const tags = sortedBy(TEAM_TAGS, [...TEAM_TAGS, ...teams.flatMap(t => t.tags || [])]);
-  const list = teamFiltered();
   const n = teamSel.members.length;
+  const list = n ? teamFiltered() : []; // 전투원을 고르기 전에는 목록을 그리지 않는다 (256개 카드·덱 썸네일 생략)
   const used = usedIds(), ctx = { used, pool: partyPool() };
   const pick = d => {
     const i = teamSel.members.indexOf(d.id);
@@ -922,7 +926,7 @@ function viewTeams() {
     ${updLine("teams")}
     <div class="filters" style="display:block;position:static">
       <div class="frow"><span class="fl">전투원</span><div style="flex:1;min-width:0"><div class="mrows">${picks}</div>
-        <p class="note" style="margin:8px 0 0">${n ? `${n}/3명 선택 · 다시 누르면 해제됩니다.` : "최대 3명. 고른 전투원이 모두 들어간 조합만 남깁니다."}</p></div></div>
+        <p class="note" style="margin:8px 0 0">${n ? `${n}/3명 선택 · 다시 누르면 해제됩니다.` : "전투원을 1~3명 고르면 그 전투원이 모두 들어간 조합이 표시됩니다."}</p></div></div>
       <div class="frow"><span class="fl">태그</span><div class="chips">
         <button class="chip${teamSel.tag.size ? "" : " on"}" data-tk="">전체</button>
         ${tags.map(t => `<button class="chip${teamSel.tag.has(t) ? " on" : ""}" data-tk="${esc(t)}">#${esc(t)}</button>`).join("")}
@@ -932,11 +936,12 @@ function viewTeams() {
         <button class="btn" data-act="toggleOwnEdit">${teamSel.editOwned ? "고르기 닫기" : `보유 전투원 고르기 (${oc}/${chars.length})`}</button>
       </div></div>
       ${teamSel.editOwned ? ownedEditor(byName, attrs) : ""}
-      <div class="frow foot"><button class="btn" data-act="resetTeams">초기화</button><span class="cnt" style="display:inline">${list.length}개 조합</span></div>
+      <div class="frow foot"><button class="btn" data-act="resetTeams">초기화</button><span class="cnt" style="display:inline">${n ? `${list.length}개 조합` : `전체 ${teams.length}개 조합`}</span></div>
     </div>
     ${partyBar()}
     ${used.size && list.length ? `<p class="note" style="margin:0 0 10px">${teamSel.parties.length >= 3 ? "편성한 3파티와 전투원이 겹치지 않는 나머지 조합입니다." : `${teamSel.parties.length + 1}파티 후보: 편성한 파티와 전투원이 겹치지 않는 조합입니다.`}</p>` : ""}
-    <div class="tgrid">${list.length ? list.map(t => teamCard(t, ctx)).join("")
+    <div class="tgrid">${!n && teams.length ? `<div class="empty">위에서 전투원을 1명 이상 고르면 그 전투원이 들어간 조합이 표시됩니다.${teamSel.parties.length && teamSel.parties.length < 3 ? `<br>${teamSel.parties.length + 1}파티에 넣을 전투원을 고르세요.` : ""}</div>`
+      : list.length ? list.map(t => teamCard(t, ctx)).join("")
       : `<div class="empty">${teams.length ? (used.size ? "편성한 파티의 전투원을 빼고 나면 조건에 맞는 조합이 없습니다." : "조건에 맞는 조합이 없습니다.") : "아직 등록된 조합이 없습니다.<br>data.json의 teams에 조합을 추가하면 여기에 표시됩니다."}</div>`}</div>
   </section>`;
 }
@@ -1006,9 +1011,11 @@ function simPickMember(id) {
   const list = decksOf(id);
   if (list.length === 1) simSel.deck[id] = list[0].code; // 덱이 하나뿐이면 바로 선택
 }
-function simDeckRow(id, i) {
-  const c = byId[id], list = decksOf(id), cur = simDeckOf(id);
-  const opts = list.length ? `<div class="dgrid">${list.map(k => {
+function simDeckCol(i) {
+  const id = simSel.members[i], c = id ? byId[id] : null;
+  if (!c) return `<div class="simcol empty"><div class="simhd"><span class="simno">${i + 1}</span><span class="note">전투원 미선택</span></div></div>`;
+  const list = decksOf(id), cur = simDeckOf(id);
+  const opts = list.length ? list.map(k => {
     const on = cur && cur.code === k.code;
     const used = teams.filter(t => (t.slots || []).some(s => s.deck === k.code)).length;
     return `<button class="dcard dpick${on ? " on" : ""}" data-act="simDeck" data-v="${esc(k.code)}" aria-pressed="${on}">
@@ -1016,11 +1023,12 @@ function simDeckRow(id, i) {
       <div class="dn">${on ? "✓ " : ""}${esc(k.name || k.code)}</div>
       ${k.note ? `<div class="dt">${esc(k.note)}</div>` : ""}
       ${used ? `<div class="dt">${used}개 조합에서 사용</div>` : ""}</button>`;
-  }).join("")}</div>` : '<p class="note">아직 등록된 덱이 없습니다.</p>';
-  return `<div class="simrow" style="--ac:${acOf(c)}">
+  }).join("") : '<p class="note">아직 등록된 덱이 없습니다.</p>';
+  return `<div class="simcol" data-id="${esc(id)}" style="--ac:${acOf(c)}">
     <div class="simhd"><span class="simno">${i + 1}</span>${img(c)}<b>${esc(c.name_ko)}</b>
-      <span class="note">${cur ? esc(cur.name || cur.code) : list.length ? `덱 ${list.length}개 중 하나를 고르세요` : ""}</span></div>
-    ${opts}</div>`;
+      <span class="note">${cur ? esc(cur.name || cur.code) : list.length ? "덱을 고르세요" : ""}</span></div>
+    ${list.length > 1 ? `<div class="simcnt">덱 ${list.length}개 · 스크롤해서 고르기</div>` : ""}
+    <div class="simlist">${opts}</div></div>`;
 }
 function simResult() {
   const ms = simSel.members;
@@ -1061,7 +1069,7 @@ function viewSim() {
         <p class="note" style="margin:8px 0 0">${n ? `${n}/3명 선택 · 다시 누르면 해제됩니다.` : "전투원 3명을 고르세요. 고른 순서대로 1·2·3번 자리에 들어갑니다."}</p></div></div>
       <div class="frow foot"><button class="btn" data-act="simReset"${n ? "" : " disabled"}>초기화</button></div>
     </div>
-    ${n ? `<div class="sec"><h3>덱 고르기</h3><div class="simrows">${simSel.members.map(simDeckRow).join("")}</div></div>` : ""}
+    ${n ? `<div class="sec"><h3>덱 고르기</h3><div class="simcols">${[0, 1, 2].map(simDeckCol).join("")}</div></div>` : ""}
     ${simResult()}
   </section>`;
 }
@@ -1489,10 +1497,13 @@ document.addEventListener("click", e => {
     }
     case "simMember": case "simDeck": case "simReset": {
       const y = window.scrollY;
+      const lists = [...document.querySelectorAll(".simcol")].map(e => { const l = e.querySelector(".simlist"); return [e.dataset.id, l ? l.scrollTop : 0]; });
       if (act.dataset.act === "simMember") simPickMember(v);
       else if (act.dataset.act === "simDeck") { const k = deckByCode[v]; if (k && simSel.members.includes(k.char)) simSel.deck[k.char] = k.code; }
       else { simSel.members = []; simSel.deck = {}; }
       render(); window.scrollTo(0, y);
+      // 덱 목록 스크롤 위치 유지 (같은 전투원 칸일 때만)
+      lists.forEach(([id, top]) => { const l = id && document.querySelector(`.simcol[data-id="${CSS.escape(id)}"] .simlist`); if (l) l.scrollTop = top; });
       break;
     }
     case "homeQ": if (homeSearch) homeSearch.set(v); break;
