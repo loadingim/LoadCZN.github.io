@@ -214,6 +214,21 @@
   .mpick:disabled { opacity: .35; cursor: default; }
   .mpick.no { opacity: .4; }
   .chip:disabled { opacity: .45; cursor: default; }
+  .partybar { margin: 14px 0; padding: 12px; border: 1px solid rgba(212, 162, 76, .45); border-radius: 12px; background: var(--panel); scroll-margin-top: 70px; }
+  .pbh { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-bottom: 10px; }
+  .pbh b { color: var(--gold-hi); }
+  .pbh .btn { margin-left: auto; }
+  .pslots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .pslot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 8px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line); min-width: 0; position: relative; }
+  .pslot.empty { border-style: dashed; }
+  .pno { font-size: 12px; font-weight: 700; color: var(--gold); }
+  .pmem { display: flex; gap: 4px; }
+  .pmem img { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; object-position: top; background: #121116; display: block; }
+  .ptn { font-size: 13px; font-weight: 700; min-width: 0; flex: 1 1 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pdel { position: absolute; top: 4px; right: 6px; background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; line-height: 1; }
+  .pdel:hover { color: var(--text); }
+  .tpa { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .tpa .note.warn { color: #f2a0a5; }
   .ownbox { margin: 4px 0 10px; padding: 12px; border: 1px dashed var(--line); border-radius: 10px; background: #121116; }
   .ownbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
   .ownbar .dbq { flex: 1 1 200px; min-width: 0; width: auto; }
@@ -364,6 +379,7 @@
     .tslot .sb { padding: 6px 8px; font-size: 12px; }
     .mgrid { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 4px; }
     .mrow { grid-template-columns: 1fr; gap: 4px; }
+    .pslots { grid-template-columns: 1fr; }
     .mattr { padding-top: 0; }
     .dgrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   }
@@ -413,21 +429,24 @@ const ATTR_COLOR = { "열정": "#e0434c", "공허": "#9b5de5", "본능": "#e09a2
 
 let chars = [], teams = [], byId = {}, decks = [], deckByCode = {};
 const sel = { attr: new Set(), job: new Set(), grade: new Set(), role: new Set(), tag: new Set(), partner: null, sort: "name" };
-const teamSel = { members: [], tag: new Set(), ownedOnly: false, editOwned: false };
+const teamSel = { members: [], tag: new Set(), ownedOnly: false, editOwned: false, parties: [] };
 // 보유 전투원: 서버 없이 이 브라우저(localStorage)에만 저장한다
-const OWN_KEY = "czn.owned.v1", OWN_ONLY_KEY = "czn.ownedOnly.v1";
+const OWN_KEY = "czn.owned.v1", OWN_ONLY_KEY = "czn.ownedOnly.v1", PARTY_KEY = "czn.parties.v1";
 let owned = new Set(), ownMsg = "";
 function loadOwned() {
   try {
     const a = JSON.parse(localStorage.getItem(OWN_KEY) || "[]");
     if (Array.isArray(a)) owned = new Set(a.filter(x => typeof x === "string"));
     teamSel.ownedOnly = localStorage.getItem(OWN_ONLY_KEY) === "1";
+    const pa = JSON.parse(localStorage.getItem(PARTY_KEY) || "[]");
+    if (Array.isArray(pa)) teamSel.parties = pa.filter(id => typeof id === "string").slice(0, 3);
   } catch (e) { /* 사생활 보호 모드 등에서 저장소를 못 쓰면 이번 방문 동안만 기억 */ }
 }
 function saveOwned() {
   try {
     localStorage.setItem(OWN_KEY, JSON.stringify([...owned]));
     localStorage.setItem(OWN_ONLY_KEY, teamSel.ownedOnly ? "1" : "0");
+    localStorage.setItem(PARTY_KEY, JSON.stringify(teamSel.parties));
   } catch (e) { /* 저장 실패해도 화면 동작에는 영향 없음 */ }
 }
 function ownedCount() { return chars.filter(d => owned.has(d.id)).length; }
@@ -730,14 +749,47 @@ function kitSections(d) {
 }
 
 /* ---------- 조합 목록 ---------- */
+/* 파티 편성: 1~3파티를 차례로 고르면, 이미 편성한 전투원이 들어간 조합은 다음 후보에서 빠진다 */
+function partyTeams() { return teamSel.parties.map(id => teams.find(t => t.id === id)).filter(Boolean); }
+function usedIds() { return new Set(partyTeams().flatMap(teamIds)); }
+// 보유 필터만 적용한 후보 풀 (전투원·태그 필터와 무관하게 다음 파티 후보 수를 셀 때 사용)
+function partyPool() { return teams.filter(t => !ownedFilterOn() || teamIds(t).every(id => owned.has(id))); }
+function nextPartyCount(t, used, pool) {
+  const u = new Set([...used, ...teamIds(t)]);
+  return pool.filter(x => x.id !== t.id && teamIds(x).every(id => !u.has(id))).length;
+}
 function teamFiltered() {
+  const used = usedIds();
   return teams.filter(t =>
     teamSel.members.every(id => teamIds(t).includes(id)) &&
     (!ownedFilterOn() || teamIds(t).every(id => owned.has(id))) &&
+    (!used.size || teamIds(t).every(id => !used.has(id))) &&
     (!teamSel.tag.size || (t.tags || []).some(x => teamSel.tag.has(x))));
 }
-function teamCard(t) {
+function partyBar() {
+  const pts = partyTeams();
+  const slot = i => {
+    const t = pts[i];
+    if (!t) return `<div class="pslot empty"><span class="pno">${i + 1}파티</span><span class="note">${i === pts.length ? "아래 조합에서 「" + (i + 1) + "파티로 편성」을 누르세요" : "앞 파티를 먼저 고르세요"}</span></div>`;
+    return `<div class="pslot"><span class="pno">${i + 1}파티</span>
+      <div class="pmem">${teamIds(t).map(id => byId[id] ? `<a href="${charLink(id)}" title="${esc(byId[id].name_ko)}">${img(byId[id])}</a>` : "").join("")}</div>
+      <a class="ptn" href="#/team/${encodeURIComponent(t.id)}">${esc(t.name)}</a>
+      <button class="pdel" data-act="removeParty" data-v="${i}" aria-label="${i + 1}파티 빼기">×</button></div>`;
+  };
+  return `<div class="partybar" id="partyBar">
+    <div class="pbh"><b>파티 편성</b><span class="note">${pts.length >= 3 ? "3파티 편성을 마쳤습니다." : "편성한 파티의 전투원은 다음 파티 후보에서 빠집니다."}${ownedFilterOn() ? "" : " 보유 전투원 필터를 켜면 가진 전투원으로만 짭니다."}</span>
+      <button class="btn" data-act="clearParties">편성 비우기</button></div>
+    <div class="pslots">${[0, 1, 2].map(slot).join("")}</div></div>`;
+}
+function teamCard(t, ctx) {
   const show = (t.slots || []).some(s => { const k = slotDeck(s); return k && k.image; });
+  const n = teamSel.parties.length;
+  let add = "";
+  if (ctx && n < 3) {
+    const next = n < 2 ? nextPartyCount(t, ctx.used, ctx.pool) : -1;
+    add = `<div class="tpa"><button class="btn" data-act="addParty" data-v="${esc(t.id)}">${n + 1}파티로 편성</button>${next >= 0
+      ? `<span class="note${next ? "" : " warn"}">${next ? `편성하면 ${n + 2}파티 후보 ${next}개` : `편성하면 ${n + 2}파티 후보가 없습니다`}</span>` : ""}</div>`;
+  }
   return `<article class="tcard2">
     <div class="thd"><a class="tn" href="#/team/${encodeURIComponent(t.id)}">${esc(t.name)}</a>
       <span class="ttags">${(t.tags || []).map(x => `<span class="ttag">#${esc(x)}</span>`).join("")}</span></div>
@@ -750,15 +802,17 @@ function teamCard(t) {
         <div class="md">${esc(k ? k.name : s.role || "")}</div>
         ${deckThumb(k, c, show)}</div>`;
     }).join("")}</div>
+    ${add}
   </article>`;
 }
 function viewTeams() {
   const tags = sortedBy(TEAM_TAGS, [...TEAM_TAGS, ...teams.flatMap(t => t.tags || [])]);
   const list = teamFiltered();
   const n = teamSel.members.length;
+  const used = usedIds(), ctx = { used, pool: partyPool() };
   const pick = d => {
     const i = teamSel.members.indexOf(d.id);
-    return `<button class="mpick${i >= 0 ? " on" : ""}${ownedFilterOn() && !owned.has(d.id) ? " no" : ""}" data-act="toggleMember" data-v="${esc(d.id)}"${i < 0 && n >= 3 ? " disabled" : ""} aria-pressed="${i >= 0}" title="${esc(d.name_ko)}">${i >= 0 ? `<b>${i + 1}</b>` : ""}${img(d)}<span>${esc(d.name_ko)}</span></button>`;
+    return `<button class="mpick${i >= 0 ? " on" : ""}${(ownedFilterOn() && !owned.has(d.id)) || used.has(d.id) ? " no" : ""}" data-act="toggleMember" data-v="${esc(d.id)}"${i < 0 && n >= 3 ? " disabled" : ""} aria-pressed="${i >= 0}" title="${esc(d.name_ko)}">${i >= 0 ? `<b>${i + 1}</b>` : ""}${img(d)}<span>${esc(d.name_ko)}</span></button>`;
   };
   // 속성별로 한 줄씩 (속성 순서는 ATTRS, 줄 안에서는 이름순)
   const byName = [...chars].sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko"));
@@ -784,8 +838,10 @@ function viewTeams() {
       ${teamSel.editOwned ? ownedEditor(byName, attrs) : ""}
       <div class="frow foot"><button class="btn" data-act="resetTeams">초기화</button><span class="cnt" style="display:inline">${list.length}개 조합</span></div>
     </div>
-    <div class="tgrid">${list.length ? list.map(teamCard).join("")
-      : `<div class="empty">${teams.length ? "조건에 맞는 조합이 없습니다." : "아직 등록된 조합이 없습니다.<br>data.json의 teams에 조합을 추가하면 여기에 표시됩니다."}</div>`}</div>
+    ${partyBar()}
+    ${used.size && list.length ? `<p class="note" style="margin:0 0 10px">${teamSel.parties.length >= 3 ? "편성한 3파티와 전투원이 겹치지 않는 나머지 조합입니다." : `${teamSel.parties.length + 1}파티 후보: 편성한 파티와 전투원이 겹치지 않는 조합입니다.`}</p>` : ""}
+    <div class="tgrid">${list.length ? list.map(t => teamCard(t, ctx)).join("")
+      : `<div class="empty">${teams.length ? (used.size ? "편성한 파티의 전투원을 빼고 나면 조건에 맞는 조합이 없습니다." : "조건에 맞는 조합이 없습니다.") : "아직 등록된 조합이 없습니다.<br>data.json의 teams에 조합을 추가하면 여기에 표시됩니다."}</div>`}</div>
   </section>`;
 }
 
@@ -1239,7 +1295,17 @@ document.addEventListener("click", e => {
       else if (teamSel.members.length < 3) teamSel.members.push(v);
       render(); break;
     }
-    case "resetTeams": teamSel.members = []; teamSel.tag.clear(); teamSel.ownedOnly = false; saveOwned(); render(); break;
+    case "resetTeams": teamSel.members = []; teamSel.tag.clear(); teamSel.ownedOnly = false; teamSel.parties = []; saveOwned(); render(); break;
+    case "addParty": {
+      const t = teams.find(x => x.id === v), used = usedIds();
+      if (t && teamSel.parties.length < 3 && !teamSel.parties.includes(v) && teamIds(t).every(id => !used.has(id))) {
+        teamSel.parties.push(v); teamSel.members = []; saveOwned(); render();
+        const bar = document.getElementById("partyBar"); if (bar) bar.scrollIntoView({ block: "start", behavior: "smooth" });
+      }
+      break;
+    }
+    case "removeParty": teamSel.parties.splice(Number(v), 1); saveOwned(); render(); break;
+    case "clearParties": teamSel.parties = []; saveOwned(); render(); break;
     case "toggleOwnedOnly": teamSel.ownedOnly = !ownedFilterOn(); saveOwned(); render(); break;
     case "toggleOwnEdit": teamSel.editOwned = !teamSel.editOwned; ownMsg = ""; render(); break;
     case "toggleOwned": if (owned.has(v)) owned.delete(v); else owned.add(v); ownMsg = ""; saveOwned(); render(); break;
