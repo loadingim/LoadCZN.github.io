@@ -1,0 +1,3673 @@
+[
+  {
+    "name": "혼돈의 지적",
+    "en": "Intellect of Discord",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "공격력 +18%\n격파 시 아군 스트레스 1 감소",
+    "group": "공용",
+    "area": "",
+    "how": "세넥투스 처치 보상",
+    "chaos": [],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "혼세의 촉수",
+    "en": "Tentacles of Chaos",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "아군 공격력 +8%\n처치 시 스트레스가 높은 전투원 스트레스 2 감소",
+    "group": "공용",
+    "area": "",
+    "how": "세넥투스 처치 보상",
+    "chaos": [],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "괴이의 껍질",
+    "en": "Shell of Aberration",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "방어력 +12%\n스트레스 증가 시 50% 확률로 1 적게 증가",
+    "group": "공용",
+    "area": "",
+    "how": "세넥투스 처치 보상",
+    "chaos": [],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "재앙의 성포",
+    "en": "Announcement of Catastrophe",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "방어력 +12%\n모든 전투원 붕괴 회복에 필요한 카드 수 1장 감소",
+    "group": "공용",
+    "area": "",
+    "how": "세넥투스 처치 보상",
+    "chaos": [],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "난수의 구체",
+    "en": "Sphere of Randomness",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "최대 체력 +10%\n전투 시작 시 행동 포인트 1 획득, 드로우 1",
+    "group": "공용",
+    "area": "",
+    "how": "세넥투스 처치 보상",
+    "chaos": [],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "착란의 다이스",
+    "en": "Dice of Derangement",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "최대 체력 +8%\n전투 종료 시 최대 체력의 50% 미만이라면 최대 체력의 8% 회복\n전투 종료 시 최대 체력의 50% 이상이면 스트레스가 높은 전투원 스트레스 5 감소",
+    "group": "공용",
+    "area": "",
+    "how": "세넥투스 처치 보상",
+    "chaos": [],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "제2의 수단",
+    "en": "Second Method",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "추가 공격 피해량 +35%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "가스트로노미콘",
+    "en": "Gastronomicon",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "비용 2 이상인 공격 카드 사용 시 대상에게 고통 3",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "RFS-17",
+    "en": "RFS-17",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "비용 0인 공격 카드의 치명확률 +10%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "시산혈해",
+    "en": "Mountain of Corpses",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "공격 카드의 피해량 25% 증가 (턴당 1회)",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 쌍성의 그림자 탐사도 레벨 30 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "쌍성의 그림자 탐사도 30"
+  },
+  {
+    "name": "M85 군용 수류탄",
+    "en": "M85 Military Grenade",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "강화 카드 사용 시 모든 적 고정 피해 150%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "흑요석 검",
+    "en": "Obsidian Sword",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "피해량 12% 증가",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 푸른 항아리 탐사도 레벨 15 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "푸른 항아리 탐사도 15"
+  },
+  {
+    "name": "비웃는 단도",
+    "en": "Sneering Dagger",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "적 처치 시 모든 적 취약 2",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "붉은 검",
+    "en": "Crimson Sword",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "타게팅 공격 카드로 피해를 준 대상에게 고통 3 (턴당 1회)",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "거물 사냥꾼",
+    "en": "Big Game Hunter",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "전투당 처음 사용하는 공격 카드의 강인도 피해 100% 증가",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "뼈절단기",
+    "en": "Bone Cutter",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "약화 상태인 대상 타격 시 피해량 +30%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 안개의 도시 탐사도 레벨 15 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "안개의 도시 탐사도 15"
+  },
+  {
+    "name": "명령: 108호",
+    "en": "Command: #108",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "공격 카드의 피해량 40% 증가 (전투당 1회)",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "진노의 횃불",
+    "en": "Torch of Wrath",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 무작위 적 표식 2",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 도래된 혼돈 탐사도 레벨 15 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "도래된 혼돈 탐사도 15"
+  },
+  {
+    "name": "섬광탄",
+    "en": "Flashbang",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 무작위 적 약화 3",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "구름을 걸은 구두",
+    "en": "Cloud-Walking Shoes",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "아군이 격파 시 고정 실드 40%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "검투사의 헬멧",
+    "en": "Gladiator's Helmet",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 피해 감소 2",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "척후병의 군화",
+    "en": "Scout's Combat Boots",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "처치 시 고정 실드 60%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "표준형 방독면",
+    "en": "Standard Gas Mask",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 면역 1",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "강습 부츠",
+    "en": "Assault Boots",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "2번째 턴 시작 시 고정 실드 200%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "강습 건틀렛",
+    "en": "Assault Gauntlets",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 반격 3",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "보강형 전투 강화복",
+    "en": "Reinforced Combat Suit",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "턴 종료 시 실드가 없다면 고정 실드 60%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "타이탄 전투 강화복",
+    "en": "Titan Combat Suit",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "피해를 받을 시 최대 체력의 2% 회복 (턴당 1회)",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 쌍성의 그림자 탐사도 레벨 15 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "쌍성의 그림자 탐사도 15"
+  },
+  {
+    "name": "생존자의 후드",
+    "en": "Survivor's Hood",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 고정 실드 140%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "사이오닉 전투 강화복",
+    "en": "Psionic Combat Suit",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "카드 소멸 시 고정 실드 30%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 안개의 도시 탐사도 레벨 30 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "안개의 도시 탐사도 30"
+  },
+  {
+    "name": "무성한 해초 갑옷",
+    "en": "Lush Seaweed Armor",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "실드 획득 시 고정 실드 30%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 심판의 늪 탐사도 레벨 15 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "심판의 늪 탐사도 15"
+  },
+  {
+    "name": "마력이 담긴 사파이어",
+    "en": "Magic-Infused Sapphire",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 개전 카드가 핸드에 있다면 모든 적 강인도 피해 1",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "양자 포집기",
+    "en": "Quantum Collector",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "아군이 강화 카드 사용 시 1턴간 피해량, 실드 획득량, 치유량 20% 증가",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "황금 심장",
+    "en": "Heart of Gold",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "전투 종료 시 체력이 50% 이하라면 최대 체력의 8% 회복",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "다면 평행우주 연결체",
+    "en": "Multifaceted Parallel Universe Nexus",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "턴 시작 시 핸드의 무작위 주도 카드 1장 발동",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "절대영도의 사면체",
+    "en": "Absolute Zero Tetrahedron",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 실드 획득량 +20%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "비정형 큐브",
+    "en": "Amorphous Cube",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "피해량 +25%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "차원의 큐브",
+    "en": "Dimensional Cube",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "카드를 버릴 시 1턴간 피해량 +15% (최대 3 중첩)",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 푸른 항아리 탐사도 레벨 30 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "푸른 항아리 탐사도 30"
+  },
+  {
+    "name": "여신의 물방울",
+    "en": "Water Drops of the Goddess",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "전투 시작 시 저장 1",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 심판의 늪 탐사도 레벨 30 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "심판의 늪 탐사도 30"
+  },
+  {
+    "name": "파괴의 달",
+    "en": "Moon of Destruction",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "전투 시작 시 모든 적 고정 피해 200%",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 푸른 항아리 탐사도 레벨 25 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "푸른 항아리 탐사도 25"
+  },
+  {
+    "name": "시간조율기",
+    "en": "Time Regulator",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "장착한 전투원 번뜩임 발동",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "보석의 심장",
+    "en": "Heart of the Jewel",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "X가 X+1로 적용",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치)",
+    "chaos": [],
+    "shop": true,
+    "unlock": ""
+  },
+  {
+    "name": "그레이 구",
+    "en": "Grey Orb",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "전투 시작 시 피해 감소 3",
+    "group": "공용",
+    "area": "",
+    "how": "공용 보상 (델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치) · 도래된 혼돈 탐사도 레벨 30 달성 시 해금",
+    "chaos": [],
+    "shop": true,
+    "unlock": "도래된 혼돈 탐사도 30"
+  },
+  {
+    "name": "과전류 충격기",
+    "en": "Overcurrent Shock Unit",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "능력으로 드로우 시 무작위 적 고정 피해 50%",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "신경 해킹 모듈",
+    "en": "Nerve Hacking Module",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "아군이 금기 카드 사용 시 피해량 +20%, 실드 획득량 +20% (전투당 2회)",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "뇌파 차단 헬멧",
+    "en": "Brainwave-Blocking Helmet",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "능력으로 드로우 시 고정 실드 40% (턴당 5회)",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "과잉 면역 호르몬",
+    "en": "Hyperimmunity Hormone",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "능력으로 드로우 시 1턴간 실드 획득량 +25% (턴당 2회)",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "불완전 갑각",
+    "en": "Incomplete Carapace",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "턴 종료 시 핸드의 카드 3장 이상이라면 고정 실드 140%",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "미확인 회복 앰플",
+    "en": "Unconfirmed Recovery Ampule",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "아군이 금기 카드 사용 시 최대 체력의 3% 회복, 고정 실드 80%",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "변이 파동 증폭기",
+    "en": "Mutagenic Wave Amplifier",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "상태이상, 저주 카드 드로우 시 1턴간 피해량 +12%",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "W-52 '도파민 주입기'",
+    "en": "W-52 Dopamine Injector",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "능력으로 드로우 시 1턴간 피해량 20% 증가 (턴당 2회)",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "변종 포식체 돌기",
+    "en": "Mutant Predator Spike",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "핸드의 카드가 4장 이상일 시 카드 피해량 30% 증가",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "초전도 단백질",
+    "en": "Superconductive Protein",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "전투 시작 시 핸드의 카드 1장 1턴간 비용 0으로 변경",
+    "group": "시즌 공용",
+    "area": "제 0 연구소",
+    "how": "제 0 연구소 시즌 공용 장비",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "천년목",
+    "en": "Millennium Arbor",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "비용 3 이상인 카드 발동 시 무작위 적 취약 1",
+    "group": "시즌 공용",
+    "area": "타오르는 생명",
+    "how": "타오르는 생명 시즌 공용 장비",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "흐릿한 가시",
+    "en": "Veiled Thorn",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "1턴간 아군이 적에게 카드로 피해를 입히지 않았다면 다음 턴 시작 시 1턴간 피해량 50% 증가",
+    "group": "시즌 공용",
+    "area": "타오르는 생명",
+    "how": "타오르는 생명 시즌 공용 장비",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "식물형 의체",
+    "en": "Phytotype Synthetic",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "카드로 실드 획득 시 1턴간 다음 발동하는 공격 카드 1장의 피해량 20% 증가 (턴당 2회)",
+    "group": "시즌 공용",
+    "area": "타오르는 생명",
+    "how": "타오르는 생명 시즌 공용 장비",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "덩굴 위장막",
+    "en": "Vine Camouflage",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "턴 시작 시 체력이 30% 이하면 회피 1 (전투당 2회)",
+    "group": "시즌 공용",
+    "area": "타오르는 생명",
+    "how": "타오르는 생명 시즌 공용 장비",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "이끼 갑옷",
+    "en": "Moss Armor",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "1턴간 아군 공격 카드 발동하지 않고 턴 종료 시 고정 실드 100%",
+    "group": "시즌 공용",
+    "area": "타오르는 생명",
+    "how": "타오르는 생명 시즌 공용 장비",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "세계수의 잎",
+    "en": "Leaf of the World Tree",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "비용 2 이상의 카드 3장 사용 시 저장 1",
+    "group": "시즌 공용",
+    "area": "타오르는 생명",
+    "how": "타오르는 생명 시즌 공용 장비",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "식물 인형",
+    "en": "Plant Doll",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "스킬 카드 4장 소멸 시 무작위 아군 스트레스 1 감소",
+    "group": "시즌 공용",
+    "area": "타오르는 생명",
+    "how": "타오르는 생명 시즌 공용 장비",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "발광 버섯",
+    "en": "Luminescent Shroom",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "6번째 생성된 공격 카드 1턴간 포자증식 효과 2배",
+    "group": "시즌 공용",
+    "area": "타오르는 생명",
+    "how": "타오르는 생명 시즌 공용 장비",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "꺼진 용기의 팔",
+    "en": "Arm of Lost Valor",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "1턴간 공격 카드 발동하지 않고 턴 종료 시 로켓 펀치 1장 생성",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "꺾인 의지의 작살통",
+    "en": "Harpoon Case of Broken Resolve",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "홀수 턴마다 꿰뚫기 1장 생성",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "빛바랜 희생의 방패",
+    "en": "Shield of Ashen Sacrifice",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "피해를 완전히 막으면 다음 턴 시작 시 방패 폭발 1장 생성",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "무너진 명예 발사기",
+    "en": "Launcher of Ruined Honor",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "짝수 턴마다 묵직한 타격 1장 생성",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "낡은 영광 충전기",
+    "en": "Charger of Weathered Glory",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "행동 포인트 1이상인 채로 턴 종료하면 다음 턴 시작 시 충전된 일격 1장 생성",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "전투용 북",
+    "en": "Combat Drum",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "스킬 카드 5장 생성 시 다음 발동하는 아군 카드 피해량 20% 증가 (최대 1 중첩)",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "투쟁의 하프",
+    "en": "Harp of Conflict",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "1턴간 아군 카드로 피해, 실드, 치유 모두 발동 시 1턴간 아군 피해량 15% 증가",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "검투사의 증표",
+    "en": "Gladiator's Medallion",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "카드로 실드 3회 획득 시 모든 적 고정 피해 100%",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "격노 물약",
+    "en": "Rage Potion",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "공격 카드 4회 발동 시 다음 발동하는 공격 카드 피해량 40% 증가",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "승자의 월계관",
+    "en": "Victor's Laurel",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "반격 피해량 40% 증가",
+    "group": "투기장",
+    "area": "차원터널 투기장",
+    "how": "차원터널 투기장 최종 보상",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "교단의 지휘봉",
+    "en": "Order’s Baton",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "카드를 생성할 때마다 1턴간 피해량 +20% (턴당 2회)",
+    "group": "시즌 공용",
+    "area": "허상의 극장",
+    "how": "허상의 극장 시즌 공용 장비",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "잠식된 건틀릿",
+    "en": "Corrupted Gauntlet",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "추가 공격 시 1턴간 치명확률 2% 증가 (턴당 5회)",
+    "group": "시즌 공용",
+    "area": "허상의 극장",
+    "how": "허상의 극장 시즌 공용 장비",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "감정의 가면",
+    "en": "Mask of Emotions",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "피격 시 공격자에게 공명 2(턴당 3회)",
+    "group": "시즌 공용",
+    "area": "허상의 극장",
+    "how": "허상의 극장 시즌 공용 장비",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "마음의 망토",
+    "en": "Cloak of the Heart",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "아군이 능력으로 카드를 버릴 시 피해 감소 1 (턴당 1회)",
+    "group": "시즌 공용",
+    "area": "허상의 극장",
+    "how": "허상의 극장 시즌 공용 장비",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "이단의 비석",
+    "en": "Stele of Heresy",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "아군이 능력으로 카드를 3장 버릴 때 마다 무작위 적 취약, 표식 중 무작위 1개 부여 (턴당 5회)",
+    "group": "시즌 공용",
+    "area": "허상의 극장",
+    "how": "허상의 극장 시즌 공용 장비",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "잠의 열쇠",
+    "en": "Key of Sleep",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "공격 카드 피해량 +40%\n공격 카드의 대상 수가 2 이상일 시 대상 수 만큼 피해량 -10% (최대 -30%)",
+    "group": "시즌 공용",
+    "area": "허상의 극장",
+    "how": "허상의 극장 시즌 공용 장비",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "악몽의 머리핀",
+    "en": "Nightmare Hairpin",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "단일 공격 카드 사용 시 대상의 행동 카운트 2 증가 (턴당 1회)",
+    "group": "시즌 공용",
+    "area": "허상의 극장",
+    "how": "허상의 극장 시즌 공용 장비",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "비명의 복음서",
+    "en": "Gospel of Lament",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "적들의 행동 카운트 증가 시 1턴간 피해량 +30%(턴당 1회)",
+    "group": "시즌 공용",
+    "area": "허상의 극장",
+    "how": "허상의 극장 시즌 공용 장비",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "출혈의 쌍수검",
+    "en": "",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "공격 카드 발동 시 대상에게 작열2(턴당 1회)",
+    "group": "시즌 공용",
+    "area": "만화경의 부화장",
+    "how": "만화경의 부화장 시즌 공용 장비",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "약탈자의 작살포",
+    "en": "",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "치명타 시 모든 적 고정 피해 150%(턴당 3회)",
+    "group": "시즌 공용",
+    "area": "만화경의 부화장",
+    "how": "만화경의 부화장 시즌 공용 장비",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "약탈자의 스캔 기어",
+    "en": "",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "턴 시작 시 처음 발동하는 공격 카드의 치명피해 +30%",
+    "group": "시즌 공용",
+    "area": "만화경의 부화장",
+    "how": "만화경의 부화장 시즌 공용 장비",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "보호의 권갑",
+    "en": "",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "원래 비용이 3이상인 공격 카드 사용 시 모든 적 고정 피해 250% (턴당 2회)",
+    "group": "시즌 공용",
+    "area": "만화경의 부화장",
+    "how": "만화경의 부화장 시즌 공용 장비",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "키틴질 방패",
+    "en": "",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "반격 3 반격 시 대상에게 충격파 1 (턴당 1회)",
+    "group": "시즌 공용",
+    "area": "만화경의 부화장",
+    "how": "만화경의 부화장 시즌 공용 장비",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "오염된 고치 망토",
+    "en": "",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "피격 시 공격자에게 고통, 취약, 작열 중 무작위 1개 부여 (턴당3회)",
+    "group": "시즌 공용",
+    "area": "만화경의 부화장",
+    "how": "만화경의 부화장 시즌 공용 장비",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "정수 파편 목걸이",
+    "en": "",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "1턴간 아군이 적 3회 처치 시 행동 포인트 1획득 증가 (턴당 1회)",
+    "group": "시즌 공용",
+    "area": "만화경의 부화장",
+    "how": "만화경의 부화장 시즌 공용 장비",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "스틸러의 단도",
+    "en": "Steeler's Dagger",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "처치 시 5~10 크레딧 획득 (전투당 1회)",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "도둑들 1 - [단도를 구매한다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "미치광이의 예술작품",
+    "en": "Madman's Masterpiece",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "엘리트 전투 시작 시 피해량 +50%",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "미치광이 예술가 1 - [후원한다] 선택 / 미치광이 예술가 3 - [제물을 더 단단하게 묶는다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "무딘 뼈 칼",
+    "en": "Dull Bone Blade",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "공격력 10%, 치명확률 -5%",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "교도들의 쉼터 1 - [천막으로 들어간다]에서 일정 확률로 발생하는 후속 이벤트에서 [수술 도구를 가져간다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "카오스 성서",
+    "en": "Chaos Bible",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "4번째 턴 시작 시 모든 적 고정 피해 400%",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "금서의 감시자 1 - [공격하기] 선택 / 금서의 감시자 2 - [성서를 훔친다] 혹은 [공격하기] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "공허한 혈석",
+    "en": "Bloodstone of the Void",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "공격 카드 사용 시 피해 기반 회복 6% (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "공물 제단 1 - [혈석을 훔친다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "금지된 성서",
+    "en": "Forbidden Bible",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "4번째 턴 시작 시 모든 적 고정 피해 550%",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "금서의 감시자 2 - [성서에 다가간다] 후속 이벤트에서 [성서를 탐한다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "붉은 혈석",
+    "en": "Crimson Bloodstone",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "공격 카드 사용 시 피해 기반 회복 9% (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "공물 제단 2 - [붉은 혈석을 훔친다] 선택 후 주사위 성공",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "처형자의 칼날",
+    "en": "Executioner's Edge",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "최대 체력의 50% 이하인 대상에게 피해량 35% 증가",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "죄와 벌 - [충성을 맹세한다] 를 제외한 모든 선택지",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "제례용 단도",
+    "en": "Ritual Dagger",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "적 처치 시 공격 카드의 피해량 +25% (최대 2회)",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "혼돈의 제단 1 - [제사를 지낸다] 선택, 혹은 [공격하기] 후속 이벤트에서 [제단을 탐색한다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "교단의 증표",
+    "en": "Order's Emblem",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "카오스 교단 전투 시 방어력 +15%",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "교도들의 쉼터 2 - [입장한다] 후속 이벤트에서 [피를 바친다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "그릇이 될 자",
+    "en": "The Chosen Vessel",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "3번째 턴 시작 시 고정 실드 250%",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "카오스의 심판관 - [교단의 증표] 혹은 [입교의 증표]를 소지한 상태에서 [심판에 도전한다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "결사의 권갑",
+    "en": "Resolute Gauntlets",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "카오스 교단 전투 시작 시 피해량 +20%, 피해 감소 1",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "단죄하는 자들 1 - [지원을 요청한다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "입교의 증표",
+    "en": "Proof of Initiation",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "카오스 교단 전투 시 방어력 +10%",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "교도들의 쉼터 1 - [천막으로 들어간다]에서 일정 확률로 발생하는 후속 이벤트에서 [집도에 나선다] 혹은 [공격하기] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "변이의 권능",
+    "en": "Mutated Order",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "행동 전인 대상에게 피해량 25% 증가",
+    "group": "미확인 구역",
+    "area": "푸른 항아리",
+    "how": "하나가 되는 의식 - [마지막이 되겠다고 한다] 선택",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "보라 나비의 채찍",
+    "en": "Violet Butterfly's Whip",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "비용 1 이하인 공격 카드의 피해량 20% 증가",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "패잔병 2 - [정당한 승부를 요청한다] 주사위 실패 또는 [공격하기] 선택",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "부서진 포르미카의 창",
+    "en": "Formica's Broken Spear",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "적 수만큼 피해량 6% 증가",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "무리의 목적 1 - [공격하기] 선택 / 무리의 목적 2 - [창을 뽑는다] 선택",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "완전한 포르미카의 창",
+    "en": "Formica's Perfect Spear",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "적 수만큼 피해량 7% 증가\n전체 공격의 피해량 10% 증가",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "무리의 목적 1 - [창을 뽑는다] 선택",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "레피돌라의 날개",
+    "en": "Lepidola's Wing",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "전투 시작 시 회피 1",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "침략자의 중추 3 - [일을 돕겠다고 한다] 선택",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "버그 킬러",
+    "en": "Bug Killer",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "공격 카드 사용 시 대상에게 고통 1 (턴당 1회)\n인베이더 전투라면 고통 2 추가",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "인베이더의 꿀 4 - [공격하기] 선택 후 [다크스타] 생존한 채로 승리",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "레피돌라의 채찍",
+    "en": "Lepidola's Whip",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "비용 1 이하인 공격 카드의 피해량 25% 증가",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "패잔병 2 - [정당한 승부를 요청한다] 선택",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "플루이더의 갑각",
+    "en": "Crustacean Fluider",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "피해를 받은 다음 턴 시작 시 고정 실드 60%",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "부화장 2 - [식사를 도와준다] 선택",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "키락의 핵",
+    "en": "Kirak's Core",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "턴 시작 시 최대 체력의 40% 미만이면 최대 체력의 5% 회복",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "끔찍한 양식 1 - [안쪽을 뒤진다] 주사위 성공 / 끔찍한 양식 2 - [함께 재료를 찾는다] 후속 이벤트에서 [구매를 제안한다] 선택, 또는 [물건을 갖고 달아난다] 주사위 성공, 혹은 주사위 실패 또는 [공격하기] 선택",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "구급 키트",
+    "en": "First Aid Kit",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "전투 종료 시 최대 체력의 5% 회복",
+    "group": "미확인 구역",
+    "area": "쌍성의 그림자",
+    "how": "침략자의 폐기장 1 - [유품을 찾아준다] 주사위 성공 / 침략자의 폐기장 2 - [사체를 뒤져본다] 선택",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "망혼의 꽃",
+    "en": "Flower of Dead Souls",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "턴마다 두 번째 공격 카드부터 피해량 20% 증가",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "망혼의 꽃 1 - [꽃을 훔친다] 주사위 성공, 혹은 [꽃을 훔친다] 주사위 실패 또는 [공격하기] 선택 / 망혼의 꽃 2 - [꽃을 훔친다] 주사위 성공, 혹은 [꽃을 훔친다] 주사위 실패 또는 [공격하기] 선택",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "혼의 구슬",
+    "en": "Soul Orb",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "카드 소멸 시 모든 적 강인도 피해 1 (전투당 1회)",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "탐식자 1 - [흥미로운 이야기를 들려준다] 선택",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "허기진 자의 배",
+    "en": "The Famished One's Belly",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "카드 소멸 시 피해량 +25%, 최대 체력의 5% 회복 (전투당 1회)",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "식객 - [배를 도려낸다] 선택",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "오염된 헬멧",
+    "en": "Contaminated Helmet",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "최대 체력 +6%\n방어력 +12%",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "공허 병 2 - [상태를 진정시킨다] 주사위 성공 후 후속 이벤트에서 [설득한다] 또는 [공격하기] 선택, 혹은 [상태를 진정시킨다] 주사위 실패 또는 [공격하기] 선택",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "M.S.S 데이터 패드",
+    "en": "M.S.S Data Pad",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "니힐럼 전투 시작 시 모든 적 취약 2",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "니힐럼 조사 1 - [조사 조수로 지원한다] 주사위 성공 / 니힐럼 조사 3 - [조사 조수로 지원한다] 주사위 성공",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "허무의 계시록",
+    "en": "Revelation's of Futility",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "공격 카드 사용 시 고정 실드 20% (턴당 10회)",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "공허의 목자 1 - [공허를 느껴본다] 후속 이벤트에서 [잡히는 것을 꺼낸다] 주사위 성공 / 공허의 목자 2 - [공허를 느껴본다] 후속 이벤트에서 [잡히는 것을 꺼낸다] 주사위 성공",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "탐식의 눈",
+    "en": "Eye of Gluttony",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "피해량 +40%, 턴 종료 시 30% 확률로 핸드의 카드 1장 소멸",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "공허의 장막 2 - [문에 다가간다] 후속 이벤트에서 [보석에 관심을 보인다] 선택",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "M.S.S 데이터 패드 SE",
+    "en": "M.S.S Data Pad SE",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "니힐럼 전투 시작 시 모든 적 취약 3",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "니힐럼 조사 5 - [공격하기] 선택 후 [모스 로봇] 생존한 채로 승리 또는 [로봇을 구한다] 선택 후 후속 이벤트에서 [연구 조수로 지원한다] 주사위 성공",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "M.S.S 스코프",
+    "en": "M.S.S Scope",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "1턴간 해로운 효과를 부여했다면 턴 종료 시 고정 실드 80%",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "급사의 동굴 2 - [생존자를 구한다] 주사위 성공",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "먹힌 자의 꿈",
+    "en": "Dream of the Devoured",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "카드 소멸 시 다음 사용하는 카드의 피해량 25% 증가 (최대 1회 중첩)",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "기억의 편린 1 - [문에 다가가본다] 후속 이벤트에서 [기억을 잡아본다] 선택",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "삼킨 자의 공허",
+    "en": "Void of the Devourer",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "카드 소멸 시 다음 사용하는 카드의 피해량 35% 증가 (최대 1회 중첩)",
+    "group": "미확인 구역",
+    "area": "안개의 도시",
+    "how": "기억의 편린 2 - [문에 다가가본다] 후속 이벤트에서 [공간을 억제한다] 선택",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "신목의 가지",
+    "en": "Branch of the Sacred Tree",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "능력으로 치유 혹은 회복 시 회복량의 35%만큼 모든 적 고정 피해",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "사잇나무 1 - [가지를 가져간다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "숲의 클로버",
+    "en": "Clover of the Forest",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "카드로 회복 시 1턴간 아군 공격력 +10% (최대 1회 중첩)",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "분투 1 - [애도를 표한다] 선택 / 분투 2 - [응급 처치를 돕는다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "밀렵꾼의 패스파인더",
+    "en": "Poacher's Pathfinder",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "세크레드 전투 시 피해량 +25%, 모든 적 취약 2",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "경고 2 - [공격하기] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "악령의 가면",
+    "en": "Mask of Evil Spirits",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "피해를 받은 다음 턴 시작 시 고정 실드 60%",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "탐욕의 대가 1 - [밀렵꾼을 구한다] 주사위 성공, 혹은 주사위 실패 후 전투 또는 [공격하기] 선택 후 전투에서 [다크스타] 생존한 채로 승리 / 탐욕의 대가 2 - [밀렵꾼을 돕는다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "저문 생명의 꽃",
+    "en": "The Fading Flower of Life",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "최대 체력인 상태라면 피해량 +40%",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "생명의 꽃 1 - [꽃을 꺾는다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "생명의 꽃",
+    "en": "The Flower of Life",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "최대 체력인 상태라면 피해량 +50%",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "생명의 꽃 2 - [꽃을 꺾는다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "악목의 가지",
+    "en": "Branch of the Evil Tree",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "능력으로 치유 혹은 회복 시 회복량의 50%만큼 무작위 적 고정 피해",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "사잇나무 2 - [가지를 가져간다] 주사위 성공",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "영겁의 가지",
+    "en": "Branch of Eternity",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "능력으로 치유 혹은 회복 시 회복량의 50%만큼 모든 적 고정 피해",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "사잇나무 3 - [옹이를 살핀다] 후속 이벤트에서 [불씨를 담는다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "심록의 낮",
+    "en": "Verdant Day",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "홀수 턴에 공격력 +8%, 방어력 +12%",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "숲이 묻는다 1 - [생명이라고 답한다] 주사위 성공, 혹은 주사위 실패 후 전투 또는 [공격하기] 후속 이벤트에서 [밝은 쪽을 살핀다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "심록의 밤",
+    "en": "Verdant Night",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "짝수 턴에 공격력 +12%, 방어력 +8%",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "숲이 묻는다 1 - [죽음이라고 답한다] 주사위 성공, 혹은 주사위 실패 후 전투 또는 [공격하기] 후속 이벤트에서 [어두운 쪽을 살핀다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "심록의 굴레",
+    "en": "Verdant Shackles",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "공격력 +12%, 방어력 +12%",
+    "group": "미확인 구역",
+    "area": "심판의 늪",
+    "how": "숲이 묻는다 2 - [영원이라고 답한다] 주사위 성공, 혹은 주사위 실패 후 전투나 [공격하기] 후속 이벤트에서 [굴레를 살핀다] 선택",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "수호 코어",
+    "en": "Guardian Core",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "행동 예고가 공격인 적이 있을 시 고정 실드 60% (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "노래하는 성물 3 - [성물을 취한다] 선택",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "룬 랜스",
+    "en": "Rune Lance",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "행동 포인트 5이상 사용 시 피해량, 실드 획득량, 치유량 +25% (전투당 1회)",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "복수극 2 - [창을 뽑는다] 선택 / 복수극 3 - [창을 구매한다] 혹은 [창을 요구한다] 선택, [공격하기] 후속 이벤트에서 [창을 뽑아낸다] 주사위 성공",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "정화의 불꽃",
+    "en": "Flame of Purification",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "카드 소멸 시 무작위 적에게 응징 1 (턴당 2회)",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "천상의 관문 1 - [들어간다] 후속 이벤트에서 [불꽃을 품는다] 선택",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "계시의 나팔",
+    "en": "Trumpet of Revelation",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "카드로 드로우 시 1턴간 피해량 +20% (턴당 2회)",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "계시 - [기도를 올린다] 후속 이벤트에서 [시련을 받아들인다], [규율에 예속된다], [천사와 계약한다], 혹은 [공격하기] 선택",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "뒤틀린 규율",
+    "en": "Twisted Discipline",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "행동 포인트 10이상 사용 시 면역 2 (전투당 1회)",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "최초의 타락 1/2/3 - [회로를 떼어간다] 선택",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "태고의 규율",
+    "en": "Primordial Discipline",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "전투 시작 시 면역 2",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "최초의 타락 2 - [룬 회로를 가동시킨다] 후속 이벤트에서 [천상의 모순을 논한다] 혹은 [공격하기] 선택",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "침식 코어",
+    "en": "Corroded Core",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "공격을 실드로 완벽하게 막으면 모든 적 손상 1 (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "타락 연구 2/3 - [성물을 취한다] 선택",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "타락 코어",
+    "en": "Corrupted Core",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "방어력 +15%, 실드 20% 보존",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "타락 연구 3 - [성물을 가동시켜본다] 후속 이벤트에서 [성물을 취한다] 선택",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "노래하는 검",
+    "en": "Singing Sword",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "공격력 +15%\n실드 보유 대상에게 피해를 줄 시 대상에게 응징 1",
+    "group": "미확인 구역",
+    "area": "도래된 혼돈",
+    "how": "최초의 타락 3 - [검을 뽑아본다, 검을 움켜쥔다] 선택",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "관리자 신분증",
+    "en": "Administrator ID Badge",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 회피 1",
+    "group": "미확인 구역",
+    "area": "제 0 연구소",
+    "how": "펠티온의 청소부 1 - [인류의 발전을 위한 것이다] 혹은 [공격하기] 선택 / 펠티온의 청소부 2 - [정보를 요구한다] 혹은 [공격하기] 선택",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "로켓 장식 망토",
+    "en": "Rocket-Adorned Cape",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "전투 시작 시 피해 감소 1, 드로우 1",
+    "group": "미확인 구역",
+    "area": "제 0 연구소",
+    "how": "비망록 1 - [가족 사진을 건낸다] 주사위 성공",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "자유의 날개",
+    "en": "Wings of Freedom",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "피격 시 피해량 10% 증가 (최대 3회 중첩)",
+    "group": "미확인 구역",
+    "area": "제 0 연구소",
+    "how": "비망록 2 - [기억을 붙잡는다] 선택",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "우수 개체의 증표",
+    "en": "Emblem of an Exceptional Entity",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "피해량 +30%\n받는 스트레스 0으로 변경 (전투당 1회)",
+    "group": "미확인 구역",
+    "area": "제 0 연구소",
+    "how": "배식 시간 - [테스트를 시작한다] 후속 이벤트 에서 [특수 개체 전투 테스트] 선택",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "레플리카 코어",
+    "en": "Replica Core",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "능력으로 자신의 공격 카드 드로우 시 그 카드 1턴간 피해량 +50%",
+    "group": "미확인 구역",
+    "area": "제 0 연구소",
+    "how": "비극의 전시 - [코어를 빼낸다] 선택",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "금기의 근원",
+    "en": "Source of the Forbidden",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "피격 시 공격자에게 취약, 약화, 손상 중 무작위 1개 부여 (턴당 3회)",
+    "group": "미확인 구역",
+    "area": "제 0 연구소",
+    "how": "논리 오류 1 - ['연구 보존'이 최우선이다] 선택 / 논리 오류 2 - ['기밀 유지'가 최우선이다] 선택",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "키메르나이트",
+    "en": "Chimeranite",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "능력으로 드로우 시 1턴간 자신의 공격 카드 피해량 35% 증가 (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "제 0 연구소",
+    "how": "광맥의 심장 1 - [파편을 채취한다] 선택 / 광맥의 심장 2 - [광맥을 안정화 시킨다] 선택",
+    "chaos": [
+      "제 0 연구소"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "심판의 검",
+    "en": "Sword of Judgment",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "카드 소멸 시 1턴간 피해량 10% 증가(턴당 1회)",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "루미너스의 부름 3: [대항한다] 또는 [공격하기] 선택 / 환상의 굴레 2: [공격하기] 선택",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "빛나는 리라",
+    "en": "Shining Lyre",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "턴 시작 시 아군 소멸 카드가 핸드에 있다면 고정 실드 60%",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "루미너스의 부름 1: [대항한다] 또는 [공격하기] 선택 / 환상의 굴레 1: [공격하기] 선택",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "금빛 종",
+    "en": "Golden Bell",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "전투 시작 시 무작위 아군 스트레스 3 감소",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "루미너스의 부름 2: [대항한다] 또는 [공격하기] 선택 / 생명의 줄기 2: [공격하기] 선택",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "소환된 빛덩어리",
+    "en": "Summoned Lump of Light",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "3번째 생성된 공격 카드 1턴간 피해량 30% 증가",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "빛을 품은 정령 1: [삼키라고 한다] 선택 후 주사위 성공",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "빛을 잃은 줄기",
+    "en": "Lightless Stem",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "치유량 15% 증가",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "생명의 줄기 1: [줄기를 베어간다] 선택",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "빛나는 세계수의 줄기",
+    "en": "Shining World Tree Stem",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "치유량 25% 증가",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "생명의 줄기 2: [줄기를 가른다] 선택",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "망각의 로브",
+    "en": "Robe of Oblivion",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "소멸 카드로 실드 획득 시 1턴간 피해량 20% 증가(턴당 1회)",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "망각의 자취 2: [빛나는 리라], [금빛 종], [심판의 검]을 소지한 상태에서 [리라를 연주한다], [종을 흔든다], [검을 꽂는다] 선택",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "바인로드의 가면",
+    "en": "Vine Lord's Mask",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "아군 능력으로 소멸 카드 드로우 시 고정 실드 80%(턴당 2회)",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "왜곡된 생명 1: [분쟁의 과정을 지켜본다] 선택 후 주사위 성공, 후속으로 [분쟁의 결말을 지켜본다] 선택 후 주사위 성공",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "창백한 영겁의 불꽃",
+    "en": "Pale Eternal Flame",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "카드 소멸 시 1턴간 아군 피해량 10% 증가(턴당 1회)",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "영겁의 불꽃: [불씨를 옮긴다] 선택 후 주사위 실패",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "찬란한 영겁의 불꽃",
+    "en": "Brilliant Eternal Flame",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "비용 2 이상인 소멸 카드 피해량 40% 증가",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "영겁의 불꽃: [불씨를 옮긴다] 선택 후 주사위 성공",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "해방된 정수",
+    "en": "Liberated Essence",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "턴 시작 시 핸드의 무작위 소멸 카드 1장 1턴간 비용 감소 1",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "망각의 자취 1, 망각의 자취 3: 징표 장비(빛나는 리라·금빛 종·심판의 검)를 소지한 상태에서 징표를 사용하고, 후속 선택지에서 한 번 더 사용하면 징표가 사라지며 획득",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "용맹의 팔찌",
+    "en": "Bangle of Valor",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "아군 투기장 카드 피해량 20% 증가\n전투 시작 시 잊혀진 검 1장 생성",
+    "group": "미확인 구역",
+    "area": "타오르는 생명",
+    "how": "",
+    "chaos": [
+      "타오르는 생명"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "부러진 황금 깃펜",
+    "en": "Broken Golden Quill Pen",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "능력으로 연결 카드를 버릴 시 1턴간 피해량 20% 증가 (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "비정한 비평가 1, 2, 3, 4 - [공격하기] 선택 / 탐미주의자 1, 2, 3 - [공격하기] 선택",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "짝을 잃은 결혼 반지",
+    "en": "A Lonesome Wedding Ring",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "턴 시작 시 핸드의 무작위 아군 안식 카드 1장 버리기",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "유품 노점상 1 - [공격하기] 선택 / 유품 노점상 2 - [공격하기] 선택 후 전원 처치 또는 [노점상] 만 처치 후 후속 이벤트에서 [주위를 살핀다] 선택",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "누군가의 편지",
+    "en": "Someone’s Letter",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "턴 종료 시 아군 페르소나 카드가 핸드에 있다면 무작위 적 고정 피해 150%",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "찢겨진 진심 1 - [교도들을 쫓아낸다] 혹은 [공격하기] 선택 / 찢겨진 진심 2 - [공격하기] 선택 / 찢겨진 진심 3 - [대본을 요구한다] 혹은 [공격하기] 선택",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "이해할 수 없는 성물",
+    "en": "Incomprehensible Holy Object",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "능력으로 안식 카드를 버릴 때 마다 고정 실드 80% (턴당 2회)",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "일그러진 연심 2 - [성물을 쟁취한다] 혹은 [공격하기] 선택",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "가녀린 쇄골",
+    "en": "Delicate Collarbone",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "턴 시작 시 아군 페르소나 카드가 핸드에 있다면 아군 스트레스 2 감소",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "토막난 우상 1 - [경매에 참여한다] 후속 이벤트에서 입찰 성공",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "갈구하는 왼손",
+    "en": "Yearning Left Hand",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "충격파 상태인 대상에게 피해량 30% 증가",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "토막난 우상 2 - [경매에 참여한다] 후속 이벤트에서 입찰 성공",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "성가를 부르는 입술",
+    "en": "Hymn-Singing Lips",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "능력으로 카드를 버릴 시, 모든 적 공명 1 (턴당 3회)",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "토막난 우상 3 - [경매에 참여한다] 후속 이벤트에서 입찰 성공",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "으깨진 천사의 날개깃",
+    "en": "Crushed Angel Feather",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "아군의 연결 카드 사용 시, 모든 적 행동 카운트 2 증가 (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "만종의 프레스코 1 - [부서진 신성을 거둔다] 선택",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "벽화에서 뜯어낸 눈동자",
+    "en": "An Eye Plucked from a Mural",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "턴 시작 시 핸드의 아군 페르소나 카드 수만큼 1턴간 자신의 피해량 20% 증가",
+    "group": "미확인 구역",
+    "area": "허상의 극장",
+    "how": "만종의 프레스코 2 - [강림한 자의 눈을 취한다] 선택",
+    "chaos": [
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "인베이더 관찰 기록",
+    "en": "",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "공격 카드 피해량 20%, 적 수만큼 치명확률 +2%",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "이성의 찌꺼기 1",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "파그나 버섯",
+    "en": "",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "피격 시 공격자에게 취약, 약화, 고통, 작열 중 무작위 효과 1개 부여 (턴당 2회)",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "페르몬 미로",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "만화경 조각",
+    "en": "",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "능력으로 약화 부여 시 대상에게 약화 1, 작열 3 (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "은밀한 암굴 1",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "마지막 일지",
+    "en": "",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "턴 시작 시 무작위 아군 스트레스 2 증가, 모든 적 고정피해 150%",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "부화하는 요람",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "영원한 쐐기",
+    "en": "",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "턴 시작 시 지속 피해 효과를 보유한 무작위 적 고정 피해 100%",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "본능의 영토",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "뒤틀린 드릴날",
+    "en": "",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "아군 욕망 카드 발동시 모든 적 고정 피해 100% (턴당 3회)",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "지능의 소화기관 1",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "폐쇄 회로 단자",
+    "en": "",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "아군의 능력으로 전체 공격 시 무작위 적 취약 1 (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "지능의 소화기관 2",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "오염된 드론 렌즈",
+    "en": "",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "턴 시작 시 아군의 욕망 카드가 핸드에 있다면 무작위 아군 스트레스 2감소",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "지능의 소화기관 3",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "순환의 고리",
+    "en": "",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "턴 종료 시 체력이 50% 미만이면 고정 치유 70% (전투당 3회)",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "은빛 유해의 폭포",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "계승의 잔흔",
+    "en": "",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "공격 카드 2회 발동 시 모든 적 작열 4 (턴당 1회)",
+    "group": "미확인 구역",
+    "area": "만화경의 부화장",
+    "how": "빈 왕좌의 메아리",
+    "chaos": [
+      "만화경의 부화장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "광기의 식도",
+    "en": "Esophagus of Madness",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "고통 상태인 대상에게 피해량 20% 증가",
+    "group": "세력",
+    "area": "카오스 교단",
+    "how": "카오스 교단 세력의 엘리트·보스 처치, 또는 주 세력이 카오스 교단인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "쌍성의 그림자",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "저주 받은 인형",
+    "en": "Cursed Doll",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "턴 시작 시 핸드의 상태이상, 저주 카드 수만큼 치유 60%",
+    "group": "세력",
+    "area": "카오스 교단",
+    "how": "카오스 교단 세력의 엘리트·보스 처치, 또는 주 세력이 카오스 교단인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "쌍성의 그림자",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "고문 도구 상자",
+    "en": "Torture Toolbox",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "턴 시작 시 모든 적 행동 카운트 3 증가",
+    "group": "세력",
+    "area": "카오스 교단",
+    "how": "카오스 교단 세력의 엘리트·보스 처치, 또는 주 세력이 카오스 교단인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "쌍성의 그림자",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "강박의 사슬",
+    "en": "Chains of Obsession",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "공격 카드 사용 시 체력감소 1%, 고정 실드 60%",
+    "group": "세력",
+    "area": "카오스 교단",
+    "how": "카오스 교단 세력의 엘리트·보스 처치, 또는 주 세력이 카오스 교단인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "쌍성의 그림자",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "피 묻은 펜던트",
+    "en": "Bloody Pendant",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "복제됨 카드 사용 시 1턴간 모든 적의 행동 카운트 감소하지 않음 (전투당 1회)",
+    "group": "세력",
+    "area": "카오스 교단",
+    "how": "카오스 교단 세력의 엘리트·보스 처치, 또는 주 세력이 카오스 교단인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "쌍성의 그림자",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "혼돈의 주사위",
+    "en": "Dice of Discord",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "턴 종료 시 무작위 적들에게 고정 피해 40% x 2~6, 아군에게 고정 피해 200% 중 무작위 1개의 효과 발동",
+    "group": "세력",
+    "area": "카오스 교단",
+    "how": "카오스 교단 세력의 엘리트·보스 처치, 또는 주 세력이 카오스 교단인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "쌍성의 그림자",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "자연의 적의",
+    "en": "Nature's Hostility",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "처치 시 모든 적 고정 피해 200%",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "변이한 발톱",
+    "en": "Mutated Claws",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "상태이상, 저주 카드 드로우 시 1턴간 피해량 +15%",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "울브즈 베인의 등뼈",
+    "en": "Wolves Bane's Spine",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "치명타 시 고정 실드 10%",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "주시하는 방패",
+    "en": "Shield of the Watcher",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "피해를 받을 시 공격자에게 표식 1",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "자연의 선물",
+    "en": "Nature's Gift",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "턴 종료 시 치유 40%",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "풍화하지 않는 돌",
+    "en": "Eternal Stone",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "턴 시작 시 적 수만큼 고정 실드 25%",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리",
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "어둠 손아귀의 손톱",
+    "en": "Dark Grip's Claws",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "전체 공격의 피해량 25% 증가",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "야성의 털가죽 망토",
+    "en": "Wild Fur Cloak",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "턴 시작 시 반격 1",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "켄트리스 키틴 갑주",
+    "en": "Kentris Chitin Armor",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "아군 실드 획득량 15% 증가",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "글루미 프라임의 눈",
+    "en": "Gloomy Prime's Eye",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "실드 획득량 +40%",
+    "group": "세력",
+    "area": "변이체",
+    "how": "변이체 세력의 엘리트·보스 처치, 또는 주 세력이 변이체인 카오스의 델랑 상점",
+    "chaos": [
+      "푸른 항아리"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "대악과 소악 쌍수검",
+    "en": "Twin Swords of Greater and Lesser Evil",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "격파 상태인 대상에게 피해량 30% 증가",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "갑각충의 뿔",
+    "en": "Shell Bug Horn",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "치명피해 +20%",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "군체의 날개",
+    "en": "Wings of the Swarm",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "전투 시작 시 면역 2",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "고동치는 알",
+    "en": "Pulsating Egg",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "공격력 +15%, 최대 체력 +10%",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "나락충의 이빨",
+    "en": "Abyssal Bug Tooth",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "치명타 시 대상에게 50% 확률로 고통 1",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "에리식톤의 파멸",
+    "en": "The Destruction of Erysichthon",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "공격 카드 사용 시 5% 확률로 타격 1회 추가",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "자라나는 갑각",
+    "en": "Growing Carapace",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "턴 시작 시 고정 실드 40%",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "밤나비의 춤",
+    "en": "Dance of the Night Butterflies",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "격파 시 고정 실드 60%",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "선천적 포식자",
+    "en": "Natural Predator",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "격파 시 다음 사용하는 공격 카드 1장의 피해량 +100%",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "포식하는 군체",
+    "en": "Voracious Swarm",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "피해를 받을 시 공격자에게 고통 4",
+    "group": "세력",
+    "area": "인베이더",
+    "how": "인베이더 세력의 엘리트·보스 처치, 또는 주 세력이 인베이더인 카오스의 델랑 상점",
+    "chaos": [
+      "쌍성의 그림자"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "안개 낀 수정구",
+    "en": "Foggy Crystal Ball",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "비용 0인 공격 카드의 피해량 40% 증가",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "텅 빈 공허의 파편",
+    "en": "Fragment of the Empty Void",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "전투 시작 시 3장까지 버리기, 그 수만큼 드로우",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "불발된 플라즈마 봄버",
+    "en": "Unexploded Plasma Bomb",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "카드 소멸 시 무작위 적 고정 피해 40%",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "블러드 자이언트 클로",
+    "en": "Blood Giant Claw",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "격파 시 대상에게 고정 피해 150%",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "재생형 늑골",
+    "en": "Regenerative Ribcage",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "최대 체력 +12%",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "게걸스러운 연미복",
+    "en": "Gluttonous Tailcoat",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "피해를 받은 다음 턴 시작 시 고정 실드 80%",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "눈 없는 것들의 눈동자",
+    "en": "Eye of the Eyeless",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "기본 공격 카드의 피해량 40% 증가",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "팔라시아의 구슬",
+    "en": "Palasia's Orb",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "카드로 취약 부여 시 대상에게 약화 1",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "꺼져서는 안 되는 등불",
+    "en": "Torch That Should Not Be Extinguished",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "실드 보유하고 턴 시작 시 고정 실드 80%",
+    "group": "세력",
+    "area": "니힐럼",
+    "how": "니힐럼 세력의 엘리트·보스 처치, 또는 주 세력이 니힐럼인 카오스의 델랑 상점",
+    "chaos": [
+      "안개의 도시"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "별빛 서린 망토",
+    "en": "Star-Lit Cloak",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "받는 피해량 10% 감소 (턴당 1회)",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "불꽃의 가면",
+    "en": "Mask of Flames",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "취약 대상에게 피해량 35% 증가",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "동면하는 씨앗",
+    "en": "Dormant Seeds",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "카드로 실드 획득 시 고정 실드 100% (턴당 1회)",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "그림자를 속인 단검",
+    "en": "Dagger That Tricked the Shadow",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "치명피해 +12%",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "호수에 비친 검",
+    "en": "Sword Reflected in the Lake",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "핸드의 카드가 6장 이상일 시 피해량 25% 증가",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "해를 떨어트린 활",
+    "en": "Sun-Setting Bow",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "비용이 2 이상인 공격 카드의 피해량 30% 증가 (턴당 1회)",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "불멸의 비늘",
+    "en": "Immortal Scale",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "능력으로 반격 획득 시 반격 1 추가",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "요정왕의 관",
+    "en": "Fairy King's Crown",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "치명확률 +6%",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "들불 품은 뼈 가락지",
+    "en": "Bone Ring of Wildfire",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "강화 카드 사용 시 1턴간 피해량 +30%",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "고대 영혼의 부름",
+    "en": "Call of the Ancient Spirit",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "치명타 시 치유 10%",
+    "group": "세력",
+    "area": "세크레드",
+    "how": "세크레드 세력의 엘리트·보스 처치, 또는 주 세력이 세크레드인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "광휘로운 보주",
+    "en": "Radiant Orb",
+    "slot": "무기",
+    "rarity": "신화",
+    "effect": "실드 보유 대상에게 피해량 25% 증가",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "축성된 광륜",
+    "en": "Consecrated Halo",
+    "slot": "방어구",
+    "rarity": "신화",
+    "effect": "실드 획득량 25% 증가",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "징벌자의 눈",
+    "en": "Eye of the Punisher",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "적이 혼자라면 피해량 30% 증가",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "룬 코드",
+    "en": "Rune Chord",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "턴 종료 시 보존된 카드가 있다면 고정 실드 60%",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "도래된 혼돈"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "전격의 기병창",
+    "en": "Cavalry of Lightning",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "실드 보유 대상에게 피해를 줄 시 다음 사용하는 공격 카드의 피해량 +100%",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "빛의 날개",
+    "en": "Wings of Light",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "에고 포인트 3 이하라면 치명타 시 에고 포인트 0.2 획득",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "천사의 고리",
+    "en": "Ring of the Seraphim",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "강화 카드 사용 시 1턴간 피해량 +30%",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "납빛 성수",
+    "en": "Lead-Colored Holy Water",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "격파 시 대상에게 손상 2",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "비아데우스 원자로",
+    "en": "Viadeus’s Reactor",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "강화 카드 사용 시 피해 감소 1",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "황금률",
+    "en": "The Golden Rule",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "피해량 +20%, 실드 획득량 +20%",
+    "group": "세력",
+    "area": "디알로스",
+    "how": "디알로스 세력의 엘리트·보스 처치, 또는 주 세력이 디알로스인 카오스의 델랑 상점",
+    "chaos": [
+      "심판의 늪",
+      "도래된 혼돈",
+      "허상의 극장"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "타락의 왕관",
+    "en": "Crown of Corruption",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "최대 체력 10% 감소\n자신의 정의 공격 카드 치명확률 +10%",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "과부하 동력 기관",
+    "en": "Overloaded Power Engine",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "이번 턴에 자신의 결속 카드가 중첩될 때마다 자신의 공격 카드 치명피해 +3% (최대 30%)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "코어해체기",
+    "en": "Core Disassembler",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "자신이 실드를 가진 적을 타격하면 강인도 피해 2 (턴당 1회)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "환영단검",
+    "en": "Phantom Dagger",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "자신의 공격 카드를 사용하면 그 카드 비용 1당 무작위 적에게 고정 피해 60% (턴당 2회)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "심판의 트리스켈리온",
+    "en": "Triskelion of Judgment",
+    "slot": "무기",
+    "rarity": "희귀",
+    "effect": "피격 시 자신이 다음에 사용하는 공격 카드 피해량 20% 증가 (턴당 1회)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "룬 무늬 망치",
+    "en": "Runic Hammer",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "아군 고유 공격 카드의 치명피해 +20% (중첩 불가)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "응축된 광휘의 파편",
+    "en": "Fragment of Condensed Radiance",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "자신의 결속 공격 카드 치명피해 +50%",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "단절된 연산자의 비늘",
+    "en": "Needle of the Severed Overseer",
+    "slot": "무기",
+    "rarity": "전설",
+    "effect": "자신의 공격 카드로 약점 공격 시 피해량 +40%",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "회개의 방패",
+    "en": "Shield of Repentance",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "턴 종료 시 실드를 가진 모든 적에게 취약 2 (전투당 1회)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "백의",
+    "en": "White Coat",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "턴 시작 시 해로운 효과 상태인 아군이 있으면 고정 실드 50%",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "응축된 연료",
+    "en": "Condensed Fuel",
+    "slot": "방어구",
+    "rarity": "희귀",
+    "effect": "턴 종료 시 고정 치유 100% (전투당 3회)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "모방된 손",
+    "en": "Imitated Hand",
+    "slot": "방어구",
+    "rarity": "전설",
+    "effect": "전투 시작 시 피해 감소 2\n피격 시 고정 치유 80% (턴당 1회)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "집행의 계약",
+    "en": "Enforcement Contract",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "턴 종료 시 핸드의 카드 1장당 고정 치유 20% (최대 100%)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "균형의 팬던트",
+    "en": "Pendant of Balance",
+    "slot": "장신구",
+    "rarity": "희귀",
+    "effect": "아군이 공격 카드를 사용하면 고정 실드 20% (턴당 5회)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "갈라진 설계코어",
+    "en": "Split Design Core",
+    "slot": "장신구",
+    "rarity": "전설",
+    "effect": "턴 시작 시 아군 피해량 8% 증가 (전투당 3회)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  },
+  {
+    "name": "최후의 명령어",
+    "en": "The Final Command",
+    "slot": "장신구",
+    "rarity": "신화",
+    "effect": "자신의 카드나 에고 스킬로 행동 포인트를 얻으면 1턴간 아군 공격력 +3% (최대 6중첩)",
+    "group": "시즌 공용",
+    "area": "천상의 방벽",
+    "how": "천상의 방벽 시즌 장비 (효과는 영문 자료를 옮긴 것)",
+    "chaos": [
+      "천상의 방벽"
+    ],
+    "shop": false,
+    "unlock": ""
+  }
+]

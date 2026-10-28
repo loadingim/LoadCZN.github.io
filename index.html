@@ -207,6 +207,49 @@
   .mx .cell a:hover img { border-color: var(--gold); }
   .mx .gap { color: #4a4652; }
 
+  /* 자료 */
+  .subtabs { display: flex; gap: 6px; flex-wrap: wrap; margin: -4px 0 18px; }
+  .subtabs a { padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); font-size: 14px; color: #d4cfd8; }
+  .subtabs a:hover { border-color: #4a4652; }
+  .subtabs a.on { border-color: var(--gold); background: var(--gold-soft); color: var(--gold-hi); font-weight: 700; }
+  .dbq { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: #0f0e12; color: var(--text); font: inherit; font-size: 14px; }
+  .dbq:focus { outline: none; border-color: var(--gold); }
+  .eqgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 10px; }
+  .eq { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; word-break: keep-all; overflow-wrap: anywhere; }
+  .eq.hit { border-color: var(--gold); }
+  .eq .eh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+  .eq .en2 { font-weight: 700; font-size: 15px; }
+  .eq .es { font-size: 12px; color: var(--muted); }
+  .rar { font-size: 11px; padding: 1px 7px; border-radius: 6px; border: 1px solid var(--line); color: #d4cfd8; }
+  .rar.r-신화 { border-color: #c26de0; color: #e3a9f5; }
+  .rar.r-전설 { border-color: var(--gold); color: var(--gold-hi); }
+  .rar.r-희귀 { border-color: #3d8fd6; color: #9cc8f0; }
+  .eq .ee { font-size: 13px; line-height: 1.6; color: #d5d0d9; margin: 6px 0 8px; white-space: pre-line; }
+  .eq .eg { font-size: 12px; line-height: 1.6; color: var(--muted); }
+  .eq .eg b { color: var(--gold); font-weight: 500; margin-right: 4px; }
+  .eq .ec { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .eq .ec span { font-size: 11px; padding: 1px 7px; border-radius: 6px; background: #121116; border: 1px solid var(--line); color: #bdb7c2; }
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .tbl th, .tbl td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .tbl thead th { background: var(--panel); color: var(--muted); font-weight: 500; white-space: nowrap; }
+  .tbl tbody tr:last-child > * { border-bottom: none; }
+  .tbl td.num { white-space: nowrap; }
+  .tbl .sn2 { font-weight: 700; white-space: nowrap; }
+  .tbl .se2 { font-size: 11px; color: var(--muted); }
+  .tbl .eff { white-space: pre-line; line-height: 1.6; }
+  .gl { display: grid; gap: 8px; }
+  .gli { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; word-break: keep-all; overflow-wrap: anywhere; }
+  .gli .gh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; margin-bottom: 4px; }
+  .gli .gn { font-weight: 700; }
+  .gli .ge { font-size: 12px; color: var(--muted); }
+  .gli .gt { font-size: 11px; padding: 1px 7px; border-radius: 6px; border: 1px solid var(--line); color: #bdb7c2; margin-left: auto; }
+  .gli .gd { font-size: 13px; line-height: 1.6; color: #d5d0d9; }
+  .src { margin-top: 22px; font-size: 12px; color: #6f6a76; line-height: 1.6; }
+  .src a { text-decoration: underline; text-underline-offset: 2px; }
+  a.ichip:hover { border-color: var(--gold); }
+  .ichip small { color: var(--muted); font-size: 11px; margin-left: 4px; }
+
   /* 확대 보기 */
   .lb { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .85); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; cursor: zoom-out; }
   .lb[hidden] { display: none; }
@@ -264,6 +307,7 @@
       <a href="#/" data-tab="list">전투원</a>
       <a href="#/teams" data-tab="teams">조합</a>
       <a href="#/roles" data-tab="roles">역할</a>
+      <a href="#/db" data-tab="db">자료</a>
     </nav>
     <div class="search">
       <input id="q" type="search" placeholder="전투원 이름 검색" autocomplete="off" aria-label="전투원 이름 검색">
@@ -280,6 +324,7 @@
   <a href="#/" data-tab="list">전투원</a>
   <a href="#/teams" data-tab="teams">조합</a>
   <a href="#/roles" data-tab="roles">역할</a>
+  <a href="#/db" data-tab="db">자료</a>
 </nav>
 
 <div class="lb" id="lb" hidden>
@@ -297,6 +342,11 @@ const ATTR_COLOR = { "열정": "#e0434c", "공허": "#9b5de5", "본능": "#e09a2
 let chars = [], teams = [], byId = {}, decks = [], deckByCode = {};
 const sel = { attr: new Set(), job: new Set(), grade: new Set(), role: new Set(), tag: new Set(), partner: null, sort: "name" };
 const teamSel = { members: [], tag: new Set() };
+let equips = [], eqByName = {}, frags = null, gloss = [], extraState = "loading";
+const eqSel = { slot: "", grp: "", chaos: "", q: "", applied: "" };
+const glSel = { type: "", q: "" };
+const EQ_GROUPS = ["공용", "시즌 공용", "투기장", "미확인 구역", "세력"];
+const CHAOS = ["푸른 항아리", "쌍성의 그림자", "안개의 도시", "심판의 늪", "도래된 혼돈", "제 0 연구소", "타오르는 생명", "허상의 극장", "만화경의 부화장", "천상의 방벽"];
 let sheetOpen = false, listScroll = 0, curView = "";
 
 /* ---------- 공통 ---------- */
@@ -522,7 +572,8 @@ function viewChar(id) {
   const g = d.gear || {};
   if (Object.keys(g).length) {
     h += `<div class="sec"><h3>추천 공용 장비</h3><div class="gear">${["무기", "방어구", "장신구"].filter(k => g[k]).map(k =>
-      `<div class="k">${k}</div><div class="chips">${g[k].map(x => `<span class="ichip">${esc(x)}</span>`).join("")}</div>`).join("")}</div></div>`;
+      `<div class="k">${k}</div><div class="chips">${g[k].map(gearChip).join("")}</div>`).join("")}</div>
+      ${equips.length ? '<p class="note" style="margin-top:8px">장비를 누르면 효과와 획득처를 볼 수 있습니다.</p>' : ""}</div>`;
   }
   return h + `</section>`;
 }
@@ -619,6 +670,130 @@ function viewRoles() {
   </section>`;
 }
 
+/* ---------- 자료: 장비 획득처 / 기억의 조각 / 효과 사전 ---------- */
+const GEAR_ALIAS = { "타이탄 강화복": "타이탄 전투 강화복", "사이오닉 강화복": "사이오닉 전투 강화복" }; // 전투원 데이터의 줄임 표기
+function gearName(x) { const n = String(x || "").replace(/\s*\(.*\)\s*$/, "").trim(); return GEAR_ALIAS[n] || n; } // "흑요석 검(딜러)" → "흑요석 검"
+function eqShort(e) {
+  if (e.group === "미확인 구역") return e.area + " 미확인 구역";
+  if (e.group === "세력") return e.area + " 세력";
+  if (e.group === "시즌 공용") return e.area + " 시즌";
+  if (e.group === "투기장") return "차원터널 투기장";
+  if (e.how.startsWith("세넥투스")) return "세넥투스 처치";
+  return e.unlock ? "공용 · " + e.unlock : "공용";
+}
+function gearChip(x) {
+  const e = eqByName[gearName(x)];
+  if (!e) return `<span class="ichip">${esc(x)}</span>`;
+  return `<a class="ichip" href="#/db/equipment/${encodeURIComponent(e.name)}" title="${esc(e.effect)}">${esc(x)}<small>${esc(eqShort(e))}</small></a>`;
+}
+function dbNav(sub) {
+  const items = [["equipment", "장비 획득처"], ["fragments", "기억의 조각"], ["glossary", "효과 사전"]];
+  return `<div class="subtabs">${items.map(([k, t]) => `<a href="#/db/${k}" class="${k === sub ? "on" : ""}">${t}</a>`).join("")}</div>`;
+}
+function dbWait() {
+  return extraState === "error"
+    ? '<div class="empty">자료 파일을 불러오지 못했습니다. data 폴더의 equipment·fragments·glossary JSON을 확인해 주세요.</div>'
+    : '<div class="empty">불러오는 중…</div>';
+}
+function eqMatches(e) {
+  const q = eqSel.q.trim();
+  return (!eqSel.slot || e.slot === eqSel.slot) && (!eqSel.grp || e.group === eqSel.grp) &&
+    (!eqSel.chaos || e.area === eqSel.chaos || e.chaos.includes(eqSel.chaos)) &&
+    (!q || e.name.includes(q) || e.effect.includes(q) || (e.en || "").toLowerCase().includes(q.toLowerCase()));
+}
+function eqCard(e, hit) {
+  const where = e.group === "공용" ? "공용" : e.group === "투기장" ? "투기장" : `${e.group} · ${e.area}`;
+  return `<article class="eq${hit ? " hit" : ""}" id="eq-${esc(e.name)}">
+    <div class="eh"><span class="en2">${esc(e.name)}</span>${e.rarity ? `<span class="rar r-${esc(e.rarity)}">${esc(e.rarity)}</span>` : ""}<span class="es">${esc(e.slot)}${e.en ? " · " + esc(e.en) : ""}</span></div>
+    <div class="ee">${esc(e.effect)}</div>
+    <div class="eg"><b>획득</b>${esc(where)}</div>
+    <div class="eg">${esc(e.how)}</div>
+    ${e.chaos.length ? `<div class="ec">${e.chaos.map(c => `<span>${esc(c)}</span>`).join("")}${e.shop ? "<span>델랑 상점</span>" : ""}</div>` : e.shop ? '<div class="ec"><span>델랑 상점</span></div>' : ""}
+  </article>`;
+}
+function eqListHtml(focus) {
+  const list = equips.filter(eqMatches);
+  return `<div class="cnt" style="display:block;margin:0 0 10px">${list.length}개 장비</div>
+    <div class="eqgrid">${list.length ? list.map(e => eqCard(e, e.name === focus)).join("") : '<div class="empty">조건에 맞는 장비가 없습니다.</div>'}</div>`;
+}
+function viewEquip(focus) {
+  // 전투원 페이지에서 장비를 눌러 들어온 경우 한 번만 그 장비로 검색 (이후 필터 조작은 유지)
+  if (focus !== eqSel.applied) {
+    eqSel.applied = focus;
+    if (focus && eqByName[focus]) { eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.q = focus; }
+  }
+  const chip = (key, v, label) => `<button class="chip${eqSel[key] === v ? " on" : ""}" data-eq="${key}" data-v="${esc(v)}">${esc(label)}</button>`;
+  return `<div class="filters" style="display:block;position:static">
+      <div class="frow"><span class="fl">검색</span><div style="flex:1;min-width:0"><input class="dbq" data-in="eq" type="search" placeholder="장비 이름이나 효과로 검색 (예: 치명, 실드)" value="${esc(eqSel.q)}"></div></div>
+      <div class="frow"><span class="fl">부위</span><div class="chips">${chip("slot", "", "전체")}${["무기", "방어구", "장신구"].map(s => chip("slot", s, s)).join("")}</div></div>
+      <div class="frow"><span class="fl">획득</span><div class="chips">${chip("grp", "", "전체")}${EQ_GROUPS.map(s => chip("grp", s, s)).join("")}</div></div>
+      <div class="frow"><span class="fl">카오스</span><div class="chips">${chip("chaos", "", "전체")}${CHAOS.map(s => chip("chaos", s, s)).join("")}</div></div>
+      <div class="frow foot"><button class="btn" data-act="resetEq">초기화</button><span class="note">'카오스'는 그 카오스의 미확인 구역 보상이거나, 그 카오스에 나오는 세력의 장비입니다.</span></div>
+    </div>
+    <div id="eqList">${eqListHtml(focus)}</div>
+    <p class="src">공용 장비는 델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치 보상으로 얻고, 일부는 해당 카오스 탐사도를 올려야 풀립니다. 세력 장비는 그 세력의 엘리트·보스를 잡거나 주 세력이 같은 카오스의 델랑 상점에서 얻습니다. 획득처는 확정 드롭이 아닙니다.<br>
+    출처: <a href="https://namu.wiki/w/%EC%B9%B4%EC%98%A4%EC%8A%A4%20%EC%A0%9C%EB%A1%9C%20%EB%82%98%EC%9D%B4%ED%8A%B8%EB%A9%94%EC%96%B4/%EC%B9%B4%EC%98%A4%EC%8A%A4/%EC%9E%A5%EB%B9%84" target="_blank" rel="noopener">나무위키 카오스/장비</a> (CC BY-NC-SA 2.0 KR) ·
+    <a href="https://kazena.co.kr/db/equipment/slot/weapon" target="_blank" rel="noopener">카오스 빌드 장비 DB</a> ·
+    <a href="https://www.prydwen.gg/chaos-zero-nightmare/equipment" target="_blank" rel="noopener">Prydwen</a>. 천상의 방벽(시즌 5) 장비 16종은 효과를 Prydwen 영문 자료에서 옮겼습니다.</p>`;
+}
+function viewFrag() {
+  const f = frags;
+  const sets = n => f.sets.filter(s => s.pieces === n).map(s => `<tr><td><div class="sn2">${esc(s.name)}</div><div class="se2">${esc(s.en)}</div></td><td class="eff">${esc(s.effect)}</td></tr>`).join("");
+  return `<div class="sec" style="margin-top:0"><h3>세트 효과</h3>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>4세트</th><th>효과</th></tr></thead><tbody>${sets(4)}</tbody></table></div>
+      <div class="tbl-wrap" style="margin-top:10px"><table class="tbl"><thead><tr><th>2세트</th><th>효과</th></tr></thead><tbody>${sets(2)}</tbody></table></div></div>
+    <div class="sec"><h3>부위별 주옵션</h3>
+      <p class="note" style="margin:-4px 0 10px">1~3번은 주옵션이 고정이고, 4~6번(이상·갈망·상상)은 획득할 때 무작위로 정해집니다. 수치는 등급별 시작값~최대 강화값입니다.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>부위</th><th>주옵션</th><th>초록</th><th>파랑</th><th>금색</th></tr></thead><tbody>
+      ${f.slots.map(s => s.rows.map((r, i) => `<tr>${i === 0 ? `<td rowspan="${s.rows.length}"><div class="sn2">${esc(s.slot)}</div><div class="se2">${esc(s.en)}</div></td>` : ""}<td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td><td class="num">${esc(r[2])}</td><td class="num">${esc(r[3])}</td></tr>`).join("")).join("")}
+      </tbody></table></div></div>
+    <div class="sec"><h3>등급별 강화</h3>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>등급</th><th>최대 레벨</th><th>시작 부옵션 수</th><th>부옵션 강화 횟수</th></tr></thead><tbody>
+      ${f.rarities.map(r => `<tr><td>${esc(r.color)}</td><td class="num">${r.maxLevel}</td><td class="num">${r.startSubs}개</td><td class="num">${r.subUpgrades}회</td></tr>`).join("")}
+      </tbody></table></div>
+      <p class="note" style="margin-top:8px">부옵션이 4개보다 적으면 강화할 때 새 부옵션이 붙고, 4개가 다 차면 기존 부옵션 하나가 무작위로 오릅니다. 같은 부옵션은 두 번 붙지 않고, 주옵션과 같은 부옵션도 붙지 않습니다.</p></div>
+    <div class="sec"><h3>부옵션 수치 범위</h3>
+      <p class="note" style="margin:-4px 0 10px">'1회'는 처음 붙을 때나 한 번 오를 때의 값이고, '최대'는 같은 부옵션에 강화가 몰렸을 때의 이론상 최댓값입니다.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>부옵션</th><th>초록 1회</th><th>파랑 1회</th><th>금색 1회</th><th>초록 최대</th><th>파랑 최대</th><th>금색 최대</th></tr></thead><tbody>
+      ${f.subs.map(r => `<tr><td class="sn2">${esc(r[0])}</td>${r.slice(1).map(v => `<td class="num">${esc(v)}</td>`).join("")}</tr>`).join("")}
+      </tbody></table></div></div>
+    <div class="sec"><h3>얻는 방법</h3>${f.farming.map(t => `<p class="desc" style="margin:0 0 6px">· ${esc(t)}</p>`).join("")}</div>
+    <p class="src">출처: <a href="https://www.prydwen.gg/chaos-zero-nightmare/guides/memory-fragments-stats" target="_blank" rel="noopener">Prydwen 기억의 조각 수치</a>(2025-11 기준) ·
+    <a href="https://www.prydwen.gg/chaos-zero-nightmare/guides/memory-fragments" target="_blank" rel="noopener">Prydwen 기억의 조각</a> ·
+    한글 세트명·효과 <a href="https://kazena.co.kr/db/fragments" target="_blank" rel="noopener">카오스 빌드</a>. 등급은 게임 내 색으로 표기했습니다.</p>`;
+}
+function glMatches(g) {
+  const q = glSel.q.trim().toLowerCase();
+  return (!glSel.type || g.type === glSel.type) &&
+    (!q || (g.name || "").toLowerCase().includes(q) || g.en.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q));
+}
+function glListHtml() {
+  const list = gloss.filter(glMatches);
+  return `<div class="cnt" style="display:block;margin:0 0 10px">${list.length}개 용어</div>
+    <div class="gl">${list.length ? list.map(g => `<div class="gli"><div class="gh"><span class="gn">${esc(g.name || g.en)}</span>${g.name ? `<span class="ge">${esc(g.en)}</span>` : '<span class="ge">한글 이름 미확인</span>'}<span class="gt">${esc(g.type)}</span></div><div class="gd">${esc(g.desc)}</div></div>`).join("") : '<div class="empty">찾는 용어가 없습니다.</div>'}</div>`;
+}
+function viewGloss() {
+  const types = ["상태 효과", "고유 효과", "카드 태그", "기타"];
+  const chip = (v, label) => `<button class="chip${glSel.type === v ? " on" : ""}" data-gl="${esc(v)}">${esc(label)}</button>`;
+  return `<div class="filters" style="display:block;position:static">
+      <div class="frow"><span class="fl">검색</span><div style="flex:1;min-width:0"><input class="dbq" data-in="gl" type="search" placeholder="용어나 설명으로 검색 (예: 취약, Vulnerable)" value="${esc(glSel.q)}"></div></div>
+      <div class="frow"><span class="fl">분류</span><div class="chips">${chip("", "전체")}${types.map(t => chip(t, t)).join("")}</div></div>
+    </div>
+    <div id="glList">${glListHtml()}</div>
+    <p class="src">설명은 <a href="https://www.prydwen.gg/chaos-zero-nightmare/guides/effects-dictionary" target="_blank" rel="noopener">Prydwen 효과 사전</a>(2026-10-27 기준)을 우리말로 옮긴 것입니다. 한글 용어는 게임 내 표기를 따랐고, 확인하지 못한 용어는 영문으로 두었습니다.</p>`;
+}
+function viewDb(sub, arg) {
+  const titles = { equipment: "장비 획득처", fragments: "기억의 조각", glossary: "효과 사전" };
+  if (!titles[sub]) sub = "equipment";
+  const title = titles[sub];
+  let body;
+  if (extraState !== "ok") body = dbWait();
+  else if (sub === "fragments") body = frags ? viewFrag() : dbWait();
+  else if (sub === "glossary") body = viewGloss();
+  else body = viewEquip(arg);
+  return `<section class="page"><div class="eyebrow">자료</div><h1>${title}</h1>${dbNav(sub)}${body}</section>`;
+}
+
 /* ---------- 확대 보기 ---------- */
 const lb = document.getElementById("lb");
 function openLb(src, cap) {
@@ -637,12 +812,13 @@ function closeLb() {
 /* ---------- 라우팅 ---------- */
 function parseRoute() {
   const h = location.hash.replace(/^#\/?/, "");
-  const [a, b] = h.split("/");
+  const [a, b, c] = h.split("/");
   const id = b ? decodeURIComponent(b) : "";
   if (a === "char" && id) return { view: "char", id };
   if (a === "team" && id) return { view: "team", id };
   if (a === "teams") return { view: "teams" };
   if (a === "roles") return { view: "roles" };
+  if (a === "db") return { view: "db", sub: id || "equipment", arg: c ? decodeURIComponent(c) : "" };
   return { view: "list" };
 }
 function render() {
@@ -652,6 +828,7 @@ function render() {
   else if (r.view === "team") app.innerHTML = viewTeam(r.id);
   else if (r.view === "teams") app.innerHTML = viewTeams();
   else if (r.view === "roles") app.innerHTML = viewRoles();
+  else if (r.view === "db") app.innerHTML = viewDb(r.sub, r.arg);
   else app.innerHTML = viewList();
   const tab = r.view === "char" || r.view === "list" ? "list" : r.view === "team" ? "teams" : r.view;
   document.querySelectorAll("[data-tab]").forEach(a => a.classList.toggle("on", a.dataset.tab === tab));
@@ -693,6 +870,10 @@ document.addEventListener("click", e => {
     render();
     return;
   }
+  const eqc = e.target.closest("[data-eq]");
+  if (eqc) { eqSel[eqc.dataset.eq] = eqc.dataset.v; render(); return; }
+  const glc = e.target.closest("[data-gl]");
+  if (glc) { glSel.type = glc.dataset.gl; render(); return; }
   const act = e.target.closest("[data-act]");
   if (!act) return;
   const v = act.dataset.v;
@@ -711,11 +892,19 @@ document.addEventListener("click", e => {
       render(); break;
     }
     case "resetTeams": teamSel.members = []; teamSel.tag.clear(); render(); break;
+    case "resetEq": eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.q = ""; render(); break;
     case "zoom": openLb(act.dataset.src, act.dataset.cap); break;
     case "closeLb": closeLb(); break;
   }
 });
 lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+// 자료 탭 검색창: 입력할 때마다 목록만 다시 그려 입력 포커스를 유지
+document.addEventListener("input", e => {
+  const box = e.target.closest("[data-in]");
+  if (!box) return;
+  if (box.dataset.in === "eq") { eqSel.q = box.value; const l = document.getElementById("eqList"); if (l) l.innerHTML = eqListHtml(""); }
+  else if (box.dataset.in === "gl") { glSel.q = box.value; const l = document.getElementById("glList"); if (l) l.innerHTML = glListHtml(); }
+});
 
 /* 헤더 검색 */
 const q = document.getElementById("q"), results = document.getElementById("results");
@@ -747,6 +936,24 @@ document.addEventListener("keydown", e => {
 });
 window.addEventListener("hashchange", onRouteChange);
 
+/* 자료 탭 데이터: 없거나 깨져도 기존 화면에는 영향이 없도록 따로 불러온다 */
+function loadExtra() {
+  const get = u => fetch(u).then(r => { if (!r.ok) throw new Error(u + " " + r.status); return r.json(); });
+  Promise.all(["data/equipment.json", "data/fragments.json", "data/glossary.json"].map(get))
+    .then(([ej, fj, gj]) => {
+      equips = Array.isArray(ej) ? ej : [];
+      eqByName = Object.fromEntries(equips.map(e => [e.name, e]));
+      frags = fj && Array.isArray(fj.sets) ? fj : null;
+      gloss = Array.isArray(gj) ? gj : [];
+      extraState = "ok";
+    })
+    .catch(() => { extraState = "error"; })
+    .then(() => {
+      const v = parseRoute().view;
+      if (v === "db" || v === "char") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    });
+}
+
 /* 데이터 불러오기 */
 Promise.all(["data/combatants.json", "data/teams.json", "data/decks.json"].map(u =>
   fetch(u).then(r => { if (!r.ok) throw new Error(u + " " + r.status); return r.json(); })))
@@ -758,6 +965,7 @@ Promise.all(["data/combatants.json", "data/teams.json", "data/decks.json"].map(u
     deckByCode = Object.fromEntries(decks.map(k => [k.code, k]));
     byId = Object.fromEntries(chars.map(d => [d.id, d]));
     curView = render();
+    loadExtra();
   })
   .catch(() => {
     document.getElementById("app").innerHTML = '<section class="page"><div class="empty">data.json을 불러오지 못했습니다. 파일 이름과 JSON 형식(따옴표, 쉼표)을 확인해 주세요.</div></section>';
