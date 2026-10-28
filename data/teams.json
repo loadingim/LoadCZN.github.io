@@ -6118,5 +6118,27 @@
         "deck": "adelheid-draw"
       }
     ]
+  },
+  {
+    "id": "rossweisse-tiphera-fei",
+    "name": "로스바이세 + 티페라 + 페이",
+    "tags": [],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-mugeom"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-memory-draw"
+      },
+      {
+        "id": "fei",
+        "alts": [],
+        "deck": "fei-ap-draw"
+      }
+    ]
   }
 ]

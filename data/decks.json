@@ -470,5 +470,29 @@
     "image": "decks/yuki-steal.webp",
     "thumb": "decks/thumb/yuki-steal.webp",
     "note": ""
+  },
+  {
+    "code": "rossweisse-mugeom",
+    "char": "rossweisse",
+    "name": "무한검",
+    "image": "decks/rossweisse-mugeom.webp",
+    "thumb": "decks/thumb/rossweisse-mugeom.webp",
+    "note": ""
+  },
+  {
+    "code": "tiphera-memory-draw",
+    "char": "tiphera",
+    "name": "기억 + 드로우",
+    "image": "decks/tiphera-memory-draw.webp",
+    "thumb": "decks/thumb/tiphera-memory-draw.webp",
+    "note": ""
+  },
+  {
+    "code": "fei-ap-draw",
+    "char": "fei",
+    "name": "행포 + 드로우",
+    "image": "decks/fei-ap-draw.webp",
+    "thumb": "decks/thumb/fei-ap-draw.webp",
+    "note": ""
   }
 ]
