@@ -178,17 +178,10 @@
   .tm .pf img { object-fit: cover; object-position: top; }
   .tm .mn { font-weight: 700; font-size: 13px; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .tm .md { font-size: 12px; color: var(--gold); min-height: 1.5em; overflow-wrap: anywhere; }
-  .tps { display: flex; gap: 6px; flex-shrink: 0; }
-  .tps img, .tps .unk { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; object-position: top; background: #121116; border: 1px solid var(--line); }
-  .tps .unk { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 11px; }
   .tn { font-family: var(--serif); font-weight: 700; font-size: 17px; }
   .ts { font-size: 13px; color: #cbc6cf; }
   .ttags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 200px; }
   .ttag { font-size: 12px; color: var(--muted); }
-  .tmini { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line); margin-bottom: 8px; }
-  .tmini:hover { border-color: var(--gold); }
-  .tmini .tps img, .tmini .tps .unk { width: 36px; height: 36px; }
-  .tmini .alt { font-size: 11px; color: var(--muted); margin-left: auto; }
   .tslots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .tslot { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
   .tslot .pf { aspect-ratio: 3 / 4; }
@@ -255,7 +248,6 @@
     .foot .cnt { display: none; }
     .dtop { grid-template-columns: 1fr; gap: 16px; }
     .dpf { max-width: 260px; margin: 0 auto; width: 100%; }
-    .tps img, .tps .unk { width: 48px; height: 48px; }
     .ttags { justify-content: flex-start; max-width: none; }
     .tslots { grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .tslot .sb { padding: 6px 8px; font-size: 12px; }
@@ -347,10 +339,6 @@ function img(d, cls) {
 }
 function charLink(id) { return "#/char/" + encodeURIComponent(id); }
 function teamIds(t) { return (t.slots || []).map(s => s.id); }
-function portraitOrUnknown(id) {
-  const c = byId[id];
-  return c ? img(c) : `<span class="unk">${esc(id || "?")}</span>`;
-}
 function labelHtml(l) { return l ? `<span class="lbl">${esc(l)}</span>` : ""; }
 
 /* ---------- 빌드 (역할 요약 아래) ---------- */
@@ -482,17 +470,9 @@ function matesOf(id) {
   return Object.keys(count).sort((a, b) => count[b] - count[a] || byId[a].name_ko.localeCompare(byId[b].name_ko, "ko"))
     .map(o => ({ c: byId[o], n: count[o] }));
 }
-function teamMini(t, altLabel) {
-  return `<a class="tmini" href="#/team/${encodeURIComponent(t.id)}">
-    <span class="tps">${teamIds(t).map(portraitOrUnknown).join("")}</span>
-    <span><b>${esc(t.name)}</b></span>${altLabel ? `<span class="alt">${altLabel}</span>` : ""}
-  </a>`;
-}
 function viewChar(id) {
   const d = byId[id];
   if (!d) return `<section class="page"><a class="back" href="#/">← 전투원 목록</a><div class="empty">전투원을 찾을 수 없습니다.</div></section>`;
-  const inTeams = teams.filter(t => teamIds(t).includes(d.id));
-  const asAlt = teams.filter(t => !teamIds(t).includes(d.id) && (t.slots || []).some(s => (s.alts || []).includes(d.id)));
   const mates = matesOf(d.id);
   let h = `<section class="page" style="--ac:${acOf(d)}">
     <a class="back" href="#/">← 전투원 목록</a>
@@ -514,9 +494,6 @@ function viewChar(id) {
     </div>
     <div class="sec"><h3>역할 요약</h3><p class="desc rsum">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</p>${buildsHtml(d)}</div>
     ${deckSection(d)}
-    <div class="sec"><h3>이 전투원이 들어간 조합</h3>${inTeams.length || asAlt.length
-      ? inTeams.map(t => teamMini(t)).join("") + asAlt.map(t => teamMini(t, "대체 멤버")).join("")
-      : '<p class="note">아직 등록된 조합이 없습니다.</p>'}</div>
     <div class="sec"><h3>잘 맞는 전투원</h3>${mates.length
       ? `<div class="mates">${mates.map(m => `<a class="mate" href="${charLink(m.c.id)}">${img(m.c)}<span>${esc(m.c.name_ko)}</span>${m.n > 1 ? `<em>${m.n}회</em>` : ""}</a>`).join("")}</div>`
       : '<p class="note">조합이 등록되면 같은 조합에 함께 들어간 전투원이 자동으로 표시됩니다.</p>'}</div>`;
