@@ -3,413 +3,472 @@
     "code": "hilde-normal",
     "char": "hilde",
     "name": "힐데-BASE",
-    "image": "decks/hilde-normal.png",
+    "image": "decks/hilde-normal.webp",
+    "thumb": "decks/thumb/hilde-normal.webp",
     "note": ""
   },
   {
     "code": "olga-normal",
     "char": "olga",
     "name": "올가-BASE",
-    "image": "decks/olga-normal.png",
+    "image": "decks/olga-normal.webp",
+    "thumb": "decks/thumb/olga-normal.webp",
     "note": ""
   },
   {
     "code": "arabella-normal",
     "char": "arabella",
     "name": "아라벨라-BASE",
-    "image": "decks/arabella-normal.png",
+    "image": "decks/arabella-normal.webp",
+    "thumb": "decks/thumb/arabella-normal.webp",
     "note": ""
   },
   {
     "code": "amir-metal",
     "char": "amir",
     "name": "광역",
-    "image": "decks/amir-metal.png",
+    "image": "decks/amir-metal.webp",
+    "thumb": "decks/thumb/amir-metal.webp",
     "note": ""
   },
   {
     "code": "beryl-followup",
     "char": "beryl",
     "name": "빈틈 발견",
-    "image": "decks/beryl-followup.png",
+    "image": "decks/beryl-followup.webp",
+    "thumb": "decks/thumb/beryl-followup.webp",
     "note": ""
   },
   {
     "code": "cassius-quest",
     "char": "cassius",
     "name": "행포",
-    "image": "decks/cassius-quest.png",
+    "image": "decks/cassius-quest.webp",
+    "thumb": "decks/thumb/cassius-quest.webp",
     "note": ""
   },
   {
     "code": "chizuru-chamwol",
     "char": "chizuru",
     "name": "기카",
-    "image": "decks/chizuru-chamwol.png",
+    "image": "decks/chizuru-chamwol.webp",
+    "thumb": "decks/thumb/chizuru-chamwol.webp",
     "note": ""
   },
   {
     "code": "haru-retrieve",
     "char": "haru",
     "name": "0코 앵커슛",
-    "image": "decks/haru-retrieve.png",
+    "image": "decks/haru-retrieve.webp",
+    "thumb": "decks/thumb/haru-retrieve.webp",
     "note": ""
   },
   {
     "code": "kayron-mark-chain",
     "char": "kayron",
     "name": "광역",
-    "image": "decks/kayron-mark-chain.png",
+    "image": "decks/kayron-mark-chain.webp",
+    "thumb": "decks/thumb/kayron-mark-chain.webp",
     "note": ""
   },
   {
     "code": "luke-weakpoint",
     "char": "luke",
     "name": "약점 공격",
-    "image": "decks/luke-weakpoint.png",
+    "image": "decks/luke-weakpoint.webp",
+    "thumb": "decks/thumb/luke-weakpoint.webp",
     "note": ""
   },
   {
     "code": "magna-vuln",
     "char": "magna",
     "name": "취약",
-    "image": "decks/magna-vuln.png",
+    "image": "decks/magna-vuln.webp",
+    "thumb": "decks/thumb/magna-vuln.webp",
     "note": ""
   },
   {
     "code": "narja-morale",
     "char": "narja",
     "name": "사기 + 드로우",
-    "image": "decks/narja-morale.png",
+    "image": "decks/narja-morale.webp",
+    "thumb": "decks/thumb/narja-morale.webp",
     "note": ""
   },
   {
     "code": "nia-adagio",
     "char": "nia",
     "name": "소멸 + 드로우",
-    "image": "decks/nia-adagio.png",
+    "image": "decks/nia-adagio.webp",
+    "thumb": "decks/thumb/nia-adagio.webp",
     "note": ""
   },
   {
     "code": "nine-armor",
     "char": "nine",
     "name": "철갑",
-    "image": "decks/nine-armor.png",
+    "image": "decks/nine-armor.webp",
+    "thumb": "decks/thumb/nine-armor.webp",
     "note": ""
   },
   {
     "code": "rin-jan",
     "char": "rin",
     "name": "흑운 오의",
-    "image": "decks/rin-jan.png",
+    "image": "decks/rin-jan.webp",
+    "thumb": "decks/thumb/rin-jan.webp",
     "note": ""
   },
   {
     "code": "rita-fate",
     "char": "rita",
     "name": "운명 각인",
-    "image": "decks/rita-fate.png",
+    "image": "decks/rita-fate.webp",
+    "thumb": "decks/thumb/rita-fate.webp",
     "note": ""
   },
   {
     "code": "rita-morale",
     "char": "rita",
     "name": "사기 + 덱 압축",
-    "image": "decks/rita-morale.png",
+    "image": "decks/rita-morale.webp",
+    "thumb": "decks/thumb/rita-morale.webp",
     "note": ""
   },
   {
     "code": "selena-followup",
     "char": "selena",
     "name": "열정 협공",
-    "image": "decks/selena-followup.png",
+    "image": "decks/selena-followup.webp",
+    "thumb": "decks/thumb/selena-followup.webp",
     "note": ""
   },
   {
     "code": "selena-recharge",
     "char": "selena",
     "name": "강인도 충전",
-    "image": "decks/selena-recharge.png",
+    "image": "decks/selena-recharge.webp",
+    "thumb": "decks/thumb/selena-recharge.webp",
     "note": ""
   },
   {
     "code": "sereniel-ap",
     "char": "sereniel",
     "name": "행포 호밍",
-    "image": "decks/sereniel-ap.png",
+    "image": "decks/sereniel-ap.webp",
+    "thumb": "decks/thumb/sereniel-ap.webp",
     "note": ""
   },
   {
     "code": "tiphera-predict",
     "char": "tiphera",
     "name": "드로우+행포",
-    "image": "decks/tiphera-predict.png",
+    "image": "decks/tiphera-predict.webp",
+    "thumb": "decks/thumb/tiphera-predict.webp",
     "note": ""
   },
   {
     "code": "tiphera-select",
     "char": "tiphera",
     "name": "행포",
-    "image": "decks/tiphera-select.png",
+    "image": "decks/tiphera-select.webp",
+    "thumb": "decks/thumb/tiphera-select.webp",
     "note": ""
   },
   {
     "code": "tressa-pain",
     "char": "tressa",
     "name": "고통",
-    "image": "decks/tressa-pain.png",
+    "image": "decks/tressa-pain.webp",
+    "thumb": "decks/thumb/tressa-pain.webp",
     "note": ""
   },
   {
     "code": "adelheid-draw",
     "char": "adelheid",
     "name": "행포 + 드로우",
-    "image": "decks/adelheid-draw.png",
+    "image": "decks/adelheid-draw.webp",
+    "thumb": "decks/thumb/adelheid-draw.webp",
     "note": ""
   },
   {
     "code": "anika-efficiency",
     "char": "anika",
     "name": "강인도 파괴",
-    "image": "decks/anika-efficiency.png",
+    "image": "decks/anika-efficiency.webp",
+    "thumb": "decks/thumb/anika-efficiency.webp",
     "note": ""
   },
   {
     "code": "arabella-sentence",
     "char": "arabella",
     "name": "광역",
-    "image": "decks/arabella-sentence.png",
+    "image": "decks/arabella-sentence.webp",
+    "thumb": "decks/thumb/arabella-sentence.webp",
     "note": ""
   },
   {
     "code": "cassius-morale",
     "char": "cassius",
     "name": "사기",
-    "image": "decks/cassius-morale.png",
+    "image": "decks/cassius-morale.webp",
+    "thumb": "decks/thumb/cassius-morale.webp",
     "note": ""
   },
   {
     "code": "chizuru-tsukuyomi",
     "char": "chizuru",
     "name": "달그림자",
-    "image": "decks/chizuru-tsukuyomi.png",
+    "image": "decks/chizuru-tsukuyomi.webp",
+    "thumb": "decks/thumb/chizuru-tsukuyomi.webp",
     "note": ""
   },
   {
     "code": "diana-heartbreaker",
     "char": "diana",
     "name": "버리기",
-    "image": "decks/diana-heartbreaker.png",
+    "image": "decks/diana-heartbreaker.webp",
+    "thumb": "decks/thumb/diana-heartbreaker.webp",
     "note": ""
   },
   {
     "code": "fei-yeommu",
     "char": "fei",
     "name": "염무",
-    "image": "decks/fei-yeommu.png",
+    "image": "decks/fei-yeommu.webp",
+    "thumb": "decks/thumb/fei-yeommu.webp",
     "note": ""
   },
   {
     "code": "heidemarie-aurora",
     "char": "heidemarie",
     "name": "극광 전개",
-    "image": "decks/heidemarie-aurora.png",
+    "image": "decks/heidemarie-aurora.webp",
+    "thumb": "decks/thumb/heidemarie-aurora.webp",
     "note": ""
   },
   {
     "code": "heidemarie-followup",
     "char": "heidemarie",
     "name": "추공",
-    "image": "decks/heidemarie-followup.png",
+    "image": "decks/heidemarie-followup.webp",
+    "thumb": "decks/thumb/heidemarie-followup.webp",
     "note": ""
   },
   {
     "code": "hilde-homing",
     "char": "hilde",
     "name": "추공 + 드로우",
-    "image": "decks/hilde-homing.png",
+    "image": "decks/hilde-homing.webp",
+    "thumb": "decks/thumb/hilde-homing.webp",
     "note": ""
   },
   {
     "code": "hugo-draw",
     "char": "hugo",
     "name": "드로우",
-    "image": "decks/hugo-draw.png",
+    "image": "decks/hugo-draw.webp",
+    "thumb": "decks/thumb/hugo-draw.webp",
     "note": ""
   },
   {
     "code": "hugo-followup",
     "char": "hugo",
     "name": "덱압축",
-    "image": "decks/hugo-followup.png",
+    "image": "decks/hugo-followup.webp",
+    "thumb": "decks/thumb/hugo-followup.webp",
     "note": ""
   },
   {
     "code": "kayron-long-battle",
     "char": "kayron",
     "name": "스노우볼",
-    "image": "decks/kayron-long-battle.png",
+    "image": "decks/kayron-long-battle.webp",
+    "thumb": "decks/thumb/kayron-long-battle.webp",
     "note": ""
   },
   {
     "code": "kayron-mark",
     "char": "kayron",
     "name": "3소멸 광역",
-    "image": "decks/kayron-mark.png",
+    "image": "decks/kayron-mark.webp",
+    "thumb": "decks/thumb/kayron-mark.webp",
     "note": ""
   },
   {
     "code": "khalipe-ap-vuln",
     "char": "khalipe",
     "name": "행포",
-    "image": "decks/khalipe-ap-vuln.png",
+    "image": "decks/khalipe-ap-vuln.webp",
+    "thumb": "decks/thumb/khalipe-ap-vuln.webp",
     "note": ""
   },
   {
     "code": "lucas-flammenwerfer",
     "char": "lucas",
     "name": "광역",
-    "image": "decks/lucas-flammenwerfer.png",
+    "image": "decks/lucas-flammenwerfer.webp",
+    "thumb": "decks/thumb/lucas-flammenwerfer.webp",
     "note": ""
   },
   {
     "code": "magna-counter",
     "char": "magna",
     "name": "반격",
-    "image": "decks/magna-counter.png",
+    "image": "decks/magna-counter.webp",
+    "thumb": "decks/thumb/magna-counter.webp",
     "note": ""
   },
   {
     "code": "maribell-wolves-dome",
     "char": "maribell",
     "name": "반격",
-    "image": "decks/maribell-wolves-dome.png",
+    "image": "decks/maribell-wolves-dome.webp",
+    "thumb": "decks/thumb/maribell-wolves-dome.webp",
     "note": ""
   },
   {
     "code": "meilin-basic",
     "char": "meilin",
     "name": "평타",
-    "image": "decks/meilin-basic.png",
+    "image": "decks/meilin-basic.webp",
+    "thumb": "decks/thumb/meilin-basic.webp",
     "note": ""
   },
   {
     "code": "mika-ap",
     "char": "mika",
     "name": "행포",
-    "image": "decks/mika-ap.png",
+    "image": "decks/mika-ap.webp",
+    "thumb": "decks/thumb/mika-ap.webp",
     "note": ""
   },
   {
     "code": "narja-cost",
     "char": "narja",
     "name": "코감 + 드로우",
-    "image": "decks/narja-cost.png",
+    "image": "decks/narja-cost.webp",
+    "thumb": "decks/thumb/narja-cost.webp",
     "note": ""
   },
   {
     "code": "nine-annihilate",
     "char": "nine",
     "name": "몰살",
-    "image": "decks/nine-annihilate.png",
+    "image": "decks/nine-annihilate.webp",
+    "thumb": "decks/thumb/nine-annihilate.webp",
     "note": ""
   },
   {
     "code": "nine-extreme",
     "char": "nine",
     "name": "극강",
-    "image": "decks/nine-extreme.png",
+    "image": "decks/nine-extreme.webp",
+    "thumb": "decks/thumb/nine-extreme.webp",
     "note": ""
   },
   {
     "code": "olga-split",
     "char": "olga",
     "name": "균열 + 고통",
-    "image": "decks/olga-split.png",
+    "image": "decks/olga-split.webp",
+    "thumb": "decks/thumb/olga-split.webp",
     "note": ""
   },
   {
     "code": "orlea-malangi",
     "char": "orlea",
     "name": "말랑이",
-    "image": "decks/orlea-malangi.png",
+    "image": "decks/orlea-malangi.webp",
+    "thumb": "decks/thumb/orlea-malangi.webp",
     "note": ""
   },
   {
     "code": "owen-armor-break",
     "char": "owen",
     "name": "불굴 감소",
-    "image": "decks/owen-armor-break.png",
+    "image": "decks/owen-armor-break.webp",
+    "thumb": "decks/thumb/owen-armor-break.webp",
     "note": ""
   },
   {
     "code": "rei-basic",
     "char": "rei",
     "name": "기카 강화",
-    "image": "decks/rei-basic.png",
+    "image": "decks/rei-basic.webp",
+    "thumb": "decks/thumb/rei-basic.webp",
     "note": ""
   },
   {
     "code": "renoa-draw",
     "char": "renoa",
     "name": "드로우",
-    "image": "decks/renoa-draw.png",
+    "image": "decks/renoa-draw.webp",
+    "thumb": "decks/thumb/renoa-draw.webp",
     "note": ""
   },
   {
     "code": "renoa-requiem",
     "char": "renoa",
     "name": "버리기",
-    "image": "decks/renoa-requiem.png",
+    "image": "decks/renoa-requiem.webp",
+    "thumb": "decks/thumb/renoa-requiem.webp",
     "note": ""
   },
   {
     "code": "rossweisse-infinite",
     "char": "rossweisse",
     "name": "9코 한방",
-    "image": "decks/rossweisse-infinite.png",
+    "image": "decks/rossweisse-infinite.webp",
+    "thumb": "decks/thumb/rossweisse-infinite.webp",
     "note": ""
   },
   {
     "code": "sereniel-vuln",
     "char": "sereniel",
     "name": "취약 호밍",
-    "image": "decks/sereniel-vuln.png",
+    "image": "decks/sereniel-vuln.webp",
+    "thumb": "decks/thumb/sereniel-vuln.webp",
     "note": ""
   },
   {
     "code": "tenebria-arpeggio",
     "char": "tenebria",
     "name": "아르페지오",
-    "image": "decks/tenebria-arpeggio.png",
+    "image": "decks/tenebria-arpeggio.webp",
+    "thumb": "decks/thumb/tenebria-arpeggio.webp",
     "note": ""
   },
   {
     "code": "veronica-draw-ap",
     "char": "veronica",
     "name": "행포 + 드로우",
-    "image": "decks/veronica-draw-ap.png",
+    "image": "decks/veronica-draw-ap.webp",
+    "thumb": "decks/thumb/veronica-draw-ap.webp",
     "note": ""
   },
   {
     "code": "veronica-draw",
     "char": "veronica",
     "name": "드로우",
-    "image": "decks/veronica-draw.png",
+    "image": "decks/veronica-draw.webp",
+    "thumb": "decks/thumb/veronica-draw.webp",
     "note": ""
   },
   {
     "code": "yuki-morale",
     "char": "yuki",
     "name": "사기 증가",
-    "image": "decks/yuki-morale.png",
+    "image": "decks/yuki-morale.webp",
+    "thumb": "decks/thumb/yuki-morale.webp",
     "note": ""
   },
   {
     "code": "yuki-steal",
     "char": "yuki",
     "name": "광역",
-    "image": "decks/yuki-steal.png",
+    "image": "decks/yuki-steal.webp",
+    "thumb": "decks/thumb/yuki-steal.webp",
     "note": ""
   }
 ]

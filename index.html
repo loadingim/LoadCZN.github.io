@@ -383,7 +383,7 @@ function deckThumb(k, c, show) {
   if (!k || !k.image) return show ? '<div class="dnone">덱 이미지 없음</div>' : "";
   const cap = (c ? c.name_ko : k.char) + " · " + (k.name || k.code);
   return `<button class="dthumb" data-act="zoom" data-src="${esc(k.image)}" data-cap="${esc(cap)}" aria-label="${esc(cap)} 덱 확대">
-    <img src="${encodeURI(k.image)}" alt="${esc(cap)} 덱" loading="lazy"></button>`;
+    <img src="${encodeURI(k.thumb || k.image)}" alt="${esc(cap)} 덱" loading="lazy"></button>`;
 }
 function deckSection(d) {
   const list = decksOf(d.id);
