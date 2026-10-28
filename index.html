@@ -129,6 +129,16 @@
   .pchip { padding: 5px 12px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line); font-size: 13px; cursor: pointer; }
   .pchip:hover { border-color: #4a4652; }
   .pchip.first, .ichip.first { border-color: rgba(212, 162, 76, .6); background: var(--gold-soft); }
+  /* 파트너: 전투원 상세의 얼굴 카드, 파트너 탭의 전신 카드 */
+  .pfaces { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pface { width: 76px; padding: 0; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; cursor: pointer; color: var(--text); font: inherit; }
+  .pface:hover { border-color: var(--gold); }
+  .pface.first { border-color: rgba(212, 162, 76, .6); background: var(--gold-soft); }
+  .pface img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #121116; }
+  .pface span { display: block; font-size: 12px; padding: 4px 2px 5px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pcard { width: 100%; padding: 0; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .pcard.off { cursor: default; }
+  .pcard.off:hover { border-color: var(--line); box-shadow: none; transform: none; }
   .ichip { padding: 5px 10px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line); font-size: 13px; }
   .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
   .lbl { font-size: 11px; padding: 2px 7px; border-radius: 6px; background: var(--red); color: #fff; }
@@ -328,6 +338,7 @@
       <a href="#/" data-tab="list">전투원</a>
       <a href="#/teams" data-tab="teams">조합</a>
       <a href="#/roles" data-tab="roles">역할</a>
+      <a href="#/partners" data-tab="partners">파트너</a>
       <a href="#/db" data-tab="db">자료</a>
     </nav>
     <div class="search">
@@ -345,6 +356,7 @@
   <a href="#/" data-tab="list">전투원</a>
   <a href="#/teams" data-tab="teams">조합</a>
   <a href="#/roles" data-tab="roles">역할</a>
+  <a href="#/partners" data-tab="partners">파트너</a>
   <a href="#/db" data-tab="db">자료</a>
 </nav>
 
@@ -367,6 +379,8 @@ let equips = [], eqByName = {}, frags = null, gloss = [], extraState = "loading"
 const eqSel = { slot: "", grp: "", chaos: "", q: "", applied: "" };
 const glSel = { type: "", q: "" };
 const EQ_GROUPS = ["공용", "시즌 공용", "투기장", "미확인 구역", "세력"];
+const PARTNER_JOBS = ["스트라이커", "레인저", "뱅가드", "헌터", "컨트롤러", "사이오닉"]; // 나무위키 파트너 문서 순서
+let partners = [], partnerByName = {}, partnerState = "loading";
 const CHAOS = ["푸른 항아리", "쌍성의 그림자", "안개의 도시", "심판의 늪", "도래된 혼돈", "제 0 연구소", "타오르는 생명", "허상의 극장", "만화경의 부화장", "천상의 방벽"];
 let sheetOpen = false, listScroll = 0, curView = "";
 
@@ -515,7 +529,7 @@ function viewList() {
       ${grades.length ? chipRow("등급", "grade", grades, g => "★" + g) : ""}
       ${chipRow("역할", "role", ROLES)}
       <details class="tagrow"${sel.tag.size ? " open" : ""}><summary>태그로 찾기${sel.tag.size ? ` (${sel.tag.size})` : ""}</summary>${chipRow("", "tag", tagCounts(), t => "#" + t)}</details>
-      ${sel.partner ? `<div class="frow"><span class="fl">파트너</span><div class="chips"><button class="chip on" data-act="clearPartner">${esc(sel.partner)} ×</button></div></div>` : ""}
+      ${sel.partner ? `<div class="frow"><span class="fl">파트너</span><div class="chips"><button class="chip on" data-act="clearPartner">${esc((partnerByName[sel.partner] || {}).name || sel.partner)} ×</button></div></div>` : ""}
       <div class="frow foot">
         <label class="sort">정렬
           <select id="sort">
@@ -570,8 +584,12 @@ function viewChar(id) {
       : '<p class="note">조합이 등록되면 같은 조합에 함께 들어간 전투원이 자동으로 표시됩니다.</p>'}</div>`;
 
   if ((d.partners || []).length) {
-    h += `<div class="sec"><h3>파트너</h3><div class="chips">${d.partners.map((p, i) =>
-      `<button class="pchip${i === 0 ? " first" : ""}" data-act="goPartner" data-v="${esc(p)}">${esc(p)}</button>`).join("")}</div>
+    h += `<div class="sec"><h3>파트너</h3><div class="pfaces">${d.partners.map((p, i) => {
+      const pt = partnerByName[p];
+      return pt
+        ? `<button class="pface${i === 0 ? " first" : ""}" data-act="goPartner" data-v="${esc(p)}" title="${esc(pt.name)} · ★${esc(pt.rarity)} ${esc(pt.cls)}"><img src="${encodeURI(partnerImg(pt, "face"))}" alt="${esc(pt.name)}" loading="lazy" onerror="this.style.visibility='hidden'"><span>${esc(pt.name)}</span></button>`
+        : `<button class="pchip${i === 0 ? " first" : ""}" data-act="goPartner" data-v="${esc(p)}">${esc(p)}</button>`;
+    }).join("")}</div>
       <p class="note" style="margin-top:8px">파트너를 누르면 같은 파트너를 쓰는 전투원을 목록에서 보여 줍니다.</p></div>`;
   }
   if ((d.sets || []).length) {
@@ -679,6 +697,38 @@ function viewTeam(id) {
 }
 
 /* ---------- 역할별 보기 ---------- */
+/* ---------- 파트너 ---------- */
+function partnerImg(p, kind) { return "images/partners/" + kind + "/" + p.id + ".webp"; }
+function partnerUsers(p) { // 이 파트너를 추천 파트너로 둔 전투원 수 (combatants.json 표기가 별칭이어도 집계)
+  const names = [p.name, ...(p.aliases || [])];
+  return chars.filter(d => (d.partners || []).some(x => names.includes(x)));
+}
+function viewPartners() {
+  if (partnerState !== "ok") return `<section class="page"><div class="eyebrow">파트너</div><h1>파트너</h1>
+    <div class="empty">${partnerState === "error" ? "파트너 자료를 불러오지 못했습니다." : "불러오는 중…"}</div></section>`;
+  const card = p => {
+    const users = partnerUsers(p);
+    // 목록 필터는 combatants.json에 적힌 표기로 걸러야 하므로 실제로 쓰인 이름을 넘긴다
+    const key = users.length ? [p.name, ...(p.aliases || [])].find(n => users.some(d => d.partners.includes(n))) : "";
+    return `<button class="card pcard${users.length ? "" : " off"}" style="--ac:var(--gold)"${users.length ? ` data-act="goPartner" data-v="${esc(key)}"` : " disabled"}>
+      <div class="pf"><img src="${encodeURI(partnerImg(p, "full"))}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'"></div>
+      <div class="nm">${esc(p.name)}</div>
+      <div class="meta">★${esc(p.rarity)}${users.length ? `<span class="dot">·</span>추천 전투원 ${users.length}명` : ""}</div>
+    </button>`;
+  };
+  const secs = PARTNER_JOBS.map(j => {
+    const list = partners.filter(p => p.cls === j).sort((a, b) => b.rarity - a.rarity || a.name.localeCompare(b.name, "ko"));
+    return list.length ? `<div class="sec"><h3>${esc(j)} <span class="note">${list.length}명</span></h3><div class="grid">${list.map(card).join("")}</div></div>` : "";
+  }).join("");
+  return `<section class="page">
+    <div class="eyebrow">파트너 데이터베이스</div>
+    <h1>파트너</h1>
+    <p class="note">파트너는 담당 전투원의 클래스에 따라 나뉩니다. 카드를 누르면 그 파트너를 추천 파트너로 둔 전투원을 보여 줍니다.</p>
+    ${secs}
+    <p class="src">이름·등급·이미지 출처: <a href="https://namu.wiki/w/%EC%B9%B4%EC%98%A4%EC%8A%A4%20%EC%A0%9C%EB%A1%9C%20%EB%82%98%EC%9D%B4%ED%8A%B8%EB%A9%94%EC%96%B4/%ED%8C%8C%ED%8A%B8%EB%84%88" target="_blank" rel="noopener">나무위키 카오스 제로 나이트메어/파트너</a> 문서</p>
+  </section>`;
+}
+
 function viewRoles() {
   const rows = ROLES.map(r => `<tr><th>${esc(r)}</th>${ATTRS.map(a => {
     const list = chars.filter(d => d.attr === a && d.roles.includes(r)).sort((x, y) => x.name_ko.localeCompare(y.name_ko, "ko"));
@@ -707,10 +757,13 @@ function eqShort(e) {
   if (e.how.startsWith("세넥투스")) return "세넥투스 처치";
   return e.unlock ? "공용 · " + e.unlock : "공용";
 }
+// 미확인 구역 이벤트로 얻는 카오스: 미확인 구역 장비는 area, 다른 획득처 장비는 event.area(이벤트로도 얻는 경우)
+function evArea(e) { return e.group === "미확인 구역" ? e.area : (e.event && e.event.area) || ""; }
 // 미확인 구역 획득 방법("이벤트 단계 - 선택지 / ...")을 이벤트별로 나눈다
 function eqEvents(e) {
-  if (!e || e.group !== "미확인 구역" || !e.how) return [];
-  return e.how.split(" / ").map(part => {
+  const how = !e ? "" : e.group === "미확인 구역" ? e.how : (e.event && e.event.how) || "";
+  if (!how) return [];
+  return how.split(" / ").map(part => {
     const m = part.match(/^(.+?)(?: - |: )(.+)$/);
     const label = (m ? m[1] : part).trim();
     const parts = label.split(/,\s*/);
@@ -724,7 +777,7 @@ function gearRow(x) {
   if (!e) return `<div class="grow"><span class="gname">${esc(x)}</span></div>`;
   const evs = eqEvents(e);
   return `<div class="grow"><a class="gname" href="#/db/equipment/${encodeURIComponent(e.name)}" title="${esc(e.effect)}">${esc(x)}</a><span class="gsrc">${esc(eqShort(e))}</span>
-    ${evs.map(v => `<div class="gev"><b>${esc(v.label)}</b>${v.choice ? esc(v.choice) : "선택지 정보 없음"}</div>`).join("")}
+    ${evs.map(v => `<div class="gev"><b>${e.group !== "미확인 구역" ? esc(evArea(e)) + " · " : ""}${esc(v.label)}</b>${v.choice ? esc(v.choice) : "선택지 정보 없음"}</div>`).join("")}
     ${e.group === "미확인 구역" && !evs.length ? '<div class="gev">획득 이벤트 정보 없음</div>' : ""}</div>`;
 }
 function dbNav(sub) {
@@ -749,6 +802,7 @@ function eqCard(e, hit) {
     <div class="ee">${esc(e.effect)}</div>
     <div class="eg"><b>획득</b>${esc(where)}</div>
     <div class="eg">${esc(e.how)}</div>
+    ${e.event ? `<div class="eg"><b>이벤트</b>${esc(e.event.area)} 미확인 구역 · ${esc(e.event.how)}</div>` : ""}
     ${e.chaos.length ? `<div class="ec">${e.chaos.map(c => `<span>${esc(c)}</span>`).join("")}${e.shop ? "<span>델랑 상점</span>" : ""}</div>` : e.shop ? '<div class="ec"><span>델랑 상점</span></div>' : ""}
   </article>`;
 }
@@ -827,10 +881,10 @@ function viewGloss() {
 const evSel = { chaos: "", q: "" };
 function eventGroups() {
   const byArea = {};
-  equips.filter(e => e.group === "미확인 구역").forEach(e => {
+  equips.filter(e => evArea(e)).forEach(e => {
     const evs = eqEvents(e);
     (evs.length ? evs : [{ label: "이벤트 정보 없음", base: "이벤트 정보 없음", stage: "", choice: "" }]).forEach(v => {
-      const a = byArea[e.area] = byArea[e.area] || {};
+      const a = byArea[evArea(e)] = byArea[evArea(e)] || {};
       (a[v.base] = a[v.base] || []).push({ ...v, item: e });
     });
   });
@@ -857,7 +911,7 @@ function evListHtml() {
   return `<div class="cnt" style="display:block;margin:0 0 4px">이벤트 ${total}개</div>${html || '<div class="empty" style="margin-top:12px">조건에 맞는 이벤트가 없습니다.</div>'}`;
 }
 function viewEvents() {
-  const areas = CHAOS.filter(c => equips.some(e => e.group === "미확인 구역" && e.area === c));
+  const areas = CHAOS.filter(c => equips.some(e => evArea(e) === c));
   const chip = (v, label) => `<button class="chip${evSel.chaos === v ? " on" : ""}" data-ev="${esc(v)}">${esc(label)}</button>`;
   return `<div class="filters" style="display:block;position:static">
       <div class="frow"><span class="fl">검색</span><div style="flex:1;min-width:0"><input class="dbq" data-in="ev" type="search" placeholder="이벤트·선택지·장비 이름으로 검색 (예: 숲이 묻는다, 심록)" value="${esc(evSel.q)}"></div></div>
@@ -865,7 +919,7 @@ function viewEvents() {
     </div>
     <div id="evList">${evListHtml()}</div>
     <p class="src">미확인 구역에서 특정 선택지를 골라야만 얻을 수 있는 장비를 이벤트별로 모았습니다. 같은 이벤트도 단계(1, 2, 3…)마다 선택지와 보상이 다릅니다. 만화경의 부화장은 선택지 정보가 아직 없습니다.<br>
-    출처: <a href="https://namu.wiki/w/%EC%B9%B4%EC%98%A4%EC%8A%A4%20%EC%A0%9C%EB%A1%9C%20%EB%82%98%EC%9D%B4%ED%8A%B8%EB%A9%94%EC%96%B4/%EC%B9%B4%EC%98%A4%EC%8A%A4/%EC%9E%A5%EB%B9%84" target="_blank" rel="noopener">나무위키 카오스/장비</a> (CC BY-NC-SA 2.0 KR)</p>`;
+    출처: <a href="https://namu.wiki/w/%EC%B9%B4%EC%98%A4%EC%8A%A4%20%EC%A0%9C%EB%A1%9C%20%EB%82%98%EC%9D%B4%ED%8A%B8%EB%A9%94%EC%96%B4/%EC%B9%B4%EC%98%A4%EC%8A%A4/%EC%9E%A5%EB%B9%84" target="_blank" rel="noopener">나무위키 카오스/장비</a> (CC BY-NC-SA 2.0 KR) · 천상의 방벽: <a href="https://arca.live/b/chaoszeronightmare/186632288" target="_blank" rel="noopener">아카라이브 미확인 구역 일람</a>(2026-10-27 수정본 기준)</p>`;
 }
 function viewDb(sub, arg) {
   const titles = { equipment: "장비 획득처", events: "이벤트 보상", fragments: "기억의 조각", glossary: "효과 사전" };
@@ -904,6 +958,7 @@ function parseRoute() {
   if (a === "team" && id) return { view: "team", id };
   if (a === "teams") return { view: "teams" };
   if (a === "roles") return { view: "roles" };
+  if (a === "partners") return { view: "partners" };
   if (a === "db") return { view: "db", sub: id || "equipment", arg: c ? decodeURIComponent(c) : "" };
   return { view: "list" };
 }
@@ -914,6 +969,7 @@ function render() {
   else if (r.view === "team") app.innerHTML = viewTeam(r.id);
   else if (r.view === "teams") app.innerHTML = viewTeams();
   else if (r.view === "roles") app.innerHTML = viewRoles();
+  else if (r.view === "partners") app.innerHTML = viewPartners();
   else if (r.view === "db") app.innerHTML = viewDb(r.sub, r.arg);
   else app.innerHTML = viewList();
   const tab = r.view === "char" || r.view === "list" ? "list" : r.view === "team" ? "teams" : r.view;
@@ -1029,6 +1085,19 @@ window.addEventListener("hashchange", onRouteChange);
 /* 자료 탭 데이터: 없거나 깨져도 기존 화면에는 영향이 없도록 따로 불러온다 */
 function loadExtra() {
   const get = u => fetch(u).then(r => { if (!r.ok) throw new Error(u + " " + r.status); return r.json(); });
+  // 파트너 자료도 따로: 실패하면 전투원 상세는 이전처럼 이름 버튼만 보여 준다
+  get("data/partners.json")
+    .then(j => {
+      partners = Array.isArray(j && j.partners) ? j.partners : [];
+      partnerByName = {};
+      partners.forEach(p => [p.name, ...(p.aliases || [])].forEach(n => { partnerByName[n] = p; }));
+      partnerState = "ok";
+    })
+    .catch(() => { partnerState = "error"; })
+    .then(() => {
+      const v = parseRoute().view;
+      if (v === "partners" || v === "char") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    });
   Promise.all(["data/equipment.json", "data/fragments.json", "data/glossary.json"].map(get))
     .then(([ej, fj, gj]) => {
       equips = Array.isArray(ej) ? ej : [];
