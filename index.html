@@ -159,6 +159,9 @@
 
   /* 조합 */
   .mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 6px; }
+  .mrows { display: grid; gap: 8px; }
+  .mrow { display: grid; grid-template-columns: 52px 1fr; gap: 8px; align-items: start; }
+  .mattr { font-size: 13px; font-weight: 700; padding-top: 18px; white-space: nowrap; }
   .mpick { position: relative; padding: 3px; border-radius: 8px; border: 1px solid var(--line); background: #121116; cursor: pointer; font-size: 11px; color: #bdb7c2; text-align: center; }
   .mpick img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; border-radius: 6px; display: block; margin-bottom: 2px; }
   .mpick span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -311,6 +314,8 @@
     .tslots { grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .tslot .sb { padding: 6px 8px; font-size: 12px; }
     .mgrid { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 4px; }
+    .mrow { grid-template-columns: 1fr; gap: 4px; }
+    .mattr { padding-top: 0; }
     .dgrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   }
 </style>
@@ -620,15 +625,20 @@ function viewTeams() {
   const tags = sortedBy(TEAM_TAGS, [...TEAM_TAGS, ...teams.flatMap(t => t.tags || [])]);
   const list = teamFiltered();
   const n = teamSel.members.length;
-  const picks = [...chars].sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko")).map(d => {
+  const pick = d => {
     const i = teamSel.members.indexOf(d.id);
     return `<button class="mpick${i >= 0 ? " on" : ""}" data-act="toggleMember" data-v="${esc(d.id)}"${i < 0 && n >= 3 ? " disabled" : ""} aria-pressed="${i >= 0}" title="${esc(d.name_ko)}">${i >= 0 ? `<b>${i + 1}</b>` : ""}${img(d)}<span>${esc(d.name_ko)}</span></button>`;
-  }).join("");
+  };
+  // 속성별로 한 줄씩 (속성 순서는 ATTRS, 줄 안에서는 이름순)
+  const byName = [...chars].sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko"));
+  const attrs = sortedBy(ATTRS, chars.map(d => d.attr));
+  const picks = attrs.map(a => `<div class="mrow"><span class="mattr" style="color:${ATTR_COLOR[a] || "var(--muted)"}">◆ ${esc(a)}</span>
+    <div class="mgrid">${byName.filter(d => d.attr === a).map(pick).join("")}</div></div>`).join("");
   return `<section class="page">
     <div class="eyebrow">추천 조합</div>
     <h1>조합</h1>
     <div class="filters" style="display:block;position:static">
-      <div class="frow"><span class="fl">전투원</span><div style="flex:1;min-width:0"><div class="mgrid">${picks}</div>
+      <div class="frow"><span class="fl">전투원</span><div style="flex:1;min-width:0"><div class="mrows">${picks}</div>
         <p class="note" style="margin:8px 0 0">${n ? `${n}/3명 선택 · 다시 누르면 해제됩니다.` : "최대 3명. 고른 전투원이 모두 들어간 조합만 남깁니다."}</p></div></div>
       <div class="frow"><span class="fl">태그</span><div class="chips">
         <button class="chip${teamSel.tag.size ? "" : " on"}" data-tk="">전체</button>
