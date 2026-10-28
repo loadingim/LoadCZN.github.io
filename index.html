@@ -482,7 +482,8 @@ function saveOwned() {
 function ownedCount() { return chars.filter(d => owned.has(d.id)).length; }
 function ownedFilterOn() { return teamSel.ownedOnly && ownedCount() > 0; }
 let equips = [], eqByName = {}, frags = null, gloss = [], extraState = "loading";
-const eqSel = { slot: "", grp: "", chaos: "", q: "", applied: "" };
+const eqSel = { slot: "", grp: "", chaos: "", rar: "", sort: "", q: "", applied: "" };
+const RARITY_ORDER = ["신화", "전설", "희귀"]; // 등급순 정렬·필터 순서
 const glSel = { type: "", q: "", applied: "" };
 const EQ_GROUPS = ["공용", "시즌 공용", "투기장", "미확인 구역", "세력"];
 // 자료를 마지막으로 고친 날짜와 기준 출처. 데이터 파일을 고치면 여기 날짜도 함께 바꾼다.
@@ -1098,7 +1099,7 @@ function dbWait() {
 }
 function eqMatches(e) {
   const q = eqSel.q.trim();
-  return (!eqSel.slot || e.slot === eqSel.slot) && (!eqSel.grp || e.group === eqSel.grp) &&
+  return (!eqSel.slot || e.slot === eqSel.slot) && (!eqSel.grp || e.group === eqSel.grp) && (!eqSel.rar || e.rarity === eqSel.rar) &&
     (!eqSel.chaos || e.area === eqSel.chaos || e.chaos.includes(eqSel.chaos)) &&
     (!q || e.name.includes(q) || e.effect.includes(q) || (e.en || "").toLowerCase().includes(q.toLowerCase()));
 }
@@ -1115,6 +1116,10 @@ function eqCard(e, hit) {
 }
 function eqListHtml(focus) {
   const list = equips.filter(eqMatches);
+  const byName = (a, b) => a.name.localeCompare(b.name, "ko");
+  const rank = e => { const i = RARITY_ORDER.indexOf(e.rarity); return i < 0 ? 99 : i; };
+  if (eqSel.sort === "name") list.sort(byName);
+  else if (eqSel.sort === "rarity") list.sort((a, b) => rank(a) - rank(b) || byName(a, b)); // 기본값("")은 기존 자료 순서 그대로
   return `<div class="cnt" style="display:block;margin:0 0 10px">${list.length}개 장비</div>
     <div class="eqgrid">${list.length ? list.map(e => eqCard(e, e.name === focus)).join("") : '<div class="empty">조건에 맞는 장비가 없습니다.</div>'}</div>`;
 }
@@ -1122,15 +1127,17 @@ function viewEquip(focus) {
   // 전투원 페이지에서 장비를 눌러 들어온 경우 한 번만 그 장비로 검색 (이후 필터 조작은 유지)
   if (focus !== eqSel.applied) {
     eqSel.applied = focus;
-    if (focus && eqByName[focus]) { eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.q = focus; }
+    if (focus && eqByName[focus]) { eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.rar = ""; eqSel.q = focus; }
   }
   const chip = (key, v, label) => `<button class="chip${eqSel[key] === v ? " on" : ""}" data-eq="${key}" data-v="${esc(v)}">${esc(label)}</button>`;
   return `<div class="filters" style="display:block;position:static">
       <div class="frow"><span class="fl">검색</span><div style="flex:1;min-width:0"><input class="dbq" data-in="eq" type="search" placeholder="장비 이름이나 효과로 검색 (예: 치명, 실드)" value="${esc(eqSel.q)}"></div></div>
       <div class="frow"><span class="fl">부위</span><div class="chips">${chip("slot", "", "전체")}${["무기", "방어구", "장신구"].map(s => chip("slot", s, s)).join("")}</div></div>
+      <div class="frow"><span class="fl">등급</span><div class="chips">${chip("rar", "", "전체")}${RARITY_ORDER.map(s => chip("rar", s, s)).join("")}</div></div>
       <div class="frow"><span class="fl">획득</span><div class="chips">${chip("grp", "", "전체")}${EQ_GROUPS.map(s => chip("grp", s, s)).join("")}</div></div>
       <div class="frow"><span class="fl">카오스</span><div class="chips">${chip("chaos", "", "전체")}${CHAOS.map(s => chip("chaos", s, s)).join("")}</div></div>
-      <div class="frow foot"><button class="btn" data-act="resetEq">초기화</button><span class="note">'카오스'는 그 카오스의 미확인 구역 보상이거나, 그 카오스에 나오는 세력의 장비입니다.</span></div>
+      <div class="frow foot"><label class="sort">정렬 <select data-eqsort aria-label="장비 정렬">${[["", "기본순"], ["name", "이름순"], ["rarity", "등급순 (신화→희귀)"]].map(([v, l]) => `<option value="${v}"${eqSel.sort === v ? " selected" : ""}>${l}</option>`).join("")}</select></label>
+        <button class="btn" data-act="resetEq">초기화</button><span class="note">'카오스'는 그 카오스의 미확인 구역 보상이거나, 그 카오스에 나오는 세력의 장비입니다.</span></div>
     </div>
     <div id="eqList">${eqListHtml(focus)}</div>
     <p class="src">공용 장비는 델랑 상점, 미확인 구역 이벤트, 엘리트·보스 처치 보상으로 얻고, 일부는 해당 카오스 탐사도를 올려야 풀립니다. 세력 장비는 그 세력의 엘리트·보스를 잡거나 주 세력이 같은 카오스의 델랑 상점에서 얻습니다. 획득처는 확정 드롭이 아닙니다.<br>
@@ -1399,12 +1406,19 @@ document.addEventListener("click", e => {
       else show("자동 복사가 안 되어 입력칸에 코드를 넣었습니다. 직접 복사해 주세요.");
       break;
     }
-    case "resetEq": eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.q = ""; render(); break;
+    case "resetEq": eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.rar = ""; eqSel.sort = ""; eqSel.q = ""; render(); break;
     case "zoom": openLb(act.dataset.src, act.dataset.cap); break;
     case "closeLb": closeLb(); break;
   }
 });
 lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+// 장비 정렬: 목록만 다시 그림
+document.addEventListener("change", e => {
+  const sel = e.target.closest("[data-eqsort]");
+  if (!sel) return;
+  eqSel.sort = sel.value;
+  const l = document.getElementById("eqList"); if (l) l.innerHTML = eqListHtml("");
+});
 // 자료 탭 검색창: 입력할 때마다 목록만 다시 그려 입력 포커스를 유지
 document.addEventListener("input", e => {
   const box = e.target.closest("[data-in]");
