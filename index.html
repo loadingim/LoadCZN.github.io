@@ -248,7 +248,23 @@
   .src { margin-top: 22px; font-size: 12px; color: #6f6a76; line-height: 1.6; }
   .src a { text-decoration: underline; text-underline-offset: 2px; }
   a.ichip:hover { border-color: var(--gold); }
-  .ichip small { color: var(--muted); font-size: 11px; margin-left: 4px; }
+  .glist { display: grid; gap: 6px; min-width: 0; }
+  .grow { padding: 7px 10px; border-radius: 8px; background: var(--panel2); border: 1px solid var(--line); word-break: keep-all; overflow-wrap: anywhere; }
+  .grow .gname { font-weight: 700; }
+  .grow a.gname:hover { color: var(--gold-hi); }
+  .grow .gsrc { font-size: 12px; color: var(--muted); margin-left: 8px; }
+  .grow .gev { font-size: 12px; color: #c9c3cd; line-height: 1.55; margin-top: 4px; padding-left: 10px; border-left: 2px solid rgba(212, 162, 76, .45); }
+  .grow .gev b { color: var(--gold); font-weight: 500; margin-right: 6px; }
+  .evgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr)); gap: 10px; }
+  .evc { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; word-break: keep-all; overflow-wrap: anywhere; }
+  .evh { font-family: var(--serif); font-weight: 700; color: var(--gold-hi); margin-bottom: 4px; }
+  .evr { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 13px; }
+  .evr:first-of-type { border-top: none; }
+  .evs { color: var(--muted); font-size: 12px; padding-top: 1px; }
+  .evch { line-height: 1.55; color: #d5d0d9; }
+  .evi { display: inline-block; margin-top: 3px; font-weight: 700; }
+  .evi:hover { color: var(--gold-hi); }
+  .evi small { color: var(--muted); font-weight: 400; }
 
   /* 확대 보기 */
   .lb { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .85); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; cursor: zoom-out; }
@@ -572,8 +588,8 @@ function viewChar(id) {
   const g = d.gear || {};
   if (Object.keys(g).length) {
     h += `<div class="sec"><h3>추천 공용 장비</h3><div class="gear">${["무기", "방어구", "장신구"].filter(k => g[k]).map(k =>
-      `<div class="k">${k}</div><div class="chips">${g[k].map(gearChip).join("")}</div>`).join("")}</div>
-      ${equips.length ? '<p class="note" style="margin-top:8px">장비를 누르면 효과와 획득처를 볼 수 있습니다.</p>' : ""}</div>`;
+      `<div class="k">${k}</div><div class="glist">${g[k].map(gearRow).join("")}</div>`).join("")}</div>
+      ${equips.length ? '<p class="note" style="margin-top:8px">장비 이름을 누르면 효과와 자세한 획득처를 볼 수 있습니다.</p>' : ""}</div>`;
   }
   return h + `</section>`;
 }
@@ -681,13 +697,28 @@ function eqShort(e) {
   if (e.how.startsWith("세넥투스")) return "세넥투스 처치";
   return e.unlock ? "공용 · " + e.unlock : "공용";
 }
-function gearChip(x) {
+// 미확인 구역 획득 방법("이벤트 단계 - 선택지 / ...")을 이벤트별로 나눈다
+function eqEvents(e) {
+  if (!e || e.group !== "미확인 구역" || !e.how) return [];
+  return e.how.split(" / ").map(part => {
+    const m = part.match(/^(.+?)(?: - |: )(.+)$/);
+    const label = (m ? m[1] : part).trim();
+    const parts = label.split(/,\s*/);
+    const base = parts[0].replace(/\s*\d[\d/]*$/, "").trim();
+    const stages = parts.map(x => (x.match(/(\d[\d/]*)$/) || [])[1]).filter(Boolean).join(", ");
+    return { label, base, stage: stages, choice: m ? m[2].trim() : "" };
+  });
+}
+function gearRow(x) {
   const e = eqByName[gearName(x)];
-  if (!e) return `<span class="ichip">${esc(x)}</span>`;
-  return `<a class="ichip" href="#/db/equipment/${encodeURIComponent(e.name)}" title="${esc(e.effect)}">${esc(x)}<small>${esc(eqShort(e))}</small></a>`;
+  if (!e) return `<div class="grow"><span class="gname">${esc(x)}</span></div>`;
+  const evs = eqEvents(e);
+  return `<div class="grow"><a class="gname" href="#/db/equipment/${encodeURIComponent(e.name)}" title="${esc(e.effect)}">${esc(x)}</a><span class="gsrc">${esc(eqShort(e))}</span>
+    ${evs.map(v => `<div class="gev"><b>${esc(v.label)}</b>${v.choice ? esc(v.choice) : "선택지 정보 없음"}</div>`).join("")}
+    ${e.group === "미확인 구역" && !evs.length ? '<div class="gev">획득 이벤트 정보 없음</div>' : ""}</div>`;
 }
 function dbNav(sub) {
-  const items = [["equipment", "장비 획득처"], ["fragments", "기억의 조각"], ["glossary", "효과 사전"]];
+  const items = [["equipment", "장비 획득처"], ["events", "이벤트 보상"], ["fragments", "기억의 조각"], ["glossary", "효과 사전"]];
   return `<div class="subtabs">${items.map(([k, t]) => `<a href="#/db/${k}" class="${k === sub ? "on" : ""}">${t}</a>`).join("")}</div>`;
 }
 function dbWait() {
@@ -782,14 +813,59 @@ function viewGloss() {
     <div id="glList">${glListHtml()}</div>
     <p class="src">설명은 <a href="https://www.prydwen.gg/chaos-zero-nightmare/guides/effects-dictionary" target="_blank" rel="noopener">Prydwen 효과 사전</a>(2026-10-27 기준)을 우리말로 옮긴 것입니다. 한글 용어는 게임 내 표기를 따랐고, 확인하지 못한 용어는 영문으로 두었습니다.</p>`;
 }
+/* 이벤트 보상: 카오스 → 이벤트 → 단계·선택지 → 장비 */
+const evSel = { chaos: "", q: "" };
+function eventGroups() {
+  const byArea = {};
+  equips.filter(e => e.group === "미확인 구역").forEach(e => {
+    const evs = eqEvents(e);
+    (evs.length ? evs : [{ label: "이벤트 정보 없음", base: "이벤트 정보 없음", stage: "", choice: "" }]).forEach(v => {
+      const a = byArea[e.area] = byArea[e.area] || {};
+      (a[v.base] = a[v.base] || []).push({ ...v, item: e });
+    });
+  });
+  return byArea;
+}
+function evListHtml() {
+  const q = evSel.q.trim();
+  const byArea = eventGroups();
+  const areas = CHAOS.filter(c => byArea[c] && (!evSel.chaos || evSel.chaos === c));
+  let total = 0;
+  const html = areas.map(area => {
+    const evs = Object.entries(byArea[area]).map(([base, rows]) => {
+      const hit = !q || base.includes(q) || rows.some(r => r.item.name.includes(q) || r.choice.includes(q));
+      return hit ? [base, rows.sort((a, b) => (a.stage || "").localeCompare(b.stage || "", "ko", { numeric: true }))] : null;
+    }).filter(Boolean).sort((a, b) => a[0].localeCompare(b[0], "ko"));
+    if (!evs.length) return "";
+    total += evs.length;
+    return `<div class="sec"><h3>${esc(area)} <span class="note">이벤트 ${evs.length}개</span></h3><div class="evgrid">${evs.map(([base, rows]) =>
+      `<div class="evc"><div class="evh">${esc(base)}</div>${rows.map(r => `<div class="evr">
+        <div class="evs">${r.stage ? esc(r.stage) + "단계" : ""}</div>
+        <div><div class="evch">${r.choice ? esc(r.choice) : '<span class="note">선택지 정보 없음</span>'}</div>
+        <a class="evi" href="#/db/equipment/${encodeURIComponent(r.item.name)}" title="${esc(r.item.effect)}">→ ${esc(r.item.name)} <span class="rar r-${esc(r.item.rarity)}">${esc(r.item.rarity)}</span> <small>${esc(r.item.slot)}</small></a></div></div>`).join("")}</div>`).join("")}</div></div>`;
+  }).join("");
+  return `<div class="cnt" style="display:block;margin:0 0 4px">이벤트 ${total}개</div>${html || '<div class="empty" style="margin-top:12px">조건에 맞는 이벤트가 없습니다.</div>'}`;
+}
+function viewEvents() {
+  const areas = CHAOS.filter(c => equips.some(e => e.group === "미확인 구역" && e.area === c));
+  const chip = (v, label) => `<button class="chip${evSel.chaos === v ? " on" : ""}" data-ev="${esc(v)}">${esc(label)}</button>`;
+  return `<div class="filters" style="display:block;position:static">
+      <div class="frow"><span class="fl">검색</span><div style="flex:1;min-width:0"><input class="dbq" data-in="ev" type="search" placeholder="이벤트·선택지·장비 이름으로 검색 (예: 숲이 묻는다, 심록)" value="${esc(evSel.q)}"></div></div>
+      <div class="frow"><span class="fl">카오스</span><div class="chips">${chip("", "전체")}${areas.map(c => chip(c, c)).join("")}</div></div>
+    </div>
+    <div id="evList">${evListHtml()}</div>
+    <p class="src">미확인 구역에서 특정 선택지를 골라야만 얻을 수 있는 장비를 이벤트별로 모았습니다. 같은 이벤트도 단계(1, 2, 3…)마다 선택지와 보상이 다릅니다. 만화경의 부화장은 선택지 정보가 아직 없습니다.<br>
+    출처: <a href="https://namu.wiki/w/%EC%B9%B4%EC%98%A4%EC%8A%A4%20%EC%A0%9C%EB%A1%9C%20%EB%82%98%EC%9D%B4%ED%8A%B8%EB%A9%94%EC%96%B4/%EC%B9%B4%EC%98%A4%EC%8A%A4/%EC%9E%A5%EB%B9%84" target="_blank" rel="noopener">나무위키 카오스/장비</a> (CC BY-NC-SA 2.0 KR)</p>`;
+}
 function viewDb(sub, arg) {
-  const titles = { equipment: "장비 획득처", fragments: "기억의 조각", glossary: "효과 사전" };
+  const titles = { equipment: "장비 획득처", events: "이벤트 보상", fragments: "기억의 조각", glossary: "효과 사전" };
   if (!titles[sub]) sub = "equipment";
   const title = titles[sub];
   let body;
   if (extraState !== "ok") body = dbWait();
   else if (sub === "fragments") body = frags ? viewFrag() : dbWait();
   else if (sub === "glossary") body = viewGloss();
+  else if (sub === "events") body = viewEvents();
   else body = viewEquip(arg);
   return `<section class="page"><div class="eyebrow">자료</div><h1>${title}</h1>${dbNav(sub)}${body}</section>`;
 }
@@ -873,6 +949,8 @@ document.addEventListener("click", e => {
   }
   const eqc = e.target.closest("[data-eq]");
   if (eqc) { eqSel[eqc.dataset.eq] = eqc.dataset.v; render(); return; }
+  const evc = e.target.closest("[data-ev]");
+  if (evc) { evSel.chaos = evc.dataset.ev; render(); return; }
   const glc = e.target.closest("[data-gl]");
   if (glc) { glSel.type = glc.dataset.gl; render(); return; }
   const act = e.target.closest("[data-act]");
@@ -904,6 +982,7 @@ document.addEventListener("input", e => {
   const box = e.target.closest("[data-in]");
   if (!box) return;
   if (box.dataset.in === "eq") { eqSel.q = box.value; const l = document.getElementById("eqList"); if (l) l.innerHTML = eqListHtml(""); }
+  else if (box.dataset.in === "ev") { evSel.q = box.value; const l = document.getElementById("evList"); if (l) l.innerHTML = evListHtml(); }
   else if (box.dataset.in === "gl") { glSel.q = box.value; const l = document.getElementById("glList"); if (l) l.innerHTML = glListHtml(); }
 });
 
