@@ -23,84 +23,84 @@
   {
     "code": "amir-metal",
     "char": "amir",
-    "name": "풀 메탈 허리케인 금속화",
+    "name": "광역",
     "image": "decks/amir-metal.png",
     "note": ""
   },
   {
     "code": "beryl-followup",
     "char": "beryl",
-    "name": "빈틈 발견 추가 공격",
+    "name": "빈틈 발견",
     "image": "decks/beryl-followup.png",
     "note": ""
   },
   {
     "code": "cassius-quest",
     "char": "cassius",
-    "name": "데블 다이스 퀘스트·행동 포인트",
+    "name": "행포",
     "image": "decks/cassius-quest.png",
     "note": ""
   },
   {
     "code": "chizuru-chamwol",
     "char": "chizuru",
-    "name": "참월",
+    "name": "기카",
     "image": "decks/chizuru-chamwol.png",
     "note": ""
   },
   {
     "code": "haru-retrieve",
     "char": "haru",
-    "name": "앵커 숏 회수",
+    "name": "0코 앵커슛",
     "image": "decks/haru-retrieve.png",
     "note": ""
   },
   {
     "code": "kayron-mark-chain",
     "char": "kayron",
-    "name": "소멸의 낙인 연속 사용",
+    "name": "광역",
     "image": "decks/kayron-mark-chain.png",
     "note": ""
   },
   {
     "code": "luke-weakpoint",
     "char": "luke",
-    "name": "마안의 난무 약점 공격",
+    "name": "약점 공격",
     "image": "decks/luke-weakpoint.png",
     "note": ""
   },
   {
     "code": "magna-vuln",
     "char": "magna",
-    "name": "냉기 충전 취약",
+    "name": "취약",
     "image": "decks/magna-vuln.png",
     "note": ""
   },
   {
     "code": "narja-morale",
     "char": "narja",
-    "name": "능동 제어 사기 획득",
+    "name": "사기 + 드로우",
     "image": "decks/narja-morale.png",
     "note": ""
   },
   {
     "code": "nia-adagio",
     "char": "nia",
-    "name": "아다지오 버리기",
+    "name": "소멸 + 드로우",
     "image": "decks/nia-adagio.png",
     "note": ""
   },
   {
     "code": "nine-armor",
     "char": "nine",
-    "name": "파쇄(철갑)",
+    "name": "철갑",
     "image": "decks/nine-armor.png",
     "note": ""
   },
   {
     "code": "rin-jan",
     "char": "rin",
-    "name": "흑운 오의 : 잔",
+    "name": "흑운 오의",
     "image": "decks/rin-jan.png",
     "note": ""
   },
@@ -114,217 +114,217 @@
   {
     "code": "rita-morale",
     "char": "rita",
-    "name": "시간축 파괴 사기 획득",
+    "name": "사기 + 덱 압축",
     "image": "decks/rita-morale.png",
     "note": ""
   },
   {
     "code": "selena-followup",
     "char": "selena",
-    "name": "드론 폭격 추가 공격",
+    "name": "열정 협공",
     "image": "decks/selena-followup.png",
     "note": ""
   },
   {
     "code": "selena-recharge",
     "char": "selena",
-    "name": "전술 기동 강인도 재충전",
+    "name": "강인도 충전",
     "image": "decks/selena-recharge.png",
     "note": ""
   },
   {
     "code": "sereniel-ap",
     "char": "sereniel",
-    "name": "호밍 레이저 행동 포인트",
+    "name": "행포 호밍",
     "image": "decks/sereniel-ap.png",
     "note": ""
   },
   {
     "code": "tiphera-predict",
     "char": "tiphera",
-    "name": "퀀텀 시드 예측 생성",
+    "name": "드로우+행포",
     "image": "decks/tiphera-predict.png",
     "note": ""
   },
   {
     "code": "tiphera-select",
     "char": "tiphera",
-    "name": "퀀텀 시드 선택 생성",
+    "name": "행포",
     "image": "decks/tiphera-select.png",
     "note": ""
   },
   {
     "code": "tressa-pain",
     "char": "tressa",
-    "name": "고통 부여",
+    "name": "고통",
     "image": "decks/tressa-pain.png",
     "note": ""
   },
   {
     "code": "adelheid-draw",
     "char": "adelheid",
-    "name": "우리를 지켜줘 드로우",
+    "name": "행포 + 드로우",
     "image": "decks/adelheid-draw.png",
     "note": ""
   },
   {
     "code": "anika-efficiency",
     "char": "anika",
-    "name": "효율 활성화",
+    "name": "강인도 파괴",
     "image": "decks/anika-efficiency.png",
     "note": ""
   },
   {
     "code": "arabella-sentence",
     "char": "arabella",
-    "name": "공허한 선고",
+    "name": "광역",
     "image": "decks/arabella-sentence.png",
     "note": ""
   },
   {
     "code": "cassius-morale",
     "char": "cassius",
-    "name": "다이스 트릭 사기 획득",
+    "name": "사기",
     "image": "decks/cassius-morale.png",
     "note": ""
   },
   {
     "code": "chizuru-tsukuyomi",
     "char": "chizuru",
-    "name": "츠쿠요미 달그림자",
+    "name": "달그림자",
     "image": "decks/chizuru-tsukuyomi.png",
     "note": ""
   },
   {
     "code": "diana-heartbreaker",
     "char": "diana",
-    "name": "하트 브레이커",
+    "name": "버리기",
     "image": "decks/diana-heartbreaker.png",
     "note": ""
   },
   {
     "code": "fei-yeommu",
     "char": "fei",
-    "name": "염무 발동",
+    "name": "염무",
     "image": "decks/fei-yeommu.png",
     "note": ""
   },
   {
     "code": "heidemarie-aurora",
     "char": "heidemarie",
-    "name": "극광 해방",
+    "name": "극광 전개",
     "image": "decks/heidemarie-aurora.png",
     "note": ""
   },
   {
     "code": "heidemarie-followup",
     "char": "heidemarie",
-    "name": "검의 비 추가 공격",
+    "name": "추공",
     "image": "decks/heidemarie-followup.png",
     "note": ""
   },
   {
     "code": "hilde-homing",
     "char": "hilde",
-    "name": "호밍 애로우",
+    "name": "추공 + 드로우",
     "image": "decks/hilde-homing.png",
     "note": ""
   },
   {
     "code": "hugo-draw",
     "char": "hugo",
-    "name": "빠른 해결법 드로우",
+    "name": "드로우",
     "image": "decks/hugo-draw.png",
     "note": ""
   },
   {
     "code": "hugo-followup",
     "char": "hugo",
-    "name": "사냥 본능 추가 공격",
+    "name": "덱압축",
     "image": "decks/hugo-followup.png",
     "note": ""
   },
   {
     "code": "kayron-long-battle",
     "char": "kayron",
-    "name": "허무의 잔상 장기 전투",
+    "name": "스노우볼",
     "image": "decks/kayron-long-battle.png",
     "note": ""
   },
   {
     "code": "kayron-mark",
     "char": "kayron",
-    "name": "소멸의 낙인",
+    "name": "3소멸 광역",
     "image": "decks/kayron-mark.png",
     "note": ""
   },
   {
     "code": "khalipe-ap-vuln",
     "char": "khalipe",
-    "name": "벌쳐 사출 행동 포인트·취약",
+    "name": "행포",
     "image": "decks/khalipe-ap-vuln.png",
     "note": ""
   },
   {
     "code": "lucas-flammenwerfer",
     "char": "lucas",
-    "name": "플라멘베르퍼",
+    "name": "광역",
     "image": "decks/lucas-flammenwerfer.png",
     "note": ""
   },
   {
     "code": "magna-counter",
     "char": "magna",
-    "name": "얼음 파편 반격",
+    "name": "반격",
     "image": "decks/magna-counter.png",
     "note": ""
   },
   {
     "code": "maribell-wolves-dome",
     "char": "maribell",
-    "name": "울브즈 돔",
+    "name": "반격",
     "image": "decks/maribell-wolves-dome.png",
     "note": ""
   },
   {
     "code": "meilin-basic",
     "char": "meilin",
-    "name": "기본 공격",
+    "name": "평타",
     "image": "decks/meilin-basic.png",
     "note": ""
   },
   {
     "code": "mika-ap",
     "char": "mika",
-    "name": "물의 근원 행동 포인트",
+    "name": "행포",
     "image": "decks/mika-ap.png",
     "note": ""
   },
   {
     "code": "narja-cost",
     "char": "narja",
-    "name": "무한한 허기 비용 감소",
+    "name": "코감 + 드로우",
     "image": "decks/narja-cost.png",
     "note": ""
   },
   {
     "code": "nine-annihilate",
     "char": "nine",
-    "name": "파쇄(몰살)",
+    "name": "몰살",
     "image": "decks/nine-annihilate.png",
     "note": ""
   },
   {
     "code": "nine-extreme",
     "char": "nine",
-    "name": "파쇄(극강)",
+    "name": "극강",
     "image": "decks/nine-extreme.png",
     "note": ""
   },
   {
     "code": "olga-split",
     "char": "olga",
-    "name": "분열 그리고 수복",
+    "name": "균열 + 고통",
     "image": "decks/olga-split.png",
     "note": ""
   },
@@ -338,77 +338,77 @@
   {
     "code": "owen-armor-break",
     "char": "owen",
-    "name": "방어구 부수기 불굴 감소",
+    "name": "불굴 감소",
     "image": "decks/owen-armor-break.png",
     "note": ""
   },
   {
     "code": "rei-basic",
     "char": "rei",
-    "name": "어둠의 참격 기본 공격",
+    "name": "기카 강화",
     "image": "decks/rei-basic.png",
     "note": ""
   },
   {
     "code": "renoa-draw",
     "char": "renoa",
-    "name": "운명을 삼킨 꽃 드로우",
+    "name": "드로우",
     "image": "decks/renoa-draw.png",
     "note": ""
   },
   {
     "code": "renoa-requiem",
     "char": "renoa",
-    "name": "진혼의 탄환",
+    "name": "버리기",
     "image": "decks/renoa-requiem.png",
     "note": ""
   },
   {
     "code": "rossweisse-infinite",
     "char": "rossweisse",
-    "name": "명멸검(무한)",
+    "name": "9코 한방",
     "image": "decks/rossweisse-infinite.png",
     "note": ""
   },
   {
     "code": "sereniel-vuln",
     "char": "sereniel",
-    "name": "호밍 레이저 취약",
+    "name": "취약 호밍",
     "image": "decks/sereniel-vuln.png",
     "note": ""
   },
   {
     "code": "tenebria-arpeggio",
     "char": "tenebria",
-    "name": "리듬 : 아르페지오",
+    "name": "아르페지오",
     "image": "decks/tenebria-arpeggio.png",
     "note": ""
   },
   {
     "code": "veronica-draw-ap",
     "char": "veronica",
-    "name": "숨돌리기 드로우·행동 포인트",
+    "name": "행포 + 드로우",
     "image": "decks/veronica-draw-ap.png",
     "note": ""
   },
   {
     "code": "veronica-draw",
     "char": "veronica",
-    "name": "숨돌리기 드로우",
+    "name": "드로우",
     "image": "decks/veronica-draw.png",
     "note": ""
   },
   {
     "code": "yuki-morale",
     "char": "yuki",
-    "name": "훔쳐베기 사기 획득",
+    "name": "사기 증가",
     "image": "decks/yuki-morale.png",
     "note": ""
   },
   {
     "code": "yuki-steal",
     "char": "yuki",
-    "name": "훔쳐베기",
+    "name": "광역",
     "image": "decks/yuki-steal.png",
     "note": ""
   }
