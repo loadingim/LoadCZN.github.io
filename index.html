@@ -165,7 +165,7 @@
   .pchip.first, .ichip.first { border-color: rgba(212, 162, 76, .6); background: var(--gold-soft); }
   /* 파트너: 전투원 상세의 얼굴 카드, 파트너 탭의 전신 카드 */
   .pfaces { display: flex; flex-wrap: wrap; gap: 10px; }
-  .pface { width: 76px; padding: 0; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; cursor: pointer; color: var(--text); font: inherit; }
+  .pface { display: block; width: 76px; padding: 0; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; cursor: pointer; color: var(--text); font: inherit; }
   .pface:hover { border-color: var(--gold); }
   .pface.first { border-color: rgba(212, 162, 76, .6); background: var(--gold-soft); }
   .pface img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #121116; }
@@ -749,10 +749,10 @@ function viewChar(id) {
     h += `<div class="sec"><h3>파트너</h3><div class="pfaces">${d.partners.map((p, i) => {
       const pt = partnerByName[p];
       return pt
-        ? `<button class="pface${i === 0 ? " first" : ""}" data-act="goPartner" data-v="${esc(p)}" title="${esc(pt.name)} · ★${esc(pt.rarity)} ${esc(pt.cls)}${pt.passive ? " · " + esc(pt.passive.name) : ""}"><img src="${encodeURI(partnerImg(pt, "face"))}" alt="${esc(pt.name)}" loading="lazy" onerror="this.style.visibility='hidden'"><span>${esc(pt.name)}</span></button>`
+        ? `<a class="pface${i === 0 ? " first" : ""}" href="#/partners/${encodeURIComponent(pt.id)}" title="${esc(pt.name)} · ★${esc(pt.rarity)} ${esc(pt.cls)}${pt.passive ? " · " + esc(pt.passive.name) : ""}"><img src="${encodeURI(partnerImg(pt, "face"))}" alt="${esc(pt.name)}" loading="lazy" onerror="this.style.visibility='hidden'"><span>${esc(pt.name)}</span></a>`
         : `<button class="pchip${i === 0 ? " first" : ""}" data-act="goPartner" data-v="${esc(p)}">${esc(p)}</button>`;
     }).join("")}</div>
-      <p class="note" style="margin-top:8px">파트너를 누르면 같은 파트너를 쓰는 전투원을 목록에서 보여 줍니다.</p></div>`;
+      <p class="note" style="margin-top:8px">파트너를 누르면 패시브·에고 스킬과 이 파트너를 쓰는 전투원을 볼 수 있습니다. 파트너 자료가 없는 이름은 같은 파트너를 쓰는 전투원 목록으로 갑니다.</p></div>`;
   }
   if ((d.sets || []).length) {
     h += `<div class="sec"><h3>기억의 조각</h3>${d.sets.map((s, i) =>
