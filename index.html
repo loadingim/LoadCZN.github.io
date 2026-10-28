@@ -380,8 +380,8 @@
   .dpick:hover { border-color: #4a4652; }
   .dpick.on { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); background: var(--gold-soft); }
   .dpick.on .dn { color: var(--gold-hi); }
-  .simres { display: grid; gap: 14px; max-width: 1000px; }
-  .simslot { padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); border-left: 3px solid var(--ac); }
+  .simres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } /* 완성본 3개를 한 줄에 */
+  .simslot { min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); border-left: 3px solid var(--ac); }
   .simslot.empty { display: flex; align-items: center; gap: 8px; border-style: dashed; border-left-width: 1px; }
   .simslot .simhd { margin-bottom: 8px; }
   .simimg { display: block; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #121116; cursor: zoom-in; }
@@ -435,6 +435,7 @@
     .home .grid { grid-template-columns: repeat(3, 1fr); }
     .mattr { padding-top: 0; }
     .dgrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .simres { grid-template-columns: 1fr; }
   }
 </style>
 </head>
