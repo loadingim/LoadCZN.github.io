@@ -100,6 +100,30 @@
   .card .nm { padding: 8px 10px 2px; font-weight: 700; font-size: 15px; border-top: 2px solid var(--ac); }
   .card .meta { padding: 0 10px 10px; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .dot { margin: 0 4px; }
+  /* 대문 */
+  .hero { text-align: center; padding: 36px 0 26px; }
+  .hero .eyebrow { justify-content: center; }
+  .hero h1 { font-size: 40px; margin-bottom: 8px; }
+  .hsub { color: var(--muted); margin: 0 0 22px; }
+  .hsearch { position: relative; width: min(640px, 100%); margin: 0 auto; text-align: left; }
+  .hsearch input { width: 100%; padding: 14px 18px; font-size: 16px; border-radius: 12px; border: 1px solid rgba(212, 162, 76, .55); background: var(--panel); color: var(--text); box-shadow: 0 0 0 4px rgba(212, 162, 76, .08); }
+  .hsearch input:focus { outline: none; border-color: var(--gold); }
+  .hsearch .results { z-index: 20; }
+  .hquick { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 12px; }
+  .season { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-radius: 14px; border: 1px solid rgba(212, 162, 76, .45);
+    background: radial-gradient(120% 140% at 0% 0%, rgba(212, 162, 76, .18), transparent 60%), var(--panel); }
+  .sbadge { font-size: 12px; color: var(--gold); letter-spacing: 1px; }
+  .stitle { font-family: var(--serif); font-weight: 900; font-size: 24px; margin: 2px 0 4px; }
+  .sbtns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .hgo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .hcard { display: block; padding: 16px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); transition: border-color .15s, transform .15s; }
+  .hcard:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .hcard .ht { font-family: var(--serif); font-weight: 900; font-size: 17px; }
+  .hcard .hm { color: var(--gold); font-size: 13px; margin: 2px 0 6px; }
+  .hcard .hdesc { color: var(--muted); font-size: 13px; line-height: 1.5; }
+  .sec h3 .more { float: right; font-family: inherit; font-size: 13px; color: var(--muted); font-weight: 400; }
+  .sec h3 .more:hover { color: var(--gold-hi); }
+  .home .grid { grid-template-columns: repeat(6, 1fr); }
 
   /* 전투원 상세 */
   .back { display: inline-block; margin-bottom: 16px; font-size: 13px; color: var(--muted); }
@@ -380,6 +404,12 @@
     .mgrid { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 4px; }
     .mrow { grid-template-columns: 1fr; gap: 4px; }
     .pslots { grid-template-columns: 1fr; }
+    .hero { padding: 18px 0 16px; }
+    .hero h1 { font-size: 30px; }
+    .hgo { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .hcard { padding: 12px; }
+    .hcard .hdesc { display: none; }
+    .home .grid { grid-template-columns: repeat(3, 1fr); }
     .mattr { padding-top: 0; }
     .dgrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   }
@@ -390,7 +420,7 @@
   <div class="wrap">
     <a class="brand" href="#/"><span class="sigil"></span>CZN 길잡이</a>
     <nav class="tabs">
-      <a href="#/" data-tab="list">전투원</a>
+      <a href="#/chars" data-tab="list">전투원</a>
       <a href="#/teams" data-tab="teams">조합</a>
       <a href="#/roles" data-tab="roles">역할</a>
       <a href="#/partners" data-tab="partners">파트너</a>
@@ -408,7 +438,7 @@
 <footer><div class="wrap">비공식 팬 사이트 · Chaos Zero Nightmare 관련 저작권은 스마일게이트에 있습니다.</div></footer>
 
 <nav class="bottombar">
-  <a href="#/" data-tab="list">전투원</a>
+  <a href="#/chars" data-tab="list">전투원</a>
   <a href="#/teams" data-tab="teams">조합</a>
   <a href="#/roles" data-tab="roles">역할</a>
   <a href="#/partners" data-tab="partners">파트너</a>
@@ -598,6 +628,43 @@ function chipRow(label, key, items, fmt) {
     ${items.map(v => `<button class="chip${s.has(String(v)) ? " on" : ""}" data-k="${key}" data-v="${esc(v)}">${esc(fmt(v))}</button>`).join("")}
   </div></div>`;
 }
+/* ---------- 대문 ---------- */
+// 현재 시즌: 시즌이 바뀌면 여기만 고친다 (CHAOS 목록의 이름과 같아야 이벤트·장비 필터가 동작)
+const CURRENT_SEASON = { label: "시즌 5", chaos: "천상의 방벽" };
+const HOME_QUICK = ["나인", "하이데마리", "로스바이세", "닉스", "취약"];
+let homeSearch = null;
+function viewHome() {
+  const recent = [...chars].filter(d => d.relKey > 0).sort((a, b) => b.relKey - a.relKey).slice(0, 6);
+  const sc = CURRENT_SEASON.chaos;
+  const evItems = equips.filter(e => evArea(e) === sc).length;
+  const seasonItems = equips.filter(e => e.area === sc || (e.chaos || []).includes(sc)).length;
+  const oc = ownedCount();
+  const go = [
+    ["#/teams", "조합 찾기", `${teams.length}개 추천 조합`, "전투원 1~3명으로 조합과 덱을 찾습니다."],
+    ["#/teams", "파티 편성", oc ? `보유 ${oc}명` : "보유 전투원 체크", "가진 전투원으로 겹치지 않게 1~3파티를 짭니다."],
+    ["#/db/events", "이벤트 보상", "미확인 구역 선택지", "어떤 이벤트에서 무엇을 고르면 어떤 장비가 나오는지."],
+    ["#/partners", "파트너", partners.length ? `${partners.length}명` : "패시브·에고 스킬", "패시브·에고 스킬과 이 파트너를 쓰는 전투원."],
+    ["#/db/equipment", "장비 획득처", equips.length ? `${equips.length}종` : "효과·획득처", "효과와 얻는 곳, 카오스별로 보기."],
+    ["#/db/glossary", "효과 사전", gloss.length ? `${gloss.length}개` : "용어 설명", "취약·작열 같은 용어 설명."],
+  ];
+  return `<section class="page home">
+    <div class="hero">
+      <div class="eyebrow">카오스 제로 나이트메어 비공식 한국어 가이드</div>
+      <h1>CZN 길잡이</h1>
+      <p class="hsub">전투원 공략, 추천 조합, 파티 편성, 미확인 구역 보상까지 한곳에서.</p>
+      <div class="hsearch"><input id="hq" type="search" autocomplete="off" placeholder="전투원·파트너·장비·효과 이름으로 검색 (예: 나인, 닉스, 심록의 밤)" aria-label="전투원·파트너·장비·효과 검색"><div class="results" id="hres" hidden></div></div>
+      <div class="hquick">${HOME_QUICK.map(t => `<button class="chip" data-act="homeQ" data-v="${esc(t)}">${esc(t)}</button>`).join("")}</div>
+    </div>
+    <div class="season">
+      <div><div class="sbadge">현재 시즌 · ${esc(CURRENT_SEASON.label)}</div><div class="stitle">${esc(sc)}</div>
+        <div class="note">${equips.length ? `미확인 구역 이벤트로 얻는 장비 ${evItems}종 · 이 카오스 관련 장비 ${seasonItems}종` : "장비 자료를 불러오는 중…"}</div></div>
+      <div class="sbtns"><button class="btn" data-act="goSeasonEvents">이벤트 보상 보기</button><button class="btn" data-act="goSeasonEquip">시즌 장비 보기</button></div>
+    </div>
+    <div class="sec"><h3>바로가기</h3><div class="hgo">${go.map(([h, t, m, d]) => `<a class="hcard" href="${h}"><div class="ht">${t}</div><div class="hm">${m}</div><div class="hdesc">${d}</div></a>`).join("")}</div></div>
+    ${recent.length ? `<div class="sec"><h3>최근 출시 전투원 <a class="more" href="#/chars">전체 ${chars.length}명 보기 →</a></h3><div class="grid">${recent.map(charCard).join("")}</div></div>` : ""}
+    <p class="upd" style="margin-top:22px">자료 갱신 ${esc(DATA_INFO.teams.date)} · 조합은 카제나 조합 가이드, 장비는 나무위키·카오스 빌드·Prydwen, 파트너·번뜩임은 나무위키 기준</p>
+  </section>`;
+}
 function charCard(d) {
   return `<a class="card" href="${charLink(d.id)}" style="--ac:${acOf(d)}">
     <div class="pf">${img(d)}${d.pending ? '<span class="pend">준비 중</span>' : ""}</div>
@@ -650,10 +717,10 @@ function matesOf(id) {
 }
 function viewChar(id) {
   const d = byId[id];
-  if (!d) return `<section class="page"><a class="back" href="#/">← 전투원 목록</a><div class="empty">전투원을 찾을 수 없습니다.</div></section>`;
+  if (!d) return `<section class="page"><a class="back" href="#/chars">← 전투원 목록</a><div class="empty">전투원을 찾을 수 없습니다.</div></section>`;
   const mates = matesOf(d.id);
   let h = `<section class="page" style="--ac:${acOf(d)}">
-    <a class="back" href="#/">← 전투원 목록</a>
+    <a class="back" href="#/chars">← 전투원 목록</a>
     <div class="dtop">
       <div class="dpf">${img(d)}</div>
       <div class="dinfo">
@@ -1201,7 +1268,8 @@ function parseRoute() {
   if (a === "roles") return { view: "roles" };
   if (a === "partners") return { view: "partners", id };
   if (a === "db") return { view: "db", sub: id || "equipment", arg: c ? decodeURIComponent(c) : "" };
-  return { view: "list" };
+  if (a === "chars") return { view: "list" };
+  return { view: "home" };
 }
 // 브라우저 탭·북마크·공유 시 보이는 제목: "내용 – 분류 | CZN 길잡이"
 const DB_TITLES = { equipment: "장비 획득처", events: "이벤트 보상", fragments: "기억의 조각", glossary: "효과 사전" };
@@ -1217,6 +1285,7 @@ function pageTitle(r) {
   else if (r.view === "roles") t = "역할별 보기";
   else if (r.view === "partners") { const pt = partners.find(x => x.id === r.id); t = (pt ? pt.name + " – " : "") + "파트너"; }
   else if (r.view === "db") t = ((r.sub === "equipment" || r.sub === "glossary") && r.arg ? r.arg + " – " : "") + (DB_TITLES[r.sub] || "자료");
+  else if (r.view === "list") t = "전투원 목록";
   else return site + " – 카오스 제로 나이트메어 전투원·조합 가이드";
   return t + " | " + site;
 }
@@ -1229,8 +1298,10 @@ function render() {
   else if (r.view === "roles") app.innerHTML = viewRoles();
   else if (r.view === "partners") app.innerHTML = r.id ? viewPartner(r.id) : viewPartners();
   else if (r.view === "db") app.innerHTML = viewDb(r.sub, r.arg);
+  else if (r.view === "home") app.innerHTML = viewHome();
   else app.innerHTML = viewList();
   document.title = pageTitle(r);
+  if (r.view === "home") { const hq = document.getElementById("hq"), hr = document.getElementById("hres"); if (hq && hr) homeSearch = makeSearch(hq, hr); }
   const tab = r.view === "char" || r.view === "list" ? "list" : r.view === "team" ? "teams" : r.view;
   document.querySelectorAll("[data-tab]").forEach(a => a.classList.toggle("on", a.dataset.tab === tab));
   document.body.classList.toggle("lock", r.view === "list" && sheetOpen);
@@ -1248,7 +1319,7 @@ function onRouteChange() {
 }
 function goList() {
   if (parseRoute().view === "list") { render(); window.scrollTo(0, 0); }
-  else { listScroll = 0; location.hash = "#/"; }
+  else { listScroll = 0; location.hash = "#/chars"; }
 }
 function resetListFilters() {
   ["attr", "job", "grade", "role", "tag"].forEach(k => sel[k].clear());
@@ -1304,6 +1375,9 @@ document.addEventListener("click", e => {
       }
       break;
     }
+    case "homeQ": if (homeSearch) homeSearch.set(v); break;
+    case "goSeasonEvents": evSel.chaos = CURRENT_SEASON.chaos; evSel.q = ""; location.hash = "#/db/events"; break;
+    case "goSeasonEquip": eqSel.slot = ""; eqSel.grp = ""; eqSel.q = ""; eqSel.chaos = CURRENT_SEASON.chaos; eqSel.applied = ""; location.hash = "#/db/equipment"; break;
     case "removeParty": teamSel.parties.splice(Number(v), 1); saveOwned(); render(); break;
     case "clearParties": teamSel.parties = []; saveOwned(); render(); break;
     case "toggleOwnedOnly": teamSel.ownedOnly = !ownedFilterOn(); saveOwned(); render(); break;
@@ -1342,7 +1416,6 @@ document.addEventListener("input", e => {
 
 /* 헤더 검색 */
 const q = document.getElementById("q"), results = document.getElementById("results");
-let hits = [], hl = 0;
 // 전투원 → 파트너 → 장비 → 효과 순으로 묶어 보여 준다 (자료가 아직 안 불러와졌으면 그 묶음은 건너뜀)
 function searchHits(s) {
   const has = (...xs) => xs.some(x => x && String(x).toLowerCase().includes(s));
@@ -1359,30 +1432,36 @@ function searchHits(s) {
   ];
   return groups.filter(([, list]) => list.length);
 }
-function drawResults() {
-  const s = q.value.trim().toLowerCase();
-  if (!s) { results.hidden = true; return; }
-  const groups = searchHits(s);
-  hits = groups.flatMap(([, list]) => list);
-  hl = Math.min(hl, Math.max(hits.length - 1, 0));
-  let i = 0;
-  results.innerHTML = hits.length ? groups.map(([label, list]) => `<div class="rg">${esc(label)}</div>` + list.map(h =>
-    `<a href="${h.href}" class="${i++ === hl ? "hl" : ""}">${h.pic}<span><span class="rn">${esc(h.name)}</span><br><span class="rm">${esc(h.meta)}</span></span></a>`).join("")).join("")
-    : '<div class="none">검색 결과가 없습니다.</div>';
-  results.hidden = false;
-  const on = results.querySelector("a.hl");
-  if (on) on.scrollIntoView({ block: "nearest" });
+// 입력칸 + 결과 상자 한 쌍에 검색 동작을 붙인다 (헤더 검색, 대문 검색)
+function makeSearch(input, box) {
+  let hits = [], hl = 0;
+  function draw() {
+    const s = input.value.trim().toLowerCase();
+    if (!s) { box.hidden = true; return; }
+    const groups = searchHits(s);
+    hits = groups.flatMap(([, list]) => list);
+    hl = Math.min(hl, Math.max(hits.length - 1, 0));
+    let i = 0;
+    box.innerHTML = hits.length ? groups.map(([label, list]) => `<div class="rg">${esc(label)}</div>` + list.map(h =>
+      `<a href="${h.href}" class="${i++ === hl ? "hl" : ""}">${h.pic}<span><span class="rn">${esc(h.name)}</span><br><span class="rm">${esc(h.meta)}</span></span></a>`).join("")).join("")
+      : '<div class="none">검색 결과가 없습니다.</div>';
+    box.hidden = false;
+    const on = box.querySelector("a.hl");
+    if (on) on.scrollIntoView({ block: "nearest" });
+  }
+  input.addEventListener("input", () => { hl = 0; draw(); });
+  input.addEventListener("focus", draw);
+  input.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown") { e.preventDefault(); hl = Math.min(hl + 1, hits.length - 1); draw(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); hl = Math.max(hl - 1, 0); draw(); }
+    else if (e.key === "Enter" && hits[hl]) { const to = hits[hl].href; input.value = ""; box.hidden = true; input.blur(); location.hash = to; }
+    else if (e.key === "Escape") { box.hidden = true; input.blur(); }
+  });
+  box.addEventListener("click", e => { if (e.target.closest("a")) { input.value = ""; box.hidden = true; } });
+  return { draw, set(v) { input.value = v; hl = 0; input.focus(); draw(); } };
 }
-q.addEventListener("input", () => { hl = 0; drawResults(); });
-q.addEventListener("focus", drawResults);
-q.addEventListener("keydown", e => {
-  if (e.key === "ArrowDown") { e.preventDefault(); hl = Math.min(hl + 1, hits.length - 1); drawResults(); }
-  else if (e.key === "ArrowUp") { e.preventDefault(); hl = Math.max(hl - 1, 0); drawResults(); }
-  else if (e.key === "Enter" && hits[hl]) { location.hash = hits[hl].href; q.value = ""; results.hidden = true; q.blur(); }
-  else if (e.key === "Escape") { results.hidden = true; q.blur(); }
-});
-results.addEventListener("click", e => { if (e.target.closest("a")) { q.value = ""; results.hidden = true; } });
-document.addEventListener("click", e => { if (!e.target.closest(".search")) results.hidden = true; });
+makeSearch(q, results);
+document.addEventListener("click", e => { document.querySelectorAll(".results").forEach(b => { if (!b.parentElement.contains(e.target)) b.hidden = true; }); });
 document.addEventListener("keydown", e => {
   if (e.key !== "Escape") return;
   if (!lb.hidden) closeLb();
@@ -1404,7 +1483,7 @@ function loadExtra() {
     .catch(() => { partnerState = "error"; })
     .then(() => {
       const v = parseRoute().view;
-      if (v === "partners" || v === "char") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+      if (v === "partners" || v === "char" || v === "home") { const y = window.scrollY; render(); window.scrollTo(0, y); }
     });
   Promise.all(["data/equipment.json", "data/fragments.json", "data/glossary.json"].map(get))
     .then(([ej, fj, gj]) => {
@@ -1417,7 +1496,7 @@ function loadExtra() {
     .catch(() => { extraState = "error"; })
     .then(() => {
       const v = parseRoute().view;
-      if (v === "db" || v === "char") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+      if (v === "db" || v === "char" || v === "home") { const y = window.scrollY; render(); window.scrollTo(0, y); }
     });
 }
 
