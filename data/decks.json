@@ -1,29 +1,5 @@
 [
   {
-    "code": "hilde-normal",
-    "char": "hilde",
-    "name": "힐데-BASE",
-    "image": "decks/hilde-normal.webp",
-    "thumb": "decks/thumb/hilde-normal.webp",
-    "note": ""
-  },
-  {
-    "code": "olga-normal",
-    "char": "olga",
-    "name": "올가-BASE",
-    "image": "decks/olga-normal.webp",
-    "thumb": "decks/thumb/olga-normal.webp",
-    "note": ""
-  },
-  {
-    "code": "arabella-normal",
-    "char": "arabella",
-    "name": "아라벨라-BASE",
-    "image": "decks/arabella-normal.webp",
-    "thumb": "decks/thumb/arabella-normal.webp",
-    "note": ""
-  },
-  {
     "code": "amir-metal",
     "char": "amir",
     "name": "광역",

@@ -50,9 +50,6 @@
         },
         "deckCode": {
             "enum": [
-                "hilde-normal",
-                "olga-normal",
-                "arabella-normal",
                 "amir-metal",
                 "beryl-followup",
                 "cassius-quest",
@@ -108,7 +105,10 @@
                 "veronica-draw-ap",
                 "veronica-draw",
                 "yuki-morale",
-                "yuki-steal"
+                "yuki-steal",
+                "rossweisse-mugeom",
+                "tiphera-memory-draw",
+                "fei-ap-draw"
             ]
         },
         "team": {
