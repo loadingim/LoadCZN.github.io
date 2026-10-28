@@ -492,5 +492,6125 @@
         "alts": []
       }
     ]
+  },
+  {
+    "id": "narja-haru-veronica",
+    "name": "나르쟈 + 하루 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      },
+      {
+        "id": "haru",
+        "alts": [],
+        "deck": "haru-retrieve"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "narja-nine-khalipe",
+    "name": "나르쟈 + 나인 + 칼리페",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      },
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "khalipe",
+        "alts": [],
+        "deck": "khalipe-ap-vuln"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-mika",
+    "name": "나인 + 베로니카 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-mika",
+    "name": "나인 + 레노아 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-tiphera-veronica",
+    "name": "나인 + 티페라 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "nia-diana-renoa",
+    "name": "니아 + 디아나 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nia",
+        "alts": [],
+        "deck": "nia-adagio"
+      },
+      {
+        "id": "diana",
+        "alts": [],
+        "deck": "diana-heartbreaker"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-requiem"
+      }
+    ]
+  },
+  {
+    "id": "narja-haru-renoa",
+    "name": "나르쟈 + 하루 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      },
+      {
+        "id": "haru",
+        "alts": [],
+        "deck": "haru-retrieve"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-mika-veronica",
+    "name": "나인 + 미카 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-tiphera-renoa",
+    "name": "나인 + 티페라 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "rei-tenebria-adelheid",
+    "name": "레이 + 테네브리아 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "rei-tenebria-narja",
+    "name": "레이 + 테네브리아 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      }
+    ]
+  },
+  {
+    "id": "rei-meilin-veronica",
+    "name": "레이 + 메이린 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "rei-meilin-renoa",
+    "name": "레이 + 메이린 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "rei-meilin-narja",
+    "name": "레이 + 메이린 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      }
+    ]
+  },
+  {
+    "id": "lucas-luke-narja",
+    "name": "루카스 + 루크 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "lucas",
+        "alts": [],
+        "deck": "lucas-flammenwerfer"
+      },
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      }
+    ]
+  },
+  {
+    "id": "luke-adelheid-veronica",
+    "name": "루크 + 아델하이트 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-adelheid-renoa",
+    "name": "루크 + 아델하이트 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "rita-mika-veronica",
+    "name": "리타 + 미카 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-fate"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw-ap"
+      }
+    ]
+  },
+  {
+    "id": "rita-luke-renoa",
+    "name": "리타 + 루크 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      },
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "rita-luke-veronica",
+    "name": "리타 + 루크 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      },
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "rita-meilin-rei",
+    "name": "리타 + 메이린 + 레이",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      },
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      }
+    ]
+  },
+  {
+    "id": "rin-mika-veronica",
+    "name": "린 + 미카 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rin",
+        "alts": [],
+        "deck": "rin-jan"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "rin-adelheid-veronica",
+    "name": "린 + 아델하이트 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rin",
+        "alts": [],
+        "deck": "rin-jan"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-magna-maribell",
+    "name": "나인 + 마그나 + 마리벨",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      },
+      {
+        "id": "maribell",
+        "alts": [],
+        "deck": "maribell-wolves-dome"
+      }
+    ]
+  },
+  {
+    "id": "nine-magna-khalipe",
+    "name": "나인 + 마그나 + 칼리페",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      },
+      {
+        "id": "khalipe",
+        "alts": [],
+        "deck": "khalipe-ap-vuln"
+      }
+    ]
+  },
+  {
+    "id": "beryl-orlea-magna",
+    "name": "베릴 + 오를레아 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "beryl",
+        "alts": [],
+        "deck": "beryl-followup"
+      },
+      {
+        "id": "orlea",
+        "alts": [],
+        "deck": "orlea-malangi"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-vuln"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-anika-narja",
+    "name": "세레니엘 + 아니카 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "anika",
+        "alts": [],
+        "deck": "anika-efficiency"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-narja-veronica",
+    "name": "세레니엘 + 나르쟈 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-heidemarie-nia",
+    "name": "세레니엘 + 하이데마리 + 니아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "heidemarie",
+        "alts": [],
+        "deck": "heidemarie-aurora"
+      },
+      {
+        "id": "nia",
+        "alts": [],
+        "deck": "nia-adagio"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-heidemarie-nia-2",
+    "name": "세레니엘 + 하이데마리 + 니아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "heidemarie",
+        "alts": [],
+        "deck": "heidemarie-aurora"
+      },
+      {
+        "id": "nia",
+        "alts": [],
+        "deck": "nia-adagio"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-selena-narja",
+    "name": "세레니엘 + 셀레나 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-recharge"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-selena-adelheid",
+    "name": "세레니엘 + 셀레나 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-recharge"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-selena-cassius-2",
+    "name": "세레니엘 + 셀레나 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-recharge"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-morale"
+      }
+    ]
+  },
+  {
+    "id": "meilin-selena-mika",
+    "name": "메이린 + 셀레나 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "meilin-selena-tiphera",
+    "name": "메이린 + 셀레나 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "meilin-narja-selena",
+    "name": "메이린 + 나르쟈 + 셀레나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-tiphera",
+    "name": "나인 + 아델하이트 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "rin-adelheid-magna",
+    "name": "린 + 아델하이트 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rin",
+        "alts": [],
+        "deck": "rin-jan"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-vuln"
+      }
+    ]
+  },
+  {
+    "id": "arabella-olga-adelheid",
+    "name": "아라벨라 + 올가 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "arabella",
+        "alts": [],
+        "deck": "arabella-sentence"
+      },
+      {
+        "id": "olga",
+        "alts": [],
+        "deck": "olga-split"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "arabella-hilde-adelheid",
+    "name": "아라벨라 + 힐데 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "arabella",
+        "alts": [],
+        "deck": "arabella-sentence"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "arabella-hilde-mika",
+    "name": "아라벨라 + 힐데 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "arabella",
+        "alts": [],
+        "deck": "arabella-sentence"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "arabella-hilde-tiphera",
+    "name": "아라벨라 + 힐데 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "arabella",
+        "alts": [],
+        "deck": "arabella-sentence"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "amir-adelheid-narja",
+    "name": "아미르 + 아델하이트 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "amir",
+        "alts": [],
+        "deck": "amir-metal"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      }
+    ]
+  },
+  {
+    "id": "luke-owen-veronica",
+    "name": "루크 + 오웬 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "owen",
+        "alts": [],
+        "deck": "owen-armor-break"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-owen-veronica",
+    "name": "세레니엘 + 오웬 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "owen",
+        "alts": [],
+        "deck": "owen-armor-break"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-owen-renoa",
+    "name": "세레니엘 + 오웬 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "owen",
+        "alts": [],
+        "deck": "owen-armor-break"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-adelheid-veronica",
+    "name": "유키 + 아델하이트 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-adelheid-renoa",
+    "name": "유키 + 아델하이트 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-adelheid-veronica-2",
+    "name": "유키 + 아델하이트 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-adelheid-renoa-2",
+    "name": "유키 + 아델하이트 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-renoa",
+    "name": "유키 + 미카 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-veronica",
+    "name": "유키 + 미카 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "chizuru-rei-narja",
+    "name": "치즈루 + 레이 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "chizuru",
+        "alts": [],
+        "deck": "chizuru-chamwol"
+      },
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      }
+    ]
+  },
+  {
+    "id": "chizuru-rei-meilin",
+    "name": "치즈루 + 레이 + 메이린",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "chizuru",
+        "alts": [],
+        "deck": "chizuru-tsukuyomi"
+      },
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      }
+    ]
+  },
+  {
+    "id": "kayron-adelheid-mika",
+    "name": "카일론 + 아델하이트 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-tiphera-mika",
+    "name": "카일론 + 티페라 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-tiphera-mika-2",
+    "name": "카일론 + 티페라 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark-chain"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "olga-tressa-mika",
+    "name": "올가 + 트리사 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "olga",
+        "alts": [],
+        "deck": "olga-split"
+      },
+      {
+        "id": "tressa",
+        "alts": [],
+        "deck": "tressa-pain"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "fei-hilde-mika",
+    "name": "페이 + 힐데 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "fei",
+        "alts": [],
+        "deck": "fei-yeommu"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "fei-hilde-tiphera",
+    "name": "페이 + 힐데 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "fei",
+        "alts": [],
+        "deck": "fei-yeommu"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "heidemarie-nia-hugo",
+    "name": "하이데마리 + 니아 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "heidemarie",
+        "alts": [],
+        "deck": "heidemarie-aurora"
+      },
+      {
+        "id": "nia",
+        "alts": [],
+        "deck": "nia-adagio"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      }
+    ]
+  },
+  {
+    "id": "heidemarie-rita-nia",
+    "name": "하이데마리 + 리타 + 니아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "heidemarie",
+        "alts": [],
+        "deck": "heidemarie-aurora"
+      },
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      },
+      {
+        "id": "nia",
+        "alts": [],
+        "deck": "nia-adagio"
+      }
+    ]
+  },
+  {
+    "id": "meilin-rei-hugo",
+    "name": "메이린 + 레이 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      }
+    ]
+  },
+  {
+    "id": "chizuru-hugo-narja",
+    "name": "치즈루 + 휴고 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "chizuru",
+        "alts": [],
+        "deck": "chizuru-chamwol"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hugo-tiphera",
+    "name": "세레니엘 + 휴고 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hilde-narja",
+    "name": "세레니엘 + 힐데 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      }
+    ]
+  },
+  {
+    "id": "heidemarie-selena-mika",
+    "name": "하이데마리 + 셀레나 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "heidemarie",
+        "alts": [],
+        "deck": "heidemarie-followup"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-magna",
+    "name": "나인 + 아델하이트 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      }
+    ]
+  },
+  {
+    "id": "tenebria-adelheid-veronica",
+    "name": "테네브리아 + 아델하이트 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "heidemarie-selena-tiphera",
+    "name": "하이데마리 + 셀레나 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "heidemarie",
+        "alts": [],
+        "deck": "heidemarie-followup"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "heidemarie-selena-adelheid",
+    "name": "하이데마리 + 셀레나 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "heidemarie",
+        "alts": [],
+        "deck": "heidemarie-followup"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "narja-haru-adelheid",
+    "name": "나르쟈 + 하루 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      },
+      {
+        "id": "haru",
+        "alts": [],
+        "deck": "haru-retrieve"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "narja-haru-hugo",
+    "name": "나르쟈 + 하루 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      },
+      {
+        "id": "haru",
+        "alts": [],
+        "deck": "haru-retrieve"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-tiphera",
+    "name": "나인 + 베로니카 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-adelheid",
+    "name": "나인 + 베로니카 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-mika",
+    "name": "나인 + 아델하이트 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-hugo-mika",
+    "name": "나인 + 휴고 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-tiphera",
+    "name": "나인 + 레노아 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-adelheid",
+    "name": "나인 + 레노아 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-tiphera-2",
+    "name": "나인 + 아델하이트 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-hugo-tiphera",
+    "name": "나인 + 휴고 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-hugo-adelheid",
+    "name": "나인 + 휴고 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-tiphera-adelheid",
+    "name": "나인 + 티페라 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-tiphera-hugo",
+    "name": "나인 + 티페라 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-mika-veronica-2",
+    "name": "나인 + 미카 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-veronica",
+    "name": "나인 + 아델하이트 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-mika-renoa",
+    "name": "나인 + 미카 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-mika-adelheid",
+    "name": "나인 + 미카 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-mika-hugo",
+    "name": "나인 + 미카 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-renoa",
+    "name": "나인 + 아델하이트 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-hugo",
+    "name": "나인 + 아델하이트 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-tiphera-veronica-2",
+    "name": "나인 + 티페라 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-veronica-2",
+    "name": "나인 + 아델하이트 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw-ap"
+      }
+    ]
+  },
+  {
+    "id": "rei-tenebria-veronica",
+    "name": "레이 + 테네브리아 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "rei-tenebria-renoa",
+    "name": "레이 + 테네브리아 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "rei-tenebria-hugo",
+    "name": "레이 + 테네브리아 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "rei-tenebria-mika",
+    "name": "레이 + 테네브리아 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "rei-tenebria-tiphera",
+    "name": "레이 + 테네브리아 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "rei-meilin-adelheid",
+    "name": "레이 + 메이린 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-adelheid-hugo",
+    "name": "루크 + 아델하이트 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-mika-veronica",
+    "name": "루크 + 미카 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-tiphera-veronica",
+    "name": "루크 + 티페라 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-renoa-hugo",
+    "name": "루크 + 레노아 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-mika-renoa",
+    "name": "루크 + 미카 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-mika-adelheid",
+    "name": "루크 + 미카 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-mika-hugo",
+    "name": "루크 + 미카 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-tiphera-renoa",
+    "name": "루크 + 티페라 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-tiphera-adelheid",
+    "name": "루크 + 티페라 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-tiphera-hugo",
+    "name": "루크 + 티페라 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "rita-tiphera-veronica",
+    "name": "리타 + 티페라 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-fate"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw-ap"
+      }
+    ]
+  },
+  {
+    "id": "rita-luke-adelheid",
+    "name": "리타 + 루크 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      },
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "rin-tiphera-adelheid",
+    "name": "린 + 티페라 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rin",
+        "alts": [],
+        "deck": "rin-jan"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-narja-renoa",
+    "name": "세레니엘 + 나르쟈 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-narja-adelheid",
+    "name": "세레니엘 + 나르쟈 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-narja-hugo",
+    "name": "세레니엘 + 나르쟈 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-selena-mika",
+    "name": "세레니엘 + 셀레나 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-recharge"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-selena-tiphera",
+    "name": "세레니엘 + 셀레나 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-recharge"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "meilin-selena-adelheid",
+    "name": "메이린 + 셀레나 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-mika-2",
+    "name": "나인 + 아델하이트 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-tiphera-2",
+    "name": "나인 + 베로니카 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-tiphera-2",
+    "name": "나인 + 레노아 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-mika-tiphera",
+    "name": "나인 + 미카 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-mika-2",
+    "name": "나인 + 베로니카 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-adelheid-2",
+    "name": "나인 + 베로니카 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-mika-2",
+    "name": "나인 + 레노아 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-adelheid-2",
+    "name": "나인 + 레노아 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-orlea-tiphera",
+    "name": "나인 + 오를레아 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "orlea",
+        "alts": [],
+        "deck": "orlea-malangi"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hilde-adelheid",
+    "name": "세레니엘 + 힐데 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "rin-hugo-adelheid",
+    "name": "린 + 휴고 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rin",
+        "alts": [],
+        "deck": "rin-jan"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hilde-tiphera",
+    "name": "세레니엘 + 힐데 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hilde-mika",
+    "name": "세레니엘 + 힐데 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "arabella-olga-mika",
+    "name": "아라벨라 + 올가 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "arabella",
+        "alts": [],
+        "deck": "arabella-sentence"
+      },
+      {
+        "id": "olga",
+        "alts": [],
+        "deck": "olga-split"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "arabella-olga-tiphera-2",
+    "name": "아라벨라 + 올가 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "arabella",
+        "alts": [],
+        "deck": "arabella-sentence"
+      },
+      {
+        "id": "olga",
+        "alts": [],
+        "deck": "olga-split"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "luke-owen-adelheid",
+    "name": "루크 + 오웬 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "owen",
+        "alts": [],
+        "deck": "owen-armor-break"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-owen-adelheid",
+    "name": "세레니엘 + 오웬 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "owen",
+        "alts": [],
+        "deck": "owen-armor-break"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-adelheid-hugo",
+    "name": "유키 + 아델하이트 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-veronica",
+    "name": "유키 + 티페라 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-adelheid",
+    "name": "유키 + 미카 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-hugo",
+    "name": "유키 + 미카 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-renoa",
+    "name": "유키 + 티페라 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-adelheid",
+    "name": "유키 + 티페라 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-hugo",
+    "name": "유키 + 티페라 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-adelheid-hugo-2",
+    "name": "유키 + 아델하이트 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-veronica-2",
+    "name": "유키 + 미카 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-veronica-2",
+    "name": "유키 + 티페라 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-renoa-2",
+    "name": "유키 + 미카 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-adelheid-2",
+    "name": "유키 + 미카 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-hugo-2",
+    "name": "유키 + 미카 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-renoa-2",
+    "name": "유키 + 티페라 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-adelheid-2",
+    "name": "유키 + 티페라 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-hugo-2",
+    "name": "유키 + 티페라 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "kayron-adelheid-tiphera",
+    "name": "카일론 + 아델하이트 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "kayron-veronica-mika",
+    "name": "카일론 + 베로니카 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-renoa-mika",
+    "name": "카일론 + 레노아 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-hugo-mika",
+    "name": "카일론 + 휴고 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-tiphera-mika-3",
+    "name": "카일론 + 티페라 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-tiphera-adelheid",
+    "name": "카일론 + 티페라 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "kayron-adelheid-mika-2",
+    "name": "카일론 + 아델하이트 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-tiphera-adelheid-2",
+    "name": "카일론 + 티페라 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark-chain"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "kayron-adelheid-mika-3",
+    "name": "카일론 + 아델하이트 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark-chain"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "olga-tressa-tiphera",
+    "name": "올가 + 트리사 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "olga",
+        "alts": [],
+        "deck": "olga-split"
+      },
+      {
+        "id": "tressa",
+        "alts": [],
+        "deck": "tressa-pain"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "olga-tressa-adelheid",
+    "name": "올가 + 트리사 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "olga",
+        "alts": [],
+        "deck": "olga-split"
+      },
+      {
+        "id": "tressa",
+        "alts": [],
+        "deck": "tressa-pain"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "fei-hilde-adelheid",
+    "name": "페이 + 힐데 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "fei",
+        "alts": [],
+        "deck": "fei-yeommu"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hugo-mika",
+    "name": "세레니엘 + 휴고 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hugo-adelheid",
+    "name": "세레니엘 + 휴고 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-magna",
+    "name": "나인 + 베로니카 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-magna",
+    "name": "나인 + 레노아 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      }
+    ]
+  },
+  {
+    "id": "nine-hugo-magna",
+    "name": "나인 + 휴고 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      }
+    ]
+  },
+  {
+    "id": "nine-mika-magna",
+    "name": "나인 + 미카 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      }
+    ]
+  },
+  {
+    "id": "nine-tiphera-magna",
+    "name": "나인 + 티페라 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      }
+    ]
+  },
+  {
+    "id": "diana-rita-nia",
+    "name": "디아나 + 리타 + 니아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "diana",
+        "alts": [],
+        "deck": "diana-heartbreaker"
+      },
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      },
+      {
+        "id": "nia",
+        "alts": [],
+        "deck": "nia-adagio"
+      }
+    ]
+  },
+  {
+    "id": "anika-rita-khalipe",
+    "name": "아니카 + 리타 + 칼리페",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "anika",
+        "alts": [],
+        "deck": "anika-efficiency"
+      },
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      },
+      {
+        "id": "khalipe",
+        "alts": [],
+        "deck": "khalipe-ap-vuln"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-cassius",
+    "name": "나인 + 베로니카 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-cassius",
+    "name": "나인 + 레노아 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-veronica",
+    "name": "나인 + 카시우스 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-veronica-2",
+    "name": "나인 + 카시우스 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-renoa",
+    "name": "나인 + 카시우스 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "rei-tenebria-cassius",
+    "name": "레이 + 테네브리아 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "luke-cassius-veronica",
+    "name": "루크 + 카시우스 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-cassius-renoa",
+    "name": "루크 + 카시우스 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "rita-cassius-veronica",
+    "name": "리타 + 카시우스 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-fate"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw-ap"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-selena-cassius-3",
+    "name": "세레니엘 + 셀레나 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-recharge"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "meilin-selena-cassius",
+    "name": "메이린 + 셀레나 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-tiphera",
+    "name": "나인 + 카시우스 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-cassius",
+    "name": "나인 + 아델하이트 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "arabella-olga-cassius",
+    "name": "아라벨라 + 올가 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "arabella",
+        "alts": [],
+        "deck": "arabella-sentence"
+      },
+      {
+        "id": "olga",
+        "alts": [],
+        "deck": "olga-split"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "arabella-hilde-cassius-2",
+    "name": "아라벨라 + 힐데 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "arabella",
+        "alts": [],
+        "deck": "arabella-sentence"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "amir-cassius-narja",
+    "name": "아미르 + 카시우스 + 나르쟈",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "amir",
+        "alts": [],
+        "deck": "amir-metal"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      }
+    ]
+  },
+  {
+    "id": "yuki-cassius-veronica",
+    "name": "유키 + 카시우스 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-cassius-renoa",
+    "name": "유키 + 카시우스 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-cassius-veronica-2",
+    "name": "유키 + 카시우스 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-cassius-renoa-2",
+    "name": "유키 + 카시우스 + 레노아",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      }
+    ]
+  },
+  {
+    "id": "kayron-cassius-mika",
+    "name": "카일론 + 카시우스 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-adelheid-cassius",
+    "name": "카일론 + 아델하이트 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "kayron-cassius-mika-2",
+    "name": "카일론 + 카시우스 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-tiphera-cassius",
+    "name": "카일론 + 티페라 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "kayron-cassius-mika-3",
+    "name": "카일론 + 카시우스 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark-chain"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "kayron-tiphera-cassius-2",
+    "name": "카일론 + 티페라 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark-chain"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "olga-tressa-cassius",
+    "name": "올가 + 트리사 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "olga",
+        "alts": [],
+        "deck": "olga-split"
+      },
+      {
+        "id": "tressa",
+        "alts": [],
+        "deck": "tressa-pain"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "fei-hilde-cassius",
+    "name": "페이 + 힐데 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "fei",
+        "alts": [],
+        "deck": "fei-yeommu"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hugo-cassius",
+    "name": "세레니엘 + 휴고 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "heidemarie-selena-cassius-2",
+    "name": "하이데마리 + 셀레나 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "heidemarie",
+        "alts": [],
+        "deck": "heidemarie-followup"
+      },
+      {
+        "id": "selena",
+        "alts": [],
+        "deck": "selena-followup"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-magna",
+    "name": "나인 + 카시우스 + 마그나",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      }
+    ]
+  },
+  {
+    "id": "tenebria-cassius-veronica",
+    "name": "테네브리아 + 카시우스 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "tenebria",
+        "alts": [],
+        "deck": "tenebria-arpeggio"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "narja-haru-cassius",
+    "name": "나르쟈 + 하루 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-cost"
+      },
+      {
+        "id": "haru",
+        "alts": [],
+        "deck": "haru-retrieve"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-mika",
+    "name": "나인 + 카시우스 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-adelheid-cassius-2",
+    "name": "나인 + 아델하이트 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-hugo-cassius",
+    "name": "나인 + 휴고 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-tiphera-2",
+    "name": "나인 + 카시우스 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-armor"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-adelheid",
+    "name": "나인 + 카시우스 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-tiphera-cassius",
+    "name": "나인 + 티페라 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-hugo",
+    "name": "나인 + 카시우스 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "nine-mika-cassius",
+    "name": "나인 + 미카 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "rei-meilin-cassius",
+    "name": "레이 + 메이린 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rei",
+        "alts": [],
+        "deck": "rei-basic"
+      },
+      {
+        "id": "meilin",
+        "alts": [],
+        "deck": "meilin-basic"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "luke-cassius-hugo",
+    "name": "루크 + 카시우스 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-cassius-adelheid",
+    "name": "루크 + 카시우스 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "luke-mika-cassius",
+    "name": "루크 + 미카 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "luke-tiphera-cassius",
+    "name": "루크 + 티페라 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "rita-luke-cassius",
+    "name": "리타 + 루크 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      },
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-narja-cassius",
+    "name": "세레니엘 + 나르쟈 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "narja",
+        "alts": [],
+        "deck": "narja-morale"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-cassius-mika-2",
+    "name": "나인 + 카시우스 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "nine-veronica-cassius-2",
+    "name": "나인 + 베로니카 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-renoa-cassius-2",
+    "name": "나인 + 레노아 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-annihilate"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "nine-orlea-cassius",
+    "name": "나인 + 오를레아 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "nine",
+        "alts": [],
+        "deck": "nine-extreme"
+      },
+      {
+        "id": "orlea",
+        "alts": [],
+        "deck": "orlea-malangi"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-hilde-cassius",
+    "name": "세레니엘 + 힐데 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-vuln"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "luke-owen-cassius",
+    "name": "루크 + 오웬 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "luke",
+        "alts": [],
+        "deck": "luke-weakpoint"
+      },
+      {
+        "id": "owen",
+        "alts": [],
+        "deck": "owen-armor-break"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "sereniel-owen-cassius",
+    "name": "세레니엘 + 오웬 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "owen",
+        "alts": [],
+        "deck": "owen-armor-break"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "yuki-cassius-hugo",
+    "name": "유키 + 카시우스 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-cassius-adelheid",
+    "name": "유키 + 카시우스 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-cassius",
+    "name": "유키 + 미카 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-cassius",
+    "name": "유키 + 티페라 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-morale"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "yuki-cassius-hugo-2",
+    "name": "유키 + 카시우스 + 휴고",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-cassius-adelheid-2",
+    "name": "유키 + 카시우스 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "yuki-mika-cassius-2",
+    "name": "유키 + 미카 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "yuki-tiphera-cassius-2",
+    "name": "유키 + 티페라 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "yuki",
+        "alts": [],
+        "deck": "yuki-steal"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "kayron-cassius-tiphera",
+    "name": "카일론 + 카시우스 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-select"
+      }
+    ]
+  },
+  {
+    "id": "kayron-veronica-cassius",
+    "name": "카일론 + 베로니카 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "kayron-renoa-cassius",
+    "name": "카일론 + 레노아 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "renoa",
+        "alts": [],
+        "deck": "renoa-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "kayron-hugo-cassius",
+    "name": "카일론 + 휴고 + 카시우스",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-long-battle"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-draw"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      }
+    ]
+  },
+  {
+    "id": "kayron-cassius-adelheid",
+    "name": "카일론 + 카시우스 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "kayron-cassius-adelheid-2",
+    "name": "카일론 + 카시우스 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "kayron",
+        "alts": [],
+        "deck": "kayron-mark-chain"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-quest"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "hugo-cassius-hilde",
+    "name": "휴고 + 카시우스 + 힐데",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "cassius",
+        "alts": [],
+        "deck": "cassius-morale"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      }
+    ]
+  },
+  {
+    "id": "anika-adelheid-rita",
+    "name": "아니카 + 아델하이트 + 리타",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "anika",
+        "alts": [],
+        "deck": "anika-efficiency"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "rita",
+        "alts": [],
+        "deck": "rita-morale"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-adelheid-tiphera-2",
+    "name": "로스바이세 + 아델하이트 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-predict"
+      }
+    ]
+  },
+  {
+    "id": "fei-hugo-hilde",
+    "name": "페이 + 휴고 + 힐데",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "fei",
+        "alts": [],
+        "deck": "fei-yeommu"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-hilde-tiphera",
+    "name": "로스바이세 + 힐데 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-predict"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-hilde-mika",
+    "name": "로스바이세 + 힐데 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-hilde-adelheid",
+    "name": "로스바이세 + 힐데 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-hugo-tiphera",
+    "name": "로스바이세 + 휴고 + 티페라",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "tiphera",
+        "alts": [],
+        "deck": "tiphera-predict"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-hugo-mika",
+    "name": "로스바이세 + 휴고 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "hugo",
+        "alts": [],
+        "deck": "hugo-followup"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-veronica-mika",
+    "name": "로스바이세 + 베로니카 + 미카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      },
+      {
+        "id": "mika",
+        "alts": [],
+        "deck": "mika-ap"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-sereniel-veronica",
+    "name": "로스바이세 + 세레니엘 + 베로니카",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "veronica",
+        "alts": [],
+        "deck": "veronica-draw"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-sereniel-hilde",
+    "name": "로스바이세 + 세레니엘 + 힐데",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "hilde",
+        "alts": [],
+        "deck": "hilde-homing"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-sereniel-adelheid",
+    "name": "로스바이세 + 세레니엘 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "sereniel",
+        "alts": [],
+        "deck": "sereniel-ap"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
+  },
+  {
+    "id": "rossweisse-magna-adelheid",
+    "name": "로스바이세 + 마그나 + 아델하이트",
+    "tags": [
+      "입문"
+    ],
+    "slots": [
+      {
+        "id": "rossweisse",
+        "alts": [],
+        "deck": "rossweisse-infinite"
+      },
+      {
+        "id": "magna",
+        "alts": [],
+        "deck": "magna-counter"
+      },
+      {
+        "id": "adelheid",
+        "alts": [],
+        "deck": "adelheid-draw"
+      }
+    ]
   }
 ]
