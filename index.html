@@ -443,6 +443,16 @@
   .crow b.up { color: #8fd6a8; }
   .crow b.dn { color: #f2a0a5; }
   .crow.cur { box-shadow: inset 0 0 0 1px var(--gold); }
+  .ctot.c3 { grid-template-columns: repeat(3, 1fr); }
+  .crow small { color: var(--muted); font-size: 11px; }
+  .crow b em { font-style: normal; font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 6px; }
+  .crow.off { opacity: .45; }
+  .cmore { margin-top: 6px; width: 100%; font-size: 12px; padding: 5px 8px; }
+  .csub { margin: 14px 0 8px; font-size: 14px; color: var(--gold-hi); }
+  .csub:first-child { margin-top: 0; }
+  .cadv { margin-top: 12px; font-size: 13px; }
+  .cadv summary { cursor: pointer; color: var(--muted); }
+  .cf .ceff { margin: 4px 0 0; }
   .cform ol { margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.6; }
   .cform li { margin-bottom: 12px; }
   .cform li b { color: var(--gold-hi); }
@@ -495,7 +505,7 @@
     .mattr { padding-top: 0; }
     .dgrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .simres, .simcols { grid-template-columns: 1fr; }
-    .csets, .crank, .ctot { grid-template-columns: 1fr; }
+    .csets, .crank, .ctot, .ctot.c3 { grid-template-columns: 1fr; }
     .cgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .bottombar a { font-size: 12px; }
   }
@@ -512,7 +522,7 @@
       <a href="#/roles" data-tab="roles">역할</a>
       <a href="#/partners" data-tab="partners">파트너</a>
       <a href="#/db" data-tab="db">자료</a>
-      <!-- <a href="#/calc" data-tab="calc">계산기</a> -->
+      <a href="#/calc" data-tab="calc">계산기</a>
     </nav>
     <div class="search">
       <input id="q" type="search" placeholder="전투원·파트너·장비·효과 검색" autocomplete="off" aria-label="전투원·파트너·장비·효과 검색">
@@ -532,7 +542,7 @@
   <a href="#/roles" data-tab="roles">역할</a>
   <a href="#/partners" data-tab="partners">파트너</a>
   <a href="#/db" data-tab="db">자료</a>
- <!-- <a href="#/calc" data-tab="calc">계산기</a>-->
+  <a href="#/calc" data-tab="calc">계산기</a>
 </nav>
 
 <div class="lb" id="lb" hidden>
@@ -1419,166 +1429,184 @@ function viewDb(sub, arg) {
   return `<section class="page"><div class="eyebrow">자료</div><h1>${title}</h1>${updLine(sub)}${dbNav(sub)}${body}</section>`;
 }
 
-/* ---------- 장비 계산기 ---------- */
-// 데미지 = (기본 배율 × (1 + 곱연산 합) + 합연산 합) × 최종 공격력 × 0.35 × 약점(1.25) × 치명 기대값
-// - 'n% 증가' = 곱연산, '+n%' = 합연산 (커뮤니티 규칙, 비공식)
-// - 최종 공격력 = 화면 공격력 ÷ (1 + 파트너 공격력%) × (1 + 파트너 공격력% + 장비 공격력%) + 무기 공격력 (Prydwen 비공식 공식)
+/* ---------- 장비 효율 계산기 ---------- */
+// 실측으로 맞춘 공식 (2026-10-29, 로스바이세·세레니엘 테스트):
+//   데미지 = 공격력 × 카드 표시 % × 0.135 × (1 + 속성 피해량) × 치명 배율 × 적 쪽 배율
+// - 카드 표시 %(전투 중 대상에 올렸을 때)에는 잠재력·버프·약점(×1.25)·피해량 증가가 이미 들어가 있다.
+// - 표시 % 안에서 '피해량 n% 증가'끼리, '피해량 +n%'끼리 각각 더하고, 두 묶음은 서로 곱한다.
+// - 치명 배율 = 1 + (치명피해 − 100%) × 증폭 (보통 1, 로스바이세는 실측 1.25)
+// 장비 효율은 지금 상태에 장비 효과를 더했을 때 기대 데미지(치명 확률 반영)가 몇 % 오르는지로 비교한다.
 const CALC_SLOTS = ["무기", "방어구", "장신구"];
 const CALC_WEAPON_ATK = { "신화": 90, "전설": 82, "희귀": 74 }; // 5성 강화 무기 공격력 (일부 장비는 예외)
-const CALC_STAT = { atk: "공격력", cr: "치명확률", cd: "치명피해", mult: "피해량 (곱)", add: "피해량 (합)" };
-const CALC_SET_COLOR = ["var(--gold)", "#5aa9e6"];
-const calcEmptySet = () => ({ "무기": "", "방어구": "", "장신구": "", on: {} });
-const calcSel = {
-  char: "", card: "", attr: "", cost: "", bind: false,
-  base: 0, hits: 1, x: 0, xPer: 0, extra: 0,
-  atk: 0, cr: 0, cd: 0, pAtk: 0, mult: 0, add: 0, weak: false, critSure: false, turns: 8, rankCond: false,
-  sets: [calcEmptySet(), calcEmptySet()]
+const CALC_STAT = { atk: "공격력", atkFlat: "공격력", cr: "치명확률", cd: "치명피해", inc: "피해량 증가", add: "피해량 +", fin: "최종 피해량", el: "속성 피해량", fu: "추가 피해량" };
+const CALC_TYPES = [["card", "카드 공격"], ["fu", "추가 공격"], ["counter", "반격"]];
+const CALC_DEF = {
+  char: "", attr: "", cost: "", bind: false, basic: false, weak: false, type: "card",
+  atk: 0, pAtk: 16, disp: 0, el: 0, cr: 0, cd: 150, inc: 0, add: 0, enemy: 0, fu: 0,
+  amp: 1, k: 0.135, addBase: 2.23, cond: false, act: 0, actCrit: false
 };
+const calcSel = { ...CALC_DEF, cur: { "무기": "", "방어구": "", "장신구": "" }, more: {} };
 const calcCompCache = {};
 
-// 장비 효과 문구에서 데미지 관련 수치를 뽑는다. 조건은 kind로 구분해 자동 판정하거나 사용자가 체크한다.
-function calcComps(e) {
-  if (calcCompCache[e.name]) return calcCompCache[e.name];
+// 효과 문구에서 데미지 관련 수치와 조건을 뽑는다.
+// 조건은 카드 조건(속성·비용·결속·기본 카드·약점·공격 종류)으로 자동 판정하고, 나머지 문구는 '조건부'로 남긴다.
+function calcParse(text) {
+  if (calcCompCache[text]) return calcCompCache[text];
   const out = [];
-  String(e.effect || "").split("\n").forEach(raw => {
+  String(text || "").split("\n").forEach(raw => {
     const line = raw.replace(/피해량(?:,\s*(?:실드 획득량|치유량))+/g, "피해량");
     const ms = [...line.matchAll(/(공격력|치명확률|치명피해|피해량)\s*([+-]?)(\d+(?:\.\d+)?)%\s*(증가|감소)?/g)];
     ms.forEach((m, i) => {
       const segStart = i ? ms[i - 1].index + ms[i - 1][0].length : 0;
-      const pre = line.slice(segStart, m.index).replace(/^[\s,/]+/, "");
+      let pre = line.slice(segStart, m.index).replace(/^[\s,/]+/, "");
       const post = line.slice(m.index + m[0].length, i + 1 < ms.length ? ms[i + 1].index : line.length);
       const neg = m[2] === "-" || m[4] === "감소";
       let stat = { "공격력": "atk", "치명확률": "cr", "치명피해": "cd" }[m[1]], unclear = false;
       if (m[1] === "피해량") {
         if (neg || /받는\s*$/.test(pre)) return; // 받는 피해 감소·피해량 감소는 제외
-        if (m[4] === "증가") stat = "mult";
+        if (/최종\s*$/.test(pre)) stat = "fin";
+        else if (m[4] === "증가") stat = "inc";
         else if (m[2] === "+") stat = "add";
-        else { stat = "mult"; unclear = true; } // '피해량 20%'처럼 표기가 애매하면 곱연산으로 계산
+        else { stat = "inc"; unclear = true; } // '피해량 20%'처럼 표기가 애매하면 'n% 증가'로 계산
       }
       let v = Number(m[3]) * (neg ? -1 : 1);
       const notes = [];
       const maxPct = post.match(/최대\s*(-?\d+(?:\.\d+)?)%/);
       const stack = post.match(/최대\s*(\d+)\s*회?\s*중첩/) || post.match(/최대\s*(\d+)\s*회\s*\)/);
-      if (maxPct) { v = Number(maxPct[1]); notes.push("최대치로 계산"); }
-      else if (stack && Number(stack[1]) > 1) { v *= Number(stack[1]); notes.push(`최대 ${stack[1]}중첩으로 계산`); }
+      if (maxPct) { v = Number(maxPct[1]); notes.push("최대치"); }
+      else if (stack && Number(stack[1]) > 1) { v *= Number(stack[1]); notes.push(`${stack[1]}중첩`); }
       const perTurn = post.match(/턴당\s*(\d+)\s*회/);
       if (perTurn) notes.push(`턴당 ${perTurn[1]}회`);
-      const perBattle = post.match(/전투당\s*(\d+)\s*회/);
-      const p = pre.replace(/자신의|아군의|아군|공격 카드의|공격 카드|카드의|카드|[\s,]/g, "");
-      let kind = "manual", arg = "";
-      if (!p) kind = "always";
-      else if (p === "짝수턴에") kind = "even";
-      else if (p === "홀수턴에") kind = "odd";
-      else if (ATTRS.includes(p)) { kind = "attr"; arg = p; }
-      else if (p === "비용0인") { kind = "cost"; arg = "eq0"; }
-      else if (p === "비용1이하인") { kind = "cost"; arg = "le1"; }
-      else if (/^비용이?2이상인$/.test(p)) { kind = "cost"; arg = "ge2"; }
-      else if (p === "결속") kind = "bind";
-      else if (/^로?약점공격시$/.test(p)) kind = "weak";
-      out.push({ stat, v, kind, arg, label: pre.trim(), notes, unclear, battle: perBattle ? Number(perBattle[1]) : 0 });
+      const c = { attrs: [], cost: "", bind: false, basic: false, weak: false, types: [], manual: "" };
+      ATTRS.forEach(a => { if (pre.includes(a)) { c.attrs.push(a); pre = pre.split(a).join(" "); } });
+      if (/추가\s*공격/.test(pre)) { c.types.push("fu"); pre = pre.replace(/추가\s*공격/g, " "); }
+      if (/반격/.test(pre)) { c.types.push("counter"); pre = pre.replace(/반격/g, " "); }
+      const costPat = [[/비용이?\s*0인/, "eq0"], [/비용이?\s*1인/, "eq1"], [/비용이?\s*1\s*이하인/, "le1"], [/비용이?\s*2\s*이상인/, "ge2"]];
+      costPat.forEach(([re, k]) => { if (re.test(pre)) { c.cost = k; pre = pre.replace(re, " "); } });
+      if (/결속/.test(pre)) { c.bind = true; pre = pre.replace(/결속(\s*카드가)?/g, " "); }
+      if (/기본\s*(공격\s*)?카드/.test(pre)) { c.basic = true; pre = pre.replace(/기본\s*(공격\s*)?카드/g, " "); }
+      if (/약점\s*공격\s*시/.test(pre)) { c.weak = true; pre = pre.replace(/(공격\s*카드로\s*)?약점\s*공격\s*시/g, " "); }
+      if (/전투당/.test(post)) pre += " 전투당 " + (post.match(/전투당\s*(\d+)/) || [, ""])[1] + "회";
+      const rest = pre.replace(/\[[^\]]*\]:?|\(최대[^)]*\),?|자신의|자신이|자신|아군의|아군|공격 카드의|공격 카드|공격|카드의|카드|속성|의|[\s,:]/g, "");
+      if (rest) c.manual = pre.replace(/\[[^\]]*\]:?|\(최대[^)]*\),?/g, "").replace(/\s+/g, " ").replace(/^[\s,]+|[\s,]+$/g, "") || "조건부";
+      out.push({ stat, v, c, notes, unclear });
     });
   });
-  return (calcCompCache[e.name] = out);
+  return (calcCompCache[text] = out);
 }
+const calcItemComps = e => {
+  const comps = calcParse(e.effect).slice();
+  if (e.slot === "무기") comps.unshift({ stat: "atkFlat", v: CALC_WEAPON_ATK[e.rarity] || 0, c: { attrs: [], types: [], manual: "" }, notes: ["무기 공격력"] });
+  return comps;
+};
 function calcCost() { const c = String(calcSel.cost).trim(); return c === "" || isNaN(Number(c)) ? null : Number(c); }
-// 조건 판정: true / false. manual은 세트에서 체크했거나(opt.manualAll) 순위 계산에서 '조건부 포함'일 때만 true
-function calcCondOk(c, t, on, opt) {
-  if (c.battle && t > c.battle) return false; // 전투당 n회: 한 턴에 한 번 친다고 보고 n턴까지만
-  const cost = calcCost();
-  switch (c.kind) {
-    case "always": return true;
-    case "even": return t % 2 === 0;
-    case "odd": return t % 2 === 1;
-    case "attr": return calcSel.attr === c.arg;
-    case "cost": return cost !== null && (c.arg === "eq0" ? cost === 0 : c.arg === "le1" ? cost <= 1 : cost >= 2);
-    case "bind": return calcSel.bind;
-    case "weak": return calcSel.weak;
-    default: return !!(opt && opt.manualAll) || !!on;
+// 'auto' 조건만 보면 되는지 판정: 카드 조건이 하나라도 안 맞으면 false
+function calcAutoOk(c) {
+  if (c.attrs.length && !c.attrs.includes(calcSel.attr)) return false;
+  if (c.types.length && !c.types.includes(calcSel.type)) return false;
+  if (c.cost) {
+    const cost = calcCost();
+    if (cost === null) return false;
+    if ({ eq0: cost !== 0, eq1: cost !== 1, le1: cost > 1, ge2: cost < 2 }[c.cost]) return false;
   }
+  if (c.bind && !calcSel.bind) return false;
+  if (c.basic && !calcSel.basic) return false;
+  if (c.weak && !calcSel.weak) return false;
+  return true;
 }
-function calcCondText(c, ok) {
-  const st = (txt, good) => `<span class="cst ${good ? "ok" : "no"}">${esc(txt)}</span>`;
-  switch (c.kind) {
-    case "always": return `<span class="cst ok">항상</span>`;
-    case "even": return `<span class="cst">짝수 턴만</span>`;
-    case "odd": return `<span class="cst">홀수 턴만</span>`;
-    case "attr": return st(`${c.arg} 카드 · ${ok ? "충족" : "미충족"}`, ok);
-    case "cost": return st(`${{ eq0: "비용 0", le1: "비용 1 이하", ge2: "비용 2 이상" }[c.arg]} · ${ok ? "충족" : "미충족"}`, ok);
-    case "bind": return st(`결속 카드 · ${ok ? "충족" : "미충족"}`, ok);
-    case "weak": return st(`약점 공격 · ${ok ? "충족" : "미충족"}`, ok);
-    default: return "";
-  }
-}
+const calcActive = (comp, withCond) => calcAutoOk(comp.c) && (!comp.c.manual || withCond);
 
-// 세트 하나의 t턴 데미지. opt.set: 세트를 바꿔 계산(순위용), opt.manualAll: 수동 조건을 모두 충족으로 계산
-function calcTurn(set, t, opt) {
-  const sum = { atk: 0, cr: 0, cd: 0, mult: 0, add: 0 };
-  CALC_SLOTS.forEach(slot => {
-    const e = eqByName[set[slot]];
-    if (!e) return;
-    calcComps(e).forEach((c, i) => { if (calcCondOk(c, t, set.on[slot + ":" + i], opt)) sum[c.stat] += c.v; });
+// 지금 입력한 상태 (현재 장비 효과가 이미 들어가 있다고 본다)
+function calcState() {
+  const w = eqByName[calcSel.cur["무기"]];
+  const F = w ? CALC_WEAPON_ATK[w.rarity] || 0 : 0;
+  const P = calcSel.pAtk;
+  return {
+    base: Math.max(0, calcSel.atk - F) / (1 + P / 100), P, F,
+    cr: calcSel.cr, cd: calcSel.cd, el: calcSel.el, fu: calcSel.fu,
+    G: 1 + calcSel.inc / 100, S: calcSel.addBase + calcSel.add / 100, fin: 1
+  };
+}
+function calcApply(st, comps, sign, withCond) {
+  const s = { ...st };
+  comps.forEach(comp => {
+    if (!calcActive(comp, withCond)) return;
+    const v = comp.v * sign;
+    switch (comp.stat) {
+      case "atk": s.P += v; break;
+      case "atkFlat": s.F += v; break;
+      case "cr": s.cr += v; break;
+      case "cd": s.cd += v; break;
+      case "el": s.el += v; break;
+      case "fu": s.fu += v; break;
+      case "inc": s.G += v / 100; break;
+      case "add": s.S += v / 100; break;
+      case "fin": s.fin *= sign > 0 ? 1 + comp.v / 100 : 1 / (1 + comp.v / 100); break;
+    }
   });
-  const w = eqByName[set["무기"]];
-  const flat = w ? CALC_WEAPON_ATK[w.rarity] || 0 : 0;
-  const p = calcSel.pAtk / 100;
-  const atk = calcSel.atk / (1 + p) * (1 + p + sum.atk / 100) + flat;
-  const card = (calcSel.base + calcSel.x * calcSel.xPer + calcSel.extra) * (1 + (calcSel.mult + sum.mult) / 100) + calcSel.add + sum.add;
-  const cr = calcSel.critSure ? 1 : Math.min(1, Math.max(0, (calcSel.cr + sum.cr) / 100));
-  const cd = (calcSel.cd + sum.cd) / 100;
-  const crit = 1 + cr * cd;
-  const dmg = card / 100 * Math.max(1, calcSel.hits) * atk * 0.35 * (calcSel.weak ? 1.25 : 1) * crit;
-  return { dmg, atk, card, cr, cd, crit };
+  return s;
 }
-function calcRun(set, opt) {
-  const turns = [];
-  for (let t = 1; t <= calcSel.turns; t++) turns.push(calcTurn(set, t, opt));
-  return { turns, total: turns.reduce((s, x) => s + x.dmg, 0) };
+// 한 번 타격의 비치명·치명·기대 데미지
+function calcDmg(st) {
+  const ref = calcState();
+  const atk = st.base * (1 + st.P / 100) + st.F;
+  const disp = calcSel.disp * (st.G / ref.G) * (st.S / ref.S) * st.fin;
+  const C = Math.max(1, 1 + (st.cd / 100 - 1) * calcSel.amp);
+  const cr = Math.min(1, Math.max(0, st.cr / 100));
+  const typeMul = calcSel.type === "fu" ? 1 + st.fu / 100 : 1;
+  const non = atk * disp / 100 * calcSel.k * (1 + st.el / 100) * Math.max(0, 1 + calcSel.enemy / 100) * typeMul;
+  return { atk, disp, C, cr, non, crit: non * C, exp: non * (1 + cr * (C - 1)) };
 }
+function calcReady() { return calcSel.atk > 0 && calcSel.disp > 0; }
 const calcFmt = n => Math.round(n).toLocaleString("ko-KR");
-const calcPct = n => (n >= 0 ? "+" : "") + n.toFixed(1) + "%";
-function calcReady() { return calcSel.atk > 0 && calcSel.base + calcSel.x * calcSel.xPer + calcSel.extra > 0; }
+const calcPct = n => (n >= 0 ? "+" : "") + n.toFixed(Math.abs(n) < 10 ? 2 : 1) + "%";
 
-// 전투원 고유 카드(공격)에서 피해 배율을 읽는다. 잠재력·번뜩임 강화 수치는 반영되지 않는다.
-function calcCardList(id) {
-  const k = kits[id];
-  if (!k) return [];
-  const list = [];
-  (k.cards || []).forEach((c, ci) => [c.base, ...(c.epiphany || [])].forEach((b, n) => {
-    if (!b || b.type !== "공격") return;
-    let base = 0, hits = 1, xPer = 0;
-    (b.effect || []).forEach(l => {
-      const s = String(l).replace(/고정 피해/g, "");
-      const m = s.match(/피해 (\d+(?:\.\d+)?)%(?:\s*[x×]\s*(\d+))?/);
-      if (m && !base) { base = Number(m[1]); hits = m[2] ? Number(m[2]) : 1; }
-      const xm = s.match(/X만큼 기본 피해량 \+(\d+(?:\.\d+)?)%/);
-      if (xm) xPer = Number(xm[1]);
-    });
-    list.push({ key: ci + ":" + (b.n || 0), b, n: b.n || 0, base, hits, xPer });
-  }));
-  return list;
+// 슬롯에서 한 장비를 바꿔 낄 때의 기대 데미지 변화 (현재 장비 대비, 비었으면 빈 칸 대비)
+function calcSlotRank(slot) {
+  const st = calcState();
+  const cur = eqByName[calcSel.cur[slot]];
+  const empty = (withCond) => cur ? calcApply(st, calcItemComps(cur), -1, withCond) : st;
+  const ref = { 0: calcDmg(st).exp, 1: calcDmg(st).exp };
+  const e0 = empty(false), e1 = empty(true);
+  return equips.filter(e => e.slot === slot && (slot === "무기" || calcItemComps(e).length))
+    .map(e => {
+      const comps = calcItemComps(e);
+      const eff = comps.filter(c => c.stat !== "atkFlat");
+      const g0 = calcDmg(calcApply(e0, comps, 1, false)).exp / ref[0] - 1;
+      const g1 = calcDmg(calcApply(e1, comps, 1, true)).exp / ref[1] - 1;
+      const hasCond = eff.some(c => c.c.manual && calcAutoOk(c.c));
+      const off = eff.length > 0 && eff.every(c => !calcAutoOk(c.c));
+      return { e, g0, g1, hasCond, off };
+    })
+    .sort((a, b) => (calcSel.cond ? b.g1 - a.g1 : b.g0 - a.g0) || a.e.name.localeCompare(b.e.name, "ko"));
 }
-function calcPickCard(key) {
-  const c = calcCardList(calcSel.char).find(x => x.key === key);
-  calcSel.card = c ? key : "";
-  if (!c) return;
-  calcSel.base = c.base; calcSel.hits = c.hits; calcSel.xPer = c.xPer;
-  if (!c.xPer) calcSel.x = 0;
-  calcSel.cost = /^\d+$/.test(String(c.b.cost)) ? String(c.b.cost) : "";
-  calcSel.bind = (c.b.tags || []).includes("결속");
+// 단일 효과(조각 주옵션·부옵션·세트)의 기대 데미지 변화
+function calcGain(comps, withCond) {
+  const st = calcState();
+  return calcDmg(calcApply(st, comps, 1, withCond)).exp / calcDmg(st).exp - 1;
 }
+const calcRangeMax = s => { const n = String(s).match(/(\d+(?:\.\d+)?)\D*$/); return n ? Number(n[1]) : 0; };
+const calcStatLabel = (name, v) => { const flat = /\+$/.test(name) || name === "에고 회복력"; const n = Number(v.toFixed(2)); return `${name.replace(/[%+]$/, "")} ${flat ? "+" : ""}${n}${flat ? "" : "%"}`; };
+const calcRangeMid = s => { const n = String(s).match(/(\d+(?:\.\d+)?)(?:\s*~\s*(\d+(?:\.\d+)?))?/); return n ? (Number(n[1]) + Number(n[2] || n[1])) / 2 : 0; };
+function calcFragStat(name) {
+  if (/^공격력%/.test(name)) return "atk";
+  if (/^공격력\+/.test(name)) return "atkFlat";
+  if (/치명\s*확률/.test(name)) return "cr";
+  if (/치명\s*피해/.test(name)) return "cd";
+  if (/속성 피해량/.test(name)) return "el";
+  if (/추가 피해량/.test(name)) return "fu";
+  return "";
+}
+const calcSimple = (stat, v) => [{ stat, v, c: { attrs: [], types: stat === "fu" ? ["fu"] : [], manual: "" }, notes: [] }];
+
 function calcExample() {
   Object.assign(calcSel, {
-    char: byId.rossweisse ? "rossweisse" : "", attr: "정의", card: "", cost: "", bind: false,
-    base: 504, hits: 1, x: 3, xPer: 120, extra: 1600,
-    atk: 886, cr: 54, cd: 179, pAtk: 16, mult: 130, add: 0, weak: true, critSure: false, turns: 8,
-    sets: [
-      { "무기": "단절된 연산자의 바늘", "방어구": "타락의 왕관", "장신구": "과부하 동력 기관", on: { "장신구:0": true } },
-      { "무기": "그림자를 속인 단검", "방어구": "요정왕의 관", "장신구": "심록의 밤", on: {} }
-    ]
+    ...CALC_DEF, char: byId.rossweisse ? "rossweisse" : "", attr: "정의", cost: "1", type: "card",
+    atk: 1277, pAtk: 16, disp: 328, el: 31, cr: 54, cd: 179, inc: 59, add: 20, amp: 1.25,
+    cur: { "무기": "", "방어구": "", "장신구": "" }, more: {}
   });
-  const fb = calcCardList("rossweisse").find(c => c.xPer > 0);
-  if (fb) calcSel.card = fb.key; // 명멸검(무한): 배율은 게임 화면 수치(504%)를 유지
 }
+function calcResetAll() { Object.assign(calcSel, { ...CALC_DEF, cur: { "무기": "", "방어구": "", "장신구": "" }, more: {} }); }
 
 function calcNum(k, label, unit, step) {
   return `<label class="cf"><span>${esc(label)}${unit ? ` <em>${esc(unit)}</em>` : ""}</span><input type="number" inputmode="decimal" step="${step || "any"}" data-calc="${k}" value="${esc(calcSel[k])}"></label>`;
@@ -1586,149 +1614,139 @@ function calcNum(k, label, unit, step) {
 function calcChk(k, label) {
   return `<label class="cchk"><input type="checkbox" data-calc="${k}"${calcSel[k] ? " checked" : ""}> ${esc(label)}</label>`;
 }
-function calcSetHtml(i) {
-  const s = calcSel.sets[i];
-  const slotHtml = slot => {
-    const list = equips.filter(e => e.slot === slot).sort((a, b) => a.name.localeCompare(b.name, "ko"));
-    const dmg = list.filter(e => calcComps(e).length), etc = list.filter(e => !calcComps(e).length);
-    const opt = e => `<option value="${esc(e.name)}"${s[slot] === e.name ? " selected" : ""}>${esc(e.name)} (${esc(e.rarity)})</option>`;
-    const e = eqByName[s[slot]];
-    let detail = "";
-    if (e) {
-      const comps = calcComps(e);
-      detail = `<div class="ceff">${esc(e.effect)}${e.effect_note ? `<span class="trn">${esc(e.effect_note)}</span>` : ""}</div>`;
-      if (slot === "무기") detail += `<div class="ccomp"><b>무기 공격력 +${CALC_WEAPON_ATK[e.rarity] || 0}</b><span class="cst">${esc(e.rarity)} 5성 기준</span></div>`;
-      detail += comps.map((c, j) => {
-        const ok = calcCondOk(c, 1, s.on[slot + ":" + j]);
-        const head = `<b>${CALC_STAT[c.stat]} ${c.v > 0 ? "+" : ""}${c.v}%</b>`;
-        const extra = [c.battle ? `<span class="cst">전투당 ${c.battle}회 → ${c.battle}턴까지</span>` : "",
-          ...c.notes.map(n => `<span class="cst">${esc(n)}</span>`),
-          c.unclear ? '<span class="cst no">표기 불명확 → 곱연산으로 계산</span>' : ""].join("");
-        if (c.kind === "manual") return `<div class="ccomp">${head}<label class="cchk"><input type="checkbox" data-calcon="${i}:${slot}:${j}"${s.on[slot + ":" + j] ? " checked" : ""}> 조건 충족: ${esc(c.label || "조건부")}</label>${extra}</div>`;
-        return `<div class="ccomp">${head}${calcCondText(c, ok)}${extra}</div>`;
-      }).join("") || '<div class="ccomp"><span class="cst">데미지에 영향 없는 효과</span></div>';
-    }
-    return `<div class="cslot"><span class="fl2">${slot}</span>
-      <select class="csel" data-calceq="${i}:${slot}" aria-label="세트 ${"AB"[i]} ${slot}"><option value="">(없음)</option>
-        <optgroup label="데미지 관련">${dmg.map(opt).join("")}</optgroup><optgroup label="기타">${etc.map(opt).join("")}</optgroup></select>
-      ${detail}</div>`;
-  };
-  return `<div class="cset" style="--sc:${CALC_SET_COLOR[i]}"><h4>세트 ${"AB"[i]}</h4>${CALC_SLOTS.map(slotHtml).join("")}</div>`;
-}
 function calcOutHtml() {
-  if (!calcReady()) return '<div class="empty">공격력과 카드 배율을 넣으면 결과가 나옵니다. 처음이라면 위의 \'예시 불러오기\'를 눌러 보세요.</div>';
-  const R = calcSel.sets.map(s => calcRun(s));
-  const [a, b] = R;
-  const diff = b.total > 0 ? (a.total / b.total - 1) * 100 : 0;
-  const win = Math.abs(diff) < 0.05 ? "두 세트가 같습니다." : `<b style="color:${CALC_SET_COLOR[diff > 0 ? 0 : 1]}">세트 ${diff > 0 ? "A" : "B"}</b>가 ${Math.abs(diff).toFixed(1)}% 더 높습니다.`;
-  const rows = a.turns.map((x, k) => {
-    const y = b.turns[k], wa = x.dmg > y.dmg + 0.5, wb = y.dmg > x.dmg + 0.5;
-    return `<tr><td>${k + 1}턴</td><td${wa ? ' class="w"' : ""}>${calcFmt(x.dmg)}</td><td${wb ? ' class="w"' : ""}>${calcFmt(y.dmg)}</td></tr>`;
-  }).join("");
-  const det = (r, i) => {
-    const t1 = r.turns[0], t2 = r.turns[1] || r.turns[0];
-    const cell = f => f(t1) === f(t2) ? f(t1) : `${f(t1)} / ${f(t2)}`;
-    return `<tr><td>세트 ${"AB"[i]}</td><td>${cell(x => calcFmt(x.atk))}</td><td>${cell(x => calcFmt(x.card) + "%")}</td><td>${cell(x => (x.cr * 100).toFixed(0) + "%")}</td><td>${cell(x => (x.cd * 100).toFixed(0) + "%")}</td></tr>`;
-  };
-  return `<div class="ctot">${R.map((r, i) => `<div style="--sc:${CALC_SET_COLOR[i]}"><div class="cl">세트 ${"AB"[i]} · ${calcSel.turns}턴 합계</div><div class="cv">${calcFmt(r.total)}</div></div>`).join("")}</div>
-    <p class="cwin">${win}</p>
-    <div class="cscroll"><table class="ctab"><thead><tr><th>턴</th><th>세트 A</th><th>세트 B</th></tr></thead><tbody>${rows}</tbody>
-      <tfoot><tr><td>합계</td><td>${calcFmt(a.total)}</td><td>${calcFmt(b.total)}</td></tr></tfoot></table></div>
-    <div class="cscroll" style="margin-top:12px"><table class="ctab"><thead><tr><th>세부 (1턴 / 2턴)</th><th>최종 공격력</th><th>카드 배율</th><th>치명확률</th><th>치명피해</th></tr></thead><tbody>${R.map(det).join("")}</tbody></table></div>`;
+  if (!calcReady()) return '<div class="empty">공격력과 카드 표시 %를 넣으면 결과가 나옵니다. 처음이라면 위의 \'예시 불러오기\'를 눌러 보세요.</div>';
+  const d = calcDmg(calcState());
+  let chk = "";
+  if (calcSel.act > 0) {
+    const p = calcSel.actCrit ? d.crit : d.non, err = (calcSel.act / p - 1) * 100;
+    chk = `<p class="cwin">실측 ${calcFmt(calcSel.act)} → 예상 대비 <b>${calcPct(err)}</b> · 이 전투에서 맞춘 기본 상수 ${(calcSel.k * calcSel.act / p).toFixed(4)}</p>`;
+  }
+  return `<div class="ctot c3">
+      <div style="--sc:var(--muted)"><div class="cl">비치명</div><div class="cv">${calcFmt(d.non)}</div></div>
+      <div style="--sc:var(--gold)"><div class="cl">치명 (×${d.C.toFixed(3)})</div><div class="cv">${calcFmt(d.crit)}</div></div>
+      <div style="--sc:#5aa9e6"><div class="cl">기대값 (치명확률 ${(d.cr * 100).toFixed(0)}%)</div><div class="cv">${calcFmt(d.exp)}</div></div>
+    </div>${chk}`;
 }
-function calcRankHtml() {
-  if (!calcReady()) return "";
-  const A = calcSel.sets[0];
-  const opt = { manualAll: calcSel.rankCond };
-  const cols = CALC_SLOTS.map(slot => {
-    const cur = A[slot];
-    const pool = equips.filter(e => e.slot === slot && (slot === "무기" || calcComps(e).length));
-    const curTotal = calcRun(A, opt).total;
-    const scored = pool.map(e => {
-      const set = { ...A, [slot]: e.name, on: e.name === cur ? A.on : {} };
-      const manual = calcComps(e).some(c => c.kind === "manual");
-      return { e, total: calcRun(set, opt).total, manual };
-    }).sort((x, y) => y.total - x.total);
-    const top = scored.slice(0, 8);
-    if (cur && !top.some(x => x.e.name === cur)) { const c = scored.find(x => x.e.name === cur); if (c) top.push(c); }
-    const max = top.length ? top[0].total : 1;
-    const rowsH = top.map(x => {
-      const d = curTotal > 0 ? (x.total / curTotal - 1) * 100 : 0;
-      const isCur = x.e.name === cur;
-      return `<div class="crow${isCur ? " cur" : ""}"><i style="width:${Math.max(2, x.total / max * 100).toFixed(1)}%"></i>
-        <span>${esc(x.e.name)}${x.manual && calcSel.rankCond ? " *" : ""}</span><b class="${isCur ? "" : d > 0.05 ? "up" : d < -0.05 ? "dn" : ""}">${isCur ? "현재" : cur ? calcPct(d) : calcFmt(x.total)}</b></div>`;
-    }).join("");
-    return `<div class="crk"><h4>${slot}${cur ? ` <span class="note">현재: ${esc(cur)}</span>` : ""}</h4>${rowsH || '<p class="note">후보 없음</p>'}</div>`;
+function calcRowHtml(name, g0, g1, max, opts) {
+  const o = opts || {};
+  const g = calcSel.cond ? g1 : g0;
+  const extra = !calcSel.cond && Math.abs(g1 - g0) > 0.00005 ? `<em>조건 시 ${calcPct(g1 * 100)}</em>` : "";
+  return `<div class="crow${o.cur ? " cur" : ""}${o.off ? " off" : ""}"${o.title ? ` title="${esc(o.title)}"` : ""}><i style="width:${max > 0 ? Math.max(1.5, Math.max(0, g) / max * 100).toFixed(1) : 0}%"></i>
+    <span>${esc(name)}${o.sub ? ` <small>${esc(o.sub)}</small>` : ""}${o.mark && calcSel.cond ? " *" : ""}</span><b class="${g > 0.00005 ? "up" : g < -0.00005 ? "dn" : ""}">${o.cur ? "현재" : calcPct(g * 100)}${extra}</b></div>`;
+}
+function calcEquipHtml() {
+  return `<div class="crank">${CALC_SLOTS.map(slot => {
+    const list = calcSlotRank(slot);
+    const cur = calcSel.cur[slot];
+    const n = calcSel.more[slot] ? list.length : 10;
+    const top = list.slice(0, n);
+    if (cur && !top.some(x => x.e.name === cur)) { const c = list.find(x => x.e.name === cur); if (c) top.push(c); }
+    const max = Math.max(...top.map(x => calcSel.cond ? x.g1 : x.g0), 0.0001);
+    const rows = top.map(x => calcRowHtml(x.e.name, x.g0, x.g1, max, { sub: x.e.rarity, cur: x.e.name === cur, mark: x.hasCond, off: x.off, title: x.e.effect })).join("");
+    return `<div class="crk"><h4>${slot} <span class="note">${cur ? "현재 장비 대비" : "빈 칸 대비"}</span></h4>${rows || '<p class="note">후보 없음</p>'}
+      ${list.length > 10 ? `<button class="btn cmore" data-act="calcMore" data-slot="${slot}">${calcSel.more[slot] ? "접기" : `전체 ${list.length}개 보기`}</button>` : ""}</div>`;
+  }).join("")}</div>`;
+}
+function calcFragHtml() {
+  if (!frags) return "";
+  const mains = frags.slots.filter(s => s.main === "무작위").map(s => {
+    const rows = s.rows.map(r => {
+      const stat = calcFragStat(r[0]);
+      const v = calcRangeMax(r[3]);
+      const g = stat ? calcGain(calcSimple(stat, v), true) : 0;
+      return { name: r[0].replace(/\s*\(.*\)$/, ""), v, stat, g };
+    }).sort((a, b) => b.g - a.g);
+    const max = Math.max(...rows.map(r => r.g), 0.0001);
+    return `<div class="crk"><h4>${esc(s.slot)} <span class="note">금색 최대</span></h4>${rows.map(r => calcRowHtml(calcStatLabel(r.name, r.v), r.g, r.g, max, { off: !r.stat })).join("")}</div>`;
   }).join("");
-  return `<div class="crank">${cols}</div>`;
+  const subs = frags.subs.map(r => {
+    const stat = calcFragStat(r[0]);
+    const v = calcRangeMid(r[3]);
+    const comps = stat ? calcSimple(stat, v) : [];
+    return { name: r[0], v, stat, g: stat ? calcGain(comps, true) : 0, off: !stat || (stat === "fu" && calcSel.type !== "fu") };
+  }).sort((a, b) => b.g - a.g);
+  const smax = Math.max(...subs.map(r => r.g), 0.0001);
+  const subHtml = `<div class="crk"><h4>부옵션 <span class="note">금색 1회 평균</span></h4>${subs.map(r => calcRowHtml(calcStatLabel(r.name, r.v), r.g, r.g, smax, { off: r.off })).join("")}</div>`;
+  const setCol = pieces => {
+    const rows = frags.sets.filter(s => s.pieces === pieces).map(s => {
+      const comps = calcParse(s.effect);
+      return { s, g0: calcGain(comps, false), g1: calcGain(comps, true), mark: comps.some(c => c.c.manual && calcAutoOk(c.c)), off: !comps.length || comps.every(c => !calcAutoOk(c.c)) };
+    }).sort((a, b) => (calcSel.cond ? b.g1 - a.g1 : b.g0 - a.g0) || (b.g1 - a.g1));
+    const max = Math.max(...rows.map(x => calcSel.cond ? x.g1 : x.g0), 0.0001);
+    return `<div class="crk"><h4>${pieces}세트</h4>${rows.map(x => calcRowHtml(x.s.name, x.g0, x.g1, max, { mark: x.mark, off: x.off, title: x.s.effect })).join("")}</div>`;
+  };
+  return `<h4 class="csub">주옵션 (4~6번)</h4><div class="crank">${mains}</div>
+    <h4 class="csub">부옵션 · 세트 효과</h4><div class="crank">${subHtml}${setCol(4)}${setCol(2)}</div>`;
 }
 function calcRefresh() {
-  const o = document.getElementById("calcOut"), r = document.getElementById("calcRank");
-  if (o) o.innerHTML = calcOutHtml();
-  if (r) r.innerHTML = calcRankHtml();
+  const parts = { calcOut: calcOutHtml, calcEq: () => calcReady() ? calcEquipHtml() : "", calcFr: () => calcReady() ? calcFragHtml() : "" };
+  Object.entries(parts).forEach(([id, f]) => { const el = document.getElementById(id); if (el) el.innerHTML = f(); });
 }
 function viewCalc() {
-  if (kitState === "idle") loadKits();
-  const head = `<div class="eyebrow">장비 계산기</div><h1>장비 효율 비교</h1>`;
+  const head = `<div class="eyebrow">장비 계산기</div><h1>장비 효율 계산기</h1>`;
   if (extraState !== "ok") return `<section class="page">${head}${dbWait()}</section>`;
   const byName = [...chars].sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko"));
-  const cards = calcSel.char ? calcCardList(calcSel.char) : [];
-  const cardOpts = cards.map(c => `<option value="${c.key}"${calcSel.card === c.key ? " selected" : ""}>${esc(c.b.name)} · ${c.n ? "번뜩임 " + c.n : "기본"} · 비용 ${esc(c.b.cost)} · 피해 ${c.base}%${c.hits > 1 ? " ×" + c.hits : ""}${c.xPer ? ` + X당 ${c.xPer}%` : ""}</option>`).join("");
-  const kitMsg = !calcSel.char ? "" : kitState === "loading" || kitState === "idle" ? "카드 불러오는 중…" : !cards.length ? "이 전투원의 공격 카드 자료가 없습니다. 배율을 직접 입력하세요." : "";
+  const curSel = slot => {
+    const list = equips.filter(e => e.slot === slot).sort((a, b) => a.name.localeCompare(b.name, "ko"));
+    const opt = e => `<option value="${esc(e.name)}"${calcSel.cur[slot] === e.name ? " selected" : ""}>${esc(e.name)} (${esc(e.rarity)})</option>`;
+    const e = eqByName[calcSel.cur[slot]];
+    return `<label class="cf"><span>${slot}</span><select class="csel" data-calccur="${slot}"><option value="">(모름 · 없음)</option>${list.map(opt).join("")}</select>${e ? `<span class="ceff">${esc(e.effect)}</span>` : ""}</label>`;
+  };
+  const ready = calcReady();
   return `<section class="page">${head}
-    <p class="note" style="margin:-8px 0 16px">같은 전투원·카드·버프 조건에서 장비 세트 두 개의 데미지를 턴별로 비교합니다. 적 방어는 넣지 않은 비교용 수치입니다.</p>
+    <p class="note" style="margin:-8px 0 16px">캐릭터의 지금 상태를 넣으면 장비·기억의 조각 옵션마다 한 번 타격의 기대 데미지(치명 확률 반영)가 몇 % 오르는지 계산해 순위를 매깁니다.</p>
     <div class="cbar"><button class="btn gold" data-act="calcExample">예시 불러오기 (로스바이세)</button><button class="btn" data-act="calcReset">초기화</button></div>
 
-    <div class="sec"><h3>전투원 · 카드</h3><div class="cbox">
+    <div class="sec"><h3>1. 캐릭터 상태 <span class="note" style="font-family:inherit;font-weight:400">전투 중 스테이터스 상세 기준</span></h3><div class="cbox">
       <div class="cgrid">
         <label class="cf"><span>전투원</span><select class="csel" data-calcsel="char"><option value="">직접 입력</option>${byName.map(d => `<option value="${esc(d.id)}"${calcSel.char === d.id ? " selected" : ""}>${esc(d.name_ko)} (${esc(d.attr)})</option>`).join("")}</select></label>
-        <label class="cf cwide"><span>공격 카드</span><select class="csel" data-calcsel="card"${cards.length ? "" : " disabled"}><option value="">${cards.length ? "카드 선택" : "—"}</option>${cardOpts}</select></label>
+        ${calcNum("atk", "공격력", "전투 중 · 무기 +n 포함")}${calcNum("pAtk", "공격력% 합계", "파트너·장비·조각")}
+        ${calcNum("disp", "카드 표시 %", "대상에 올렸을 때")}${calcNum("el", "속성 피해량", "%")}
+        ${calcNum("cr", "치명확률", "% · 버프 포함")}${calcNum("cd", "치명피해", "% · 버프 포함")}
+        ${calcNum("inc", "'피해량 n% 증가' 합계", "% · 잠재력 포함")}${calcNum("add", "'피해량 +n%' 합계", "% · 사기·리듬 등")}
+        ${calcNum("enemy", "적 받는 피해 증감", "% · 취약 +, 불굴 −")}
       </div>
-      ${kitMsg ? `<p class="note" style="margin:8px 0 0">${esc(kitMsg)}</p>` : ""}
-      <div class="cgrid" style="margin-top:10px">
-        ${calcNum("base", "기본 배율", "%")}${calcNum("hits", "타수", "회", "1")}
-        ${calcNum("x", "X (사용 AP)", "", "1")}${calcNum("xPer", "X당 기본 배율", "+%")}
-        ${calcNum("extra", "추가 기본 배율", "+% · 검수 등")}
+      <details class="cadv"><summary>고급 설정</summary><div class="cgrid" style="margin-top:10px">
+        ${calcNum("amp", "치명 증폭", "보통 1 · 로스바이세 1.25", "0.01")}${calcNum("k", "기본 상수", "기본 0.135", "0.0001")}${calcNum("addBase", "'+n%' 묶음 기본값", "미확정 2.23", "0.01")}
+      </div><p class="note" style="margin:8px 0 0">로스바이세는 치명 배율이 1 + (치명피해 − 100%) × 1.25로 측정됐습니다. 기본 상수는 전투(적)마다 ±2% 정도 달라집니다. '+n%' 묶음 기본값은 사기 +20%가 실제로 약 8%만 올린 측정에서 거꾸로 구한 값입니다.</p></details>
+    </div></div>
+
+    <div class="sec"><h3>2. 카드 조건 <span class="note" style="font-family:inherit;font-weight:400">장비 효과의 조건을 자동으로 판정</span></h3><div class="cbox">
+      <div class="cgrid">
         <label class="cf"><span>카드 속성</span><select class="csel" data-calcsel="attr"><option value="">없음</option>${ATTRS.map(a => `<option${calcSel.attr === a ? " selected" : ""}>${a}</option>`).join("")}</select></label>
         <label class="cf"><span>카드 비용</span><input type="text" inputmode="numeric" data-calc="cost" value="${esc(calcSel.cost)}" placeholder="X면 비움"></label>
+        <label class="cf"><span>공격 종류</span><select class="csel" data-calcsel="type">${CALC_TYPES.map(([v, l]) => `<option value="${v}"${calcSel.type === v ? " selected" : ""}>${l}</option>`).join("")}</select></label>
+        ${calcSel.type === "fu" ? calcNum("fu", "추가 피해량", "% · 스탯창") : ""}
       </div>
-      <div class="cchks">${calcChk("bind", "결속 카드")}</div>
-      <p class="note" style="margin:8px 0 0">카드 자료의 배율에는 잠재력·번뜩임 강화가 빠져 있습니다. 게임 카드에 보이는 수치로 고쳐 넣으세요.</p>
+      <div class="cchks">${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}${calcChk("weak", "약점 공격")}</div>
     </div></div>
 
-    <div class="sec"><h3>스탯 · 버프</h3><div class="cbox">
-      <div class="cgrid">
-        ${calcNum("atk", "공격력", "능력치 화면")}${calcNum("cr", "치명확률", "%")}${calcNum("cd", "치명피해", "%")}
-        ${calcNum("pAtk", "파트너 공격력", "% · 시그 16")}
-        ${calcNum("mult", "곱연산 합", "'n% 증가' 합계")}${calcNum("add", "합연산 합", "'+n%' 합계")}
-        ${calcNum("turns", "턴 수", "1~30", "1")}
-      </div>
-      <div class="cchks">${calcChk("weak", "약점 공격 (×1.25)")}${calcChk("critSure", "치명타 확정")}</div>
-    </div></div>
+    <div class="sec"><h3>3. 예상 데미지</h3><div id="calcOut">${calcOutHtml()}</div>
+      <div class="cgrid" style="margin-top:10px">${calcNum("act", "실측 데미지 (선택)", "비교용")}<div class="cf" style="justify-content:flex-end">${calcChk("actCrit", "치명타였음")}</div></div></div>
 
-    <div class="sec"><h3>장비 세트</h3><div class="csets">${calcSetHtml(0)}${calcSetHtml(1)}</div>
-      <p class="note" style="margin:8px 0 0">조건이 자동으로 판정되지 않는 효과는 '조건 충족'을 체크해야 계산에 들어갑니다. 중첩 효과는 최대치로 계산합니다.</p></div>
+    <div class="sec"><h3>4. 장비 순위 <span class="note" style="font-family:inherit;font-weight:400">한 칸만 바꿨을 때 기대 데미지 변화</span></h3>
+      <div class="cbox" style="margin-bottom:12px"><p class="note" style="margin:0 0 8px">지금 낀 장비를 고르면 그 장비를 빼고 바꿔 낀 값으로 비교합니다. 모르면 비워 두세요.</p>
+        <div class="cgrid">${CALC_SLOTS.map(curSel).join("")}</div>
+        <div class="cchks">${calcChk("cond", "조건부 효과도 충족으로 보고 순위 매기기 (* 표시)")}</div></div>
+      <div id="calcEq">${ready ? calcEquipHtml() : ""}</div></div>
 
-    <div class="sec"><h3>결과</h3><div id="calcOut">${calcOutHtml()}</div></div>
-
-    <div class="sec"><h3>슬롯별 순위 <span class="note" style="font-family:inherit;font-weight:400">세트 A에서 한 칸만 바꿨을 때</span></h3>
-      <div class="cchks" style="margin:0 0 10px">${calcChk("rankCond", "조건부 효과도 충족으로 보고 순위 매기기 (* 표시)")}</div>
-      <div id="calcRank">${calcRankHtml()}</div></div>
+    <div class="sec"><h3>5. 기억의 조각 순위 <span class="note" style="font-family:inherit;font-weight:400">지금 상태에 더했을 때 기대 데미지 변화</span></h3>
+      <div id="calcFr">${ready ? calcFragHtml() : ""}</div>
+      ${ready ? "" : '<div class="empty">캐릭터 상태를 넣으면 순위가 나옵니다.</div>'}</div>
 
     <div class="sec"><h3>계산식</h3><div class="cbox cform"><ol>
-      <li><b>카드 배율</b><code>(기본 배율 + X × X당 기본 배율 + 추가 기본 배율) × (1 + 곱연산 합) + 합연산 합</code>
-        <span class="note">곱연산 = '피해량 n% 증가', 합연산 = '피해량 +n%'. 입력한 값과 장비 효과를 각각 더해서 씁니다.</span></li>
-      <li><b>최종 공격력</b><code>공격력 ÷ (1 + 파트너 공격력%) × (1 + 파트너 공격력% + 장비 공격력%) + 무기 공격력</code>
+      <li><b>한 번 타격</b><code>공격력 × 카드 표시 % × 0.135 × (1 + 속성 피해량) × 치명 배율 × (1 + 적 받는 피해 증감)</code>
+        <span class="note">카드 표시 %는 전투 중 대상에 올렸을 때의 수치입니다. 잠재력·버프·약점(×1.25)이 이미 들어가 있어 따로 곱하지 않습니다.</span></li>
+      <li><b>표시 % 안의 피해량</b><code>표시 % ∝ (1 + '피해량 +n%' 합) × (1 + '피해량 n% 증가' 합) × 최종 피해량</code>
+        <span class="note">같은 표기끼리는 더하고 표기가 다르면 곱합니다. 그래서 이미 많이 쌓인 묶음일수록 장비 1%의 효과가 줄어듭니다.</span></li>
+      <li><b>치명 배율</b><code>1 + (치명피해 − 100%) × 증폭</code>
+        <span class="note">세레니엘은 치명피해 128.4% → ×1.284로 그대로, 로스바이세는 증폭 1.25로 측정됐습니다.</span></li>
+      <li><b>기대값</b><code>비치명 × (1 + 치명확률 × (치명 배율 − 1))</code></li>
+      <li><b>공격력</b><code>(공격력 − 무기 공격력) ÷ (1 + 공격력% 합) × (1 + 공격력% 합 + 장비 공격력%) + 무기 공격력</code>
         <span class="note">무기 공격력은 5성 강화 기준 희귀 74 · 전설 82 · 신화 90 (일부 장비는 예외).</span></li>
-      <li><b>치명 기대값</b><code>1 + 치명확률 × 치명피해</code>
-        <span class="note">치명확률은 100%까지만 반영하고, '치명타 확정'을 켜면 100%로 계산합니다.</span></li>
-      <li><b>한 턴 데미지</b><code>카드 배율 × 타수 × 최종 공격력 × 0.35 × 약점 공격(1.25) × 치명 기대값</code>
-        <span class="note">약점 공격을 끄면 1.25 대신 1을 곱합니다.</span></li>
-      <li><b>합계</b><code>1턴부터 N턴까지 한 턴 데미지의 합</code>
-        <span class="note">짝수·홀수 턴 효과와 '전투당 n회' 효과(n턴까지만)는 턴마다 따로 판정하고, 중첩 효과는 최대치로 계산합니다.</span></li>
     </ol>
-    <p class="note" style="margin:10px 0 0">적 방어와 취약은 넣지 않은 비교용 수치입니다. 곱/합연산 구분은 커뮤니티 규칙, 최종 공격력과 0.35 계수는 Prydwen의 비공식 공식이라 실제 게임과 다를 수 있습니다. 천상의 방벽 장비 중 '영문 번역' 표시가 붙은 효과는 문구가 게임과 달라 곱/합 구분이 틀릴 수 있습니다.</p></div>
-    <p class="src">출처: <a href="https://www.prydwen.gg/chaos-zero-nightmare/guides/damage-formula" target="_blank" rel="noopener">Prydwen 데미지 공식</a></p></div>
+    <p class="note" style="margin:10px 0 0">2026-10-29 로스바이세·세레니엘 실측으로 맞춘 비공식 공식입니다. 같은 스테이지에서 오차 1% 안팎, 전투가 바뀌면 ±2% 정도 차이가 납니다. 불굴·취약의 정확한 수치, '+n%' 묶음의 기본값, 추가 피해량의 계산 위치는 아직 확인하지 못했습니다. 조건부 효과(*)는 조건이 계속 충족된다고 보고, 중첩 효과는 최대치로 계산합니다.</p></div></div>
   </section>`;
 }
 
@@ -1776,7 +1794,7 @@ function pageTitle(r) {
   else if (r.view === "teams") t = "조합 찾기";
   else if (r.view === "sim") t = "덱 짜기";
   else if (r.view === "roles") t = "역할별 보기";
-  else if (r.view === "calc") t = "장비 효율 비교";
+  else if (r.view === "calc") t = "장비 효율 계산기";
   else if (r.view === "partners") { const pt = partners.find(x => x.id === r.id); t = (pt ? pt.name + " – " : "") + "파트너"; }
   else if (r.view === "db") t = ((r.sub === "equipment" || r.sub === "glossary") && r.arg ? r.arg + " – " : "") + (DB_TITLES[r.sub] || "자료");
   else if (r.view === "list") t = "전투원 목록";
@@ -1908,10 +1926,10 @@ document.addEventListener("click", e => {
     }
     case "resetEq": eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.rar = ""; eqSel.sort = ""; eqSel.q = ""; render(); break;
     case "calcExample": case "calcReset": {
-      if (act.dataset.act === "calcExample") calcExample();
-      else Object.assign(calcSel, { char: "", card: "", attr: "", cost: "", bind: false, base: 0, hits: 1, x: 0, xPer: 0, extra: 0, atk: 0, cr: 0, cd: 0, pAtk: 0, mult: 0, add: 0, weak: false, critSure: false, turns: 8, rankCond: false, sets: [calcEmptySet(), calcEmptySet()] });
+      if (act.dataset.act === "calcExample") calcExample(); else calcResetAll();
       const y = window.scrollY; render(); window.scrollTo(0, y); break;
     }
+    case "calcMore": { const sl = act.dataset.slot; calcSel.more[sl] = !calcSel.more[sl]; calcRefresh(); break; }
     case "zoom": openLb(act.dataset.src, act.dataset.cap); break;
     case "closeLb": closeLb(); break;
   }
@@ -1939,36 +1957,20 @@ document.addEventListener("input", e => {
   if (!box || box.type === "checkbox") return;
   const k = box.dataset.calc;
   if (k === "cost") calcSel.cost = box.value;
-  else {
-    let n = Number(box.value);
-    if (!isFinite(n)) n = 0;
-    if (k === "turns") n = Math.min(30, Math.max(1, Math.round(n) || 1));
-    if (k === "hits" || k === "x") n = Math.max(0, Math.round(n));
-    calcSel[k] = n;
-  }
+  else { const n = Number(box.value); calcSel[k] = isFinite(n) ? n : 0; }
   calcRefresh(); // 비용은 입력을 마쳤을 때(change) 조건 표시까지 다시 그림
 });
 document.addEventListener("change", e => {
   const t = e.target;
   let full = true;
   if (t.matches('[data-calc="cost"]')) calcSel.cost = t.value;
-  else if (t.matches('[data-calc][type="checkbox"]')) { calcSel[t.dataset.calc] = t.checked; full = t.dataset.calc !== "rankCond" && t.dataset.calc !== "critSure"; }
+  else if (t.matches('[data-calc][type="checkbox"]')) { calcSel[t.dataset.calc] = t.checked; full = t.dataset.calc !== "actCrit"; }
   else if (t.matches("[data-calcsel]")) {
     const k = t.dataset.calcsel;
-    if (k === "char") { calcSel.char = t.value; calcSel.card = ""; calcSel.attr = byId[t.value] ? byId[t.value].attr : calcSel.attr; }
-    else if (k === "card") calcPickCard(t.value);
+    if (k === "char") { calcSel.char = t.value; if (byId[t.value]) calcSel.attr = byId[t.value].attr; }
     else calcSel[k] = t.value;
   }
-  else if (t.matches("[data-calceq]")) {
-    const [i, slot] = t.dataset.calceq.split(":");
-    const s = calcSel.sets[Number(i)];
-    s[slot] = t.value;
-    Object.keys(s.on).forEach(key => { if (key.startsWith(slot + ":")) delete s.on[key]; });
-  }
-  else if (t.matches("[data-calcon]")) {
-    const [i, slot, j] = t.dataset.calcon.split(":");
-    calcSel.sets[Number(i)].on[slot + ":" + j] = t.checked;
-  }
+  else if (t.matches("[data-calccur]")) calcSel.cur[t.dataset.calccur] = t.value;
   else return;
   if (!full) { calcRefresh(); return; }
   const y = window.scrollY; render(); window.scrollTo(0, y);
