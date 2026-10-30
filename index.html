@@ -444,6 +444,25 @@
   .crow b.dn { color: #f2a0a5; }
   .crow.cur { box-shadow: inset 0 0 0 1px var(--gold); }
   .ctot.c3 { grid-template-columns: repeat(3, 1fr); }
+  .ctot.c4 { grid-template-columns: repeat(4, 1fr); }
+  .csteps { list-style: none; margin: 0; padding: 10px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; font-size: 13px; }
+  .csteps li { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border-top: 1px dashed var(--line); }
+  .csteps li:first-child { border-top: 0; }
+  .csteps li span { color: var(--muted); }
+  .csteps li b { font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+  .csteps li b small { color: var(--muted); font-size: 11px; margin-left: 4px; }
+  .csteps li.tot b { color: var(--gold-hi); font-weight: 700; }
+  .cbuffs { display: flex; flex-direction: column; gap: 6px; }
+  .cbuff { display: grid; grid-template-columns: 18px minmax(0, 1.2fr) minmax(0, 1.5fr) 90px 64px 30px; grid-template-areas: "on name kind val gain del"; gap: 8px; align-items: center; }
+  .cbuff.off .cbname, .cbuff.off .cbkind, .cbuff.off .cbval { opacity: .45; }
+  .cbon { grid-area: on; accent-color: var(--gold); width: 16px; height: 16px; margin: 0; }
+  .cbname { grid-area: name; } .cbkind { grid-area: kind; } .cbval { grid-area: val; }
+  .cbin { width: 100%; box-sizing: border-box; min-width: 0; background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 14px; font-family: inherit; }
+  .cbin:focus { outline: none; border-color: var(--gold); }
+  .cbg { grid-area: gain; font-size: 12px; font-weight: 500; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .cbg.up { color: #8fd6a8; } .cbg.dn { color: #f2a0a5; }
+  .cbx { grid-area: del; width: 30px; height: 30px; padding: 0; background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; font-size: 16px; cursor: pointer; }
+  .cbx:hover { color: var(--text); border-color: var(--gold); }
   .crow small { color: var(--muted); font-size: 11px; }
   .crow b em { font-style: normal; font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 6px; }
   .crow.off { opacity: .45; }
@@ -506,6 +525,11 @@
     .dgrid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .simres, .simcols { grid-template-columns: 1fr; }
     .csets, .crank, .ctot, .ctot.c3 { grid-template-columns: 1fr; }
+    .ctot.c4 { grid-template-columns: 1fr 1fr; }
+    .ctot .cv { font-size: 20px; }
+    .cbuff { grid-template-columns: 18px minmax(0, 1fr) 80px 30px; grid-template-areas: "on name name del" ". kind kind kind" ". val gain gain"; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+    .cbuff:last-child { border-bottom: 0; }
+    .cbg { text-align: left; }
     .cgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .bottombar a { font-size: 12px; }
   }
@@ -522,7 +546,7 @@
       <a href="#/roles" data-tab="roles">역할</a>
       <a href="#/partners" data-tab="partners">파트너</a>
       <a href="#/db" data-tab="db">자료</a>
-      <!--<a href="#/calc" data-tab="calc">계산기</a>-->
+      <a href="#/calc" data-tab="calc">계산기</a>
     </nav>
     <div class="search">
       <input id="q" type="search" placeholder="전투원·파트너·장비·효과 검색" autocomplete="off" aria-label="전투원·파트너·장비·효과 검색">
@@ -542,7 +566,7 @@
   <a href="#/roles" data-tab="roles">역할</a>
   <a href="#/partners" data-tab="partners">파트너</a>
   <a href="#/db" data-tab="db">자료</a>
- <!-- <a href="#/calc" data-tab="calc">계산기</a>-->
+  <a href="#/calc" data-tab="calc">계산기</a>
 </nav>
 
 <div class="lb" id="lb" hidden>
@@ -1429,26 +1453,36 @@ function viewDb(sub, arg) {
   return `<section class="page"><div class="eyebrow">자료</div><h1>${title}</h1>${updLine(sub)}${dbNav(sub)}${body}</section>`;
 }
 
-/* ---------- 장비 효율 계산기 ---------- */
-// 실측으로 맞춘 공식 (2026-10-29, 로스바이세·세레니엘 테스트):
-//   데미지 = 공격력 × 카드 표시 % × 0.135 × (1 + 속성 피해량) × 치명 배율 × 적 쪽 배율
-// - 카드 표시 %(전투 중 대상에 올렸을 때)에는 잠재력·버프·약점(×1.25)·피해량 증가가 이미 들어가 있다.
-// - 표시 % 안에서 '피해량 n% 증가'끼리, '피해량 +n%'끼리 각각 더하고, 두 묶음은 서로 곱한다.
-// - 치명 배율 = 1 + (치명피해 − 100%) × 증폭 (보통 1, 로스바이세는 실측 1.25)
-// 장비 효율은 지금 상태에 장비 효과를 더했을 때 기대 데미지(치명 확률 반영)가 몇 % 오르는지로 비교한다.
+/* ---------- 피해량 계수 계산기 ---------- */
+// 공식 출처: 아카라이브 카제나 채널 「받는 피해 증가 합연산과 곱연산은 어떻게 다른가요?」 (늑대0, 2026-07-31)
+//   피해량 계수 = [기본 피해량 × (1 + Σ피해량 n% 증가) + Σ피해량 +n% + Σ적 받는 피해량 +n%] × Π(1 + 적 받는 피해 곱연산) × 약점 × 치명타
+// - 'n% 증가'(곱연산 묶음)끼리는 더해서 기본 피해량에 곱하고, '+n%'(합연산 묶음)는 계수에 그대로 더한다.
+// - 적 받는 피해량 +n%(이야기 속 진실·이온화)는 '+n%'와 같은 자리, 취약(50%)은 마지막에 따로 곱한다.
+// - 화면에 보이는 계수는 소수점 첫째 자리에서 올림 (3011.25% → 3012%). 글의 검증 수치 6개가 모두 이 식과 일치.
+// 실제 데미지는 이 계수에 공격력·적 방어력 등이 반영되는데 그 식은 밝혀지지 않았다.
+// 그래서 장비·버프 효율은 '공격력 × 계수 × (1 + 속성 피해량) × 치명'이 몇 % 오르는지 비율로만 비교한다.
+// (공격력은 계수에 곱해진다고 가정, 속성 피해량·추가 피해량의 계산 위치는 미확인이라 따로 곱한다)
 const CALC_SLOTS = ["무기", "방어구", "장신구"];
 const CALC_WEAPON_ATK = { "신화": 90, "전설": 82, "희귀": 74 }; // 5성 강화 무기 공격력 (일부 장비는 예외)
-const CALC_STAT = { atk: "공격력", atkFlat: "공격력", cr: "치명확률", cd: "치명피해", inc: "피해량 증가", add: "피해량 +", fin: "최종 피해량", el: "속성 피해량", fu: "추가 피해량" };
 const CALC_TYPES = [["card", "카드 공격"], ["fu", "추가 공격"], ["counter", "반격"]];
+const CALC_KINDS = [
+  ["mul", "피해량 n% 증가 (곱연산)"],
+  ["add", "피해량 +n% (합연산)"],
+  ["eadd", "적 받는 피해량 +n% (합연산)"],
+  ["emul", "적 받는 피해 증가 (곱연산 · 취약)"]
+];
 const CALC_DEF = {
   char: "", attr: "", cost: "", bind: false, basic: false, weak: false, type: "card",
-  atk: 0, pAtk: 16, disp: 0, el: 0, cr: 0, cd: 150, inc: 0, add: 0, enemy: 0, fu: 0,
-  amp: 1, k: 0.135, addBase: 2.23, cond: false, act: 0, actCrit: false
+  base: 0, weakMul: 125, cr: 0, cd: 150, amp: 1,
+  atk: 0, pAtk: 0, el: 0, fu: 0, step: 10, cond: false
 };
-const calcSel = { ...CALC_DEF, cur: { "무기": "", "방어구": "", "장신구": "" }, more: {} };
+let calcBuffSeq = 0;
+const calcNewBuff = (name, kind, v, on) => ({ id: ++calcBuffSeq, on: on !== false, name: name || "", kind: kind || "mul", v: v || 0 });
+const calcBlank = () => ({ ...CALC_DEF, buffs: [calcNewBuff()], cur: { "무기": "", "방어구": "", "장신구": "" }, more: {} });
+const calcSel = calcBlank();
 const calcCompCache = {};
 
-// 효과 문구에서 데미지 관련 수치와 조건을 뽑는다.
+// 장비·조각 효과 문구에서 데미지 관련 수치와 조건을 뽑는다.
 // 조건은 카드 조건(속성·비용·결속·기본 카드·약점·공격 종류)으로 자동 판정하고, 나머지 문구는 '조건부'로 남긴다.
 function calcParse(text) {
   if (calcCompCache[text]) return calcCompCache[text];
@@ -1516,16 +1550,25 @@ function calcAutoOk(c) {
 }
 const calcActive = (comp, withCond) => calcAutoOk(comp.c) && (!comp.c.manual || withCond);
 
-// 지금 입력한 상태 (현재 장비 효과가 이미 들어가 있다고 본다)
-function calcState() {
+// 버프 한 줄을 상태에 더하거나(sign 1) 뺀다(sign -1)
+function calcAddBuff(s, kind, v, sign) {
+  if (kind === "mul") s.M += sign * v;
+  else if (kind === "add") s.A += sign * v;
+  else if (kind === "eadd") s.E += sign * v;
+  else if (kind === "emul") s.V *= sign > 0 ? 1 + v / 100 : 1 / (1 + v / 100);
+}
+// 지금 입력한 상태 (켜 둔 버프 줄과 현재 장비 효과가 이미 들어가 있다고 본다)
+function calcState(skipId) {
   const w = eqByName[calcSel.cur["무기"]];
   const F = w ? CALC_WEAPON_ATK[w.rarity] || 0 : 0;
   const P = calcSel.pAtk;
-  return {
+  const s = {
     base: Math.max(0, calcSel.atk - F) / (1 + P / 100), P, F,
     cr: calcSel.cr, cd: calcSel.cd, el: calcSel.el, fu: calcSel.fu,
-    G: 1 + calcSel.inc / 100, S: calcSel.addBase + calcSel.add / 100, fin: 1
+    M: 0, A: 0, E: 0, V: 1, fin: 1
   };
+  calcSel.buffs.forEach(b => { if (b.on && b.id !== skipId) calcAddBuff(s, b.kind, Number(b.v) || 0, 1); });
+  return s;
 }
 function calcApply(st, comps, sign, withCond) {
   const s = { ...st };
@@ -1539,26 +1582,37 @@ function calcApply(st, comps, sign, withCond) {
       case "cd": s.cd += v; break;
       case "el": s.el += v; break;
       case "fu": s.fu += v; break;
-      case "inc": s.G += v / 100; break;
-      case "add": s.S += v / 100; break;
+      case "inc": s.M += v; break;
+      case "add": s.A += v; break;
+      case "eadd": s.E += v; break;
+      case "emul": calcAddBuff(s, "emul", comp.v, sign); break;
       case "fin": s.fin *= sign > 0 ? 1 + comp.v / 100 : 1 / (1 + comp.v / 100); break;
     }
   });
   return s;
 }
-// 한 번 타격의 비치명·치명·기대 데미지
-function calcDmg(st) {
-  const ref = calcState();
-  const atk = st.base * (1 + st.P / 100) + st.F;
-  const disp = calcSel.disp * (st.G / ref.G) * (st.S / ref.S) * st.fin;
+// 계수 계산. score는 효율 비교용 상대값 (공격력 × 기대 계수 × 속성·추가 피해량)
+function calcCoef(st) {
+  const b = calcSel.base;
+  const mulPart = b * (1 + st.M / 100);
+  const hand = mulPart + st.A;                 // 핸드에서 보이는 값 (적 쪽 효과 제외)
+  const pre = hand + st.E;                     // 대괄호 안 합계
+  const weak = calcSel.weak ? calcSel.weakMul / 100 : 1;
+  const non = pre * st.V * weak * st.fin;      // 대상 지정 시 계수 (비치명)
   const C = Math.max(1, 1 + (st.cd / 100 - 1) * calcSel.amp);
   const cr = Math.min(1, Math.max(0, st.cr / 100));
+  const exp = non * (1 + cr * (C - 1));
+  const atk = st.base * (1 + st.P / 100) + st.F;
   const typeMul = calcSel.type === "fu" ? 1 + st.fu / 100 : 1;
-  const non = atk * disp / 100 * calcSel.k * (1 + st.el / 100) * Math.max(0, 1 + calcSel.enemy / 100) * typeMul;
-  return { atk, disp, C, cr, non, crit: non * C, exp: non * (1 + cr * (C - 1)) };
+  const score = exp * (calcSel.atk > 0 ? atk : 1) * (1 + st.el / 100) * typeMul;
+  return { mulPart, hand, pre, weak, non, C, cr, crit: non * C, exp, atk, score };
 }
-function calcReady() { return calcSel.atk > 0 && calcSel.disp > 0; }
-const calcFmt = n => Math.round(n).toLocaleString("ko-KR");
+const calcReady = () => calcSel.base > 0;
+const calcRankReady = () => calcSel.base > 0 && calcSel.atk > 0;
+// 게임 표시처럼 소수점 첫째 자리 올림 (부동소수 오차는 먼저 정리)
+const calcShow = n => Math.ceil(Math.round(n * 1e4) / 1e4);
+const calcNumFmt = n => Number(n.toFixed(2)).toLocaleString("ko-KR");
+const calcPctFmt = n => calcShow(n).toLocaleString("ko-KR") + "%";
 const calcPct = n => (n >= 0 ? "+" : "") + n.toFixed(Math.abs(n) < 10 ? 2 : 1) + "%";
 
 // 슬롯에서 한 장비를 바꿔 낄 때의 기대 데미지 변화 (현재 장비 대비, 비었으면 빈 칸 대비)
@@ -1566,24 +1620,24 @@ function calcSlotRank(slot) {
   const st = calcState();
   const cur = eqByName[calcSel.cur[slot]];
   const empty = (withCond) => cur ? calcApply(st, calcItemComps(cur), -1, withCond) : st;
-  const ref = { 0: calcDmg(st).exp, 1: calcDmg(st).exp };
+  const ref = calcCoef(st).score;
   const e0 = empty(false), e1 = empty(true);
   return equips.filter(e => e.slot === slot && (slot === "무기" || calcItemComps(e).length))
     .map(e => {
       const comps = calcItemComps(e);
       const eff = comps.filter(c => c.stat !== "atkFlat");
-      const g0 = calcDmg(calcApply(e0, comps, 1, false)).exp / ref[0] - 1;
-      const g1 = calcDmg(calcApply(e1, comps, 1, true)).exp / ref[1] - 1;
+      const g0 = calcCoef(calcApply(e0, comps, 1, false)).score / ref - 1;
+      const g1 = calcCoef(calcApply(e1, comps, 1, true)).score / ref - 1;
       const hasCond = eff.some(c => c.c.manual && calcAutoOk(c.c));
       const off = eff.length > 0 && eff.every(c => !calcAutoOk(c.c));
       return { e, g0, g1, hasCond, off };
     })
     .sort((a, b) => (calcSel.cond ? b.g1 - a.g1 : b.g0 - a.g0) || a.e.name.localeCompare(b.e.name, "ko"));
 }
-// 단일 효과(조각 주옵션·부옵션·세트)의 기대 데미지 변화
+// 단일 효과(조각 주옵션·부옵션·세트·가상 버프)의 기대 데미지 변화
 function calcGain(comps, withCond) {
   const st = calcState();
-  return calcDmg(calcApply(st, comps, 1, withCond)).exp / calcDmg(st).exp - 1;
+  return calcCoef(calcApply(st, comps, 1, withCond)).score / calcCoef(st).score - 1;
 }
 const calcRangeMax = s => { const n = String(s).match(/(\d+(?:\.\d+)?)\D*$/); return n ? Number(n[1]) : 0; };
 const calcStatLabel = (name, v) => { const flat = /\+$/.test(name) || name === "에고 회복력"; const n = Number(v.toFixed(2)); return `${name.replace(/[%+]$/, "")} ${flat ? "+" : ""}${n}${flat ? "" : "%"}`; };
@@ -1599,14 +1653,23 @@ function calcFragStat(name) {
 }
 const calcSimple = (stat, v) => [{ stat, v, c: { attrs: [], types: stat === "fu" ? ["fu"] : [], manual: "" }, notes: [] }];
 
-function calcExample() {
-  Object.assign(calcSel, {
-    ...CALC_DEF, char: byId.rossweisse ? "rossweisse" : "", attr: "정의", cost: "1", type: "card",
-    atk: 1277, pAtk: 16, disp: 328, el: 31, cr: 54, cd: 179, inc: 59, add: 20, amp: 1.25,
-    cur: { "무기": "", "방어구": "", "장신구": "" }, more: {}
-  });
+// 글의 검증 장면 두 개를 그대로 불러온다 (치명·공격력은 글에 없어 비워 둠)
+const CALC_EXAMPLES = {
+  1: { label: "글 예시 1 · 취약", weak: false, buffs: [
+    ["에너지 충전", "mul", 50], ["아스트리아", "mul", 20], ["아델하이트 프리즘", "mul", 20], ["취약가면", "mul", 35],
+    ["아스트리아", "add", 30], ["6스택", "add", 600], ["행포증 페르소나", "add", 150],
+    ["이야기 속 진실", "eadd", 100], ["취약", "emul", 50]] },
+  2: { label: "글 예시 2 · 취약 + 약점", weak: true, buffs: [
+    ["에너지 충전", "mul", 50], ["아스트리아", "mul", 20], ["프리즘 4스택", "mul", 20], ["취약가면", "mul", 35], ["분쇄", "mul", 20],
+    ["아스트리아", "add", 30], ["3스택", "add", 300],
+    ["이야기 속 진실", "eadd", 100], ["취약", "emul", 50]] }
+};
+function calcExample(n) {
+  const ex = CALC_EXAMPLES[n];
+  if (!ex) return;
+  Object.assign(calcSel, calcBlank(), { base: 480, weak: ex.weak, weakMul: 125, buffs: ex.buffs.map(([nm, k, v]) => calcNewBuff(nm, k, v)) });
 }
-function calcResetAll() { Object.assign(calcSel, { ...CALC_DEF, cur: { "무기": "", "방어구": "", "장신구": "" }, more: {} }); }
+function calcResetAll() { Object.assign(calcSel, calcBlank()); }
 
 function calcNum(k, label, unit, step) {
   return `<label class="cf"><span>${esc(label)}${unit ? ` <em>${esc(unit)}</em>` : ""}</span><input type="number" inputmode="decimal" step="${step || "any"}" data-calc="${k}" value="${esc(calcSel[k])}"></label>`;
@@ -1614,19 +1677,50 @@ function calcNum(k, label, unit, step) {
 function calcChk(k, label) {
   return `<label class="cchk"><input type="checkbox" data-calc="${k}"${calcSel[k] ? " checked" : ""}> ${esc(label)}</label>`;
 }
+function calcBuffRow(b) {
+  return `<div class="cbuff${b.on ? "" : " off"}" data-bid="${b.id}">
+    <input type="checkbox" class="cbon" data-bf="on"${b.on ? " checked" : ""} aria-label="적용">
+    <input type="text" class="cbin cbname" data-bf="name" value="${esc(b.name)}" placeholder="이름 (선택)" aria-label="버프 이름">
+    <select class="csel cbkind" data-bf="kind" aria-label="종류">${CALC_KINDS.map(([v, l]) => `<option value="${v}"${b.kind === v ? " selected" : ""}>${l}</option>`).join("")}</select>
+    <input type="number" inputmode="decimal" step="any" class="cbin cbval" data-bf="v" value="${esc(b.v)}" placeholder="%" aria-label="수치 (%)">
+    <b class="cbg" id="cbg${b.id}" title="이 버프를 뺐을 때와 비교한 기대 데미지 비율"></b>
+    <button class="cbx" data-act="calcDelBuff" data-v="${b.id}" aria-label="이 줄 삭제">×</button>
+  </div>`;
+}
+// 각 버프 줄 오른쪽의 기여도 (이 버프가 지금 기대 데미지를 몇 % 올리고 있는지)
+function calcBuffGains() {
+  const ready = calcReady();
+  const full = ready ? calcCoef(calcState()).score : 0;
+  calcSel.buffs.forEach(b => {
+    const el = document.getElementById("cbg" + b.id);
+    if (!el) return;
+    if (!ready || !b.on || !Number(b.v)) { el.textContent = ""; el.className = "cbg"; return; }
+    const without = calcCoef(calcState(b.id)).score;
+    const g = without > 0 ? full / without - 1 : 0;
+    el.textContent = calcPct(g * 100);
+    el.className = "cbg" + (g > 0.00005 ? " up" : g < -0.00005 ? " dn" : "");
+  });
+}
 function calcOutHtml() {
-  if (!calcReady()) return '<div class="empty">공격력과 카드 표시 %를 넣으면 결과가 나옵니다. 처음이라면 위의 \'예시 불러오기\'를 눌러 보세요.</div>';
-  const d = calcDmg(calcState());
-  let chk = "";
-  if (calcSel.act > 0) {
-    const p = calcSel.actCrit ? d.crit : d.non, err = (calcSel.act / p - 1) * 100;
-    chk = `<p class="cwin">실측 ${calcFmt(calcSel.act)} → 예상 대비 <b>${calcPct(err)}</b> · 이 전투에서 맞춘 기본 상수 ${(calcSel.k * calcSel.act / p).toFixed(4)}</p>`;
-  }
-  return `<div class="ctot c3">
-      <div style="--sc:var(--muted)"><div class="cl">비치명</div><div class="cv">${calcFmt(d.non)}</div></div>
-      <div style="--sc:var(--gold)"><div class="cl">치명 (×${d.C.toFixed(3)})</div><div class="cv">${calcFmt(d.crit)}</div></div>
-      <div style="--sc:#5aa9e6"><div class="cl">기대값 (치명확률 ${(d.cr * 100).toFixed(0)}%)</div><div class="cv">${calcFmt(d.exp)}</div></div>
-    </div>${chk}`;
+  if (!calcReady()) return '<div class="empty">기본 피해량을 넣으면 결과가 나옵니다. 처음이라면 위의 \'글 예시\'를 눌러 보세요.</div>';
+  const st = calcState(), d = calcCoef(st);
+  const sumBy = k => calcSel.buffs.filter(b => b.on && b.kind === k).reduce((a, b) => a + (Number(b.v) || 0), 0);
+  const steps = [
+    `<li><span>기본 × (1 + 곱연산 ${calcNumFmt(st.M)}%)</span><b>${calcNumFmt(calcSel.base)}% × ${calcNumFmt(1 + st.M / 100)} = ${calcNumFmt(d.mulPart)}%</b></li>`,
+    `<li><span>+ 피해량 +n% 합 ${calcNumFmt(st.A)}%</span><b>${calcNumFmt(d.hand)}% <small>핸드 표시</small></b></li>`,
+    sumBy("eadd") || st.E ? `<li><span>+ 적 받는 피해량 +n% 합 ${calcNumFmt(st.E)}%</span><b>${calcNumFmt(d.pre)}%</b></li>` : "",
+    st.V !== 1 ? `<li><span>× 적 받는 피해 곱연산</span><b>×${calcNumFmt(st.V)}</b></li>` : "",
+    calcSel.weak ? `<li><span>× 약점</span><b>×${calcNumFmt(d.weak)}</b></li>` : "",
+    `<li class="tot"><span>대상 지정 계수 (비치명)</span><b>${calcNumFmt(d.non)}% → 표시 ${calcPctFmt(d.non)}</b></li>`,
+    `<li><span>× 치명 배율 (치명피해 ${calcNumFmt(st.cd)}%)</span><b>×${calcNumFmt(d.C)} = ${calcPctFmt(d.crit)}</b></li>`
+  ].join("");
+  return `<div class="ctot c4">
+      <div style="--sc:var(--muted)"><div class="cl">핸드 표시</div><div class="cv">${calcPctFmt(d.hand)}</div></div>
+      <div style="--sc:var(--gold)"><div class="cl">대상 지정 (비치명)</div><div class="cv">${calcPctFmt(d.non)}</div></div>
+      <div style="--sc:#e08a5a"><div class="cl">치명 (×${calcNumFmt(d.C)})</div><div class="cv">${calcPctFmt(d.crit)}</div></div>
+      <div style="--sc:#5aa9e6"><div class="cl">기대값 (치명확률 ${calcNumFmt(d.cr * 100)}%)</div><div class="cv">${calcPctFmt(d.exp)}</div></div>
+    </div>
+    <ol class="csteps">${steps}</ol>`;
 }
 function calcRowHtml(name, g0, g1, max, opts) {
   const o = opts || {};
@@ -1634,6 +1728,22 @@ function calcRowHtml(name, g0, g1, max, opts) {
   const extra = !calcSel.cond && Math.abs(g1 - g0) > 0.00005 ? `<em>조건 시 ${calcPct(g1 * 100)}</em>` : "";
   return `<div class="crow${o.cur ? " cur" : ""}${o.off ? " off" : ""}"${o.title ? ` title="${esc(o.title)}"` : ""}><i style="width:${max > 0 ? Math.max(1.5, Math.max(0, g) / max * 100).toFixed(1) : 0}%"></i>
     <span>${esc(name)}${o.sub ? ` <small>${esc(o.sub)}</small>` : ""}${o.mark && calcSel.cond ? " *" : ""}</span><b class="${g > 0.00005 ? "up" : g < -0.00005 ? "dn" : ""}">${o.cur ? "현재" : calcPct(g * 100)}${extra}</b></div>`;
+}
+// 같은 수치의 버프를 하나 더 얻는다면 어느 쪽이 이득인지
+function calcCmpHtml() {
+  if (!calcReady()) return "";
+  const n = Number(calcSel.step) || 0;
+  const rows = [
+    [`피해량 ${n}% 증가 (곱연산)`, "inc"], [`피해량 +${n}% (합연산)`, "add"], [`적 받는 피해량 +${n}% (합연산)`, "eadd"],
+    [`적 받는 피해 ${n}% 증가 (곱연산)`, "emul"], [`공격력 +${n}%`, "atk"], [`치명확률 +${n}%`, "cr"], [`치명피해 +${n}%`, "cd"],
+    [`속성 피해량 +${n}% (위치 미확인)`, "el"]
+  ].map(([name, stat]) => {
+    const off = stat === "atk" && !(calcSel.atk > 0);
+    const g = off ? 0 : calcGain([{ stat, v: n, c: { attrs: [], types: [], manual: "" } }], true);
+    return { name, g, off };
+  }).sort((a, b) => b.g - a.g);
+  const max = Math.max(...rows.map(r => r.g), 0.0001);
+  return `<div class="crk">${rows.map(r => calcRowHtml(r.name, r.g, r.g, max, { off: r.off, title: r.off ? "공격력을 넣으면 계산됩니다" : "" })).join("")}</div>`;
 }
 function calcEquipHtml() {
   return `<div class="crank">${CALC_SLOTS.map(slot => {
@@ -1679,12 +1789,18 @@ function calcFragHtml() {
   return `<h4 class="csub">주옵션 (4~6번)</h4><div class="crank">${mains}</div>
     <h4 class="csub">부옵션 · 세트 효과</h4><div class="crank">${subHtml}${setCol(4)}${setCol(2)}</div>`;
 }
+const CALC_RANK_WAIT = '<div class="empty">기본 피해량과 공격력을 넣으면 순위가 나옵니다.</div>';
 function calcRefresh() {
-  const parts = { calcOut: calcOutHtml, calcEq: () => calcReady() ? calcEquipHtml() : "", calcFr: () => calcReady() ? calcFragHtml() : "" };
+  const parts = {
+    calcOut: calcOutHtml, calcCmp: calcCmpHtml,
+    calcEq: () => calcRankReady() ? calcEquipHtml() : CALC_RANK_WAIT,
+    calcFr: () => calcRankReady() ? calcFragHtml() : CALC_RANK_WAIT
+  };
   Object.entries(parts).forEach(([id, f]) => { const el = document.getElementById(id); if (el) el.innerHTML = f(); });
+  calcBuffGains();
 }
 function viewCalc() {
-  const head = `<div class="eyebrow">장비 계산기</div><h1>장비 효율 계산기</h1>`;
+  const head = `<div class="eyebrow">계산기</div><h1>피해량 계수 계산기</h1>`;
   if (extraState !== "ok") return `<section class="page">${head}${dbWait()}</section>`;
   const byName = [...chars].sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko"));
   const curSel = slot => {
@@ -1693,60 +1809,67 @@ function viewCalc() {
     const e = eqByName[calcSel.cur[slot]];
     return `<label class="cf"><span>${slot}</span><select class="csel" data-calccur="${slot}"><option value="">(모름 · 없음)</option>${list.map(opt).join("")}</select>${e ? `<span class="ceff">${esc(e.effect)}</span>` : ""}</label>`;
   };
-  const ready = calcReady();
+  const rankReady = calcRankReady();
   return `<section class="page">${head}
-    <p class="note" style="margin:-8px 0 16px">캐릭터의 지금 상태를 넣으면 장비·기억의 조각 옵션마다 한 번 타격의 기대 데미지(치명 확률 반영)가 몇 % 오르는지 계산해 순위를 매깁니다.</p>
-    <div class="cbar"><button class="btn gold" data-act="calcExample">예시 불러오기 (로스바이세)</button><button class="btn" data-act="calcReset">초기화</button></div>
+    <p class="note" style="margin:-8px 0 16px">카드의 기본 피해량과 걸린 버프를 넣으면 게임 화면에 뜨는 피해량 계수를 계산하고, 어떤 버프·장비·조각이 기대 데미지를 얼마나 올리는지 비교합니다.</p>
+    <div class="cbar">${Object.entries(CALC_EXAMPLES).map(([n, ex]) => `<button class="btn gold" data-act="calcExample" data-v="${n}">${esc(ex.label)}</button>`).join("")}<button class="btn" data-act="calcReset">초기화</button></div>
 
-    <div class="sec"><h3>1. 캐릭터 상태 <span class="note" style="font-family:inherit;font-weight:400">전투 중 스테이터스 상세 기준</span></h3><div class="cbox">
+    <div class="sec"><h3>1. 카드 <span class="note" style="font-family:inherit;font-weight:400">장비 효과의 조건도 여기로 자동 판정</span></h3><div class="cbox">
       <div class="cgrid">
+        ${calcNum("base", "기본 피해량", "% · 버프 없는 카드 수치")}
         <label class="cf"><span>전투원</span><select class="csel" data-calcsel="char"><option value="">직접 입력</option>${byName.map(d => `<option value="${esc(d.id)}"${calcSel.char === d.id ? " selected" : ""}>${esc(d.name_ko)} (${esc(d.attr)})</option>`).join("")}</select></label>
-        ${calcNum("atk", "공격력", "전투 중 · 무기 +n 포함")}${calcNum("pAtk", "공격력% 합계", "파트너·장비·조각")}
-        ${calcNum("disp", "카드 표시 %", "대상에 올렸을 때")}${calcNum("el", "속성 피해량", "%")}
-        ${calcNum("cr", "치명확률", "% · 버프 포함")}${calcNum("cd", "치명피해", "% · 버프 포함")}
-        ${calcNum("inc", "'피해량 n% 증가' 합계", "% · 잠재력 포함")}${calcNum("add", "'피해량 +n%' 합계", "% · 사기·리듬 등")}
-        ${calcNum("enemy", "적 받는 피해 증감", "% · 취약 +, 불굴 −")}
-      </div>
-      <details class="cadv"><summary>고급 설정</summary><div class="cgrid" style="margin-top:10px">
-        ${calcNum("amp", "치명 증폭", "보통 1 · 로스바이세 1.25", "0.01")}${calcNum("k", "기본 상수", "기본 0.135", "0.0001")}${calcNum("addBase", "'+n%' 묶음 기본값", "미확정 2.23", "0.01")}
-      </div><p class="note" style="margin:8px 0 0">로스바이세는 치명 배율이 1 + (치명피해 − 100%) × 1.25로 측정됐습니다. 기본 상수는 전투(적)마다 ±2% 정도 달라집니다. '+n%' 묶음 기본값은 사기 +20%가 실제로 약 8%만 올린 측정에서 거꾸로 구한 값입니다.</p></details>
-    </div></div>
-
-    <div class="sec"><h3>2. 카드 조건 <span class="note" style="font-family:inherit;font-weight:400">장비 효과의 조건을 자동으로 판정</span></h3><div class="cbox">
-      <div class="cgrid">
         <label class="cf"><span>카드 속성</span><select class="csel" data-calcsel="attr"><option value="">없음</option>${ATTRS.map(a => `<option${calcSel.attr === a ? " selected" : ""}>${a}</option>`).join("")}</select></label>
         <label class="cf"><span>카드 비용</span><input type="text" inputmode="numeric" data-calc="cost" value="${esc(calcSel.cost)}" placeholder="X면 비움"></label>
         <label class="cf"><span>공격 종류</span><select class="csel" data-calcsel="type">${CALC_TYPES.map(([v, l]) => `<option value="${v}"${calcSel.type === v ? " selected" : ""}>${l}</option>`).join("")}</select></label>
-        ${calcSel.type === "fu" ? calcNum("fu", "추가 피해량", "% · 스탯창") : ""}
+        ${calcSel.weak ? calcNum("weakMul", "약점 배율", "% · 하루 125") : ""}
       </div>
-      <div class="cchks">${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}${calcChk("weak", "약점 공격")}</div>
+      <div class="cchks">${calcChk("weak", "약점 공격")}${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}</div>
     </div></div>
 
-    <div class="sec"><h3>3. 예상 데미지</h3><div id="calcOut">${calcOutHtml()}</div>
-      <div class="cgrid" style="margin-top:10px">${calcNum("act", "실측 데미지 (선택)", "비교용")}<div class="cf" style="justify-content:flex-end">${calcChk("actCrit", "치명타였음")}</div></div></div>
+    <div class="sec"><h3>2. 버프 <span class="note" style="font-family:inherit;font-weight:400">오른쪽 % = 그 버프가 지금 기대 데미지를 올리는 몫</span></h3><div class="cbox">
+      <div class="cbuffs">${calcSel.buffs.map(calcBuffRow).join("")}</div>
+      <div class="cbar" style="margin:10px 0 0"><button class="btn" data-act="calcAddBuff">+ 줄 추가</button></div>
+      <p class="note" style="margin:10px 0 0">종류는 효과 문구로 고릅니다. '피해량 50% <b>증가</b>'는 곱연산, '피해량 <b>+</b>150%'는 합연산, '대상이 받는 피해량 +100%'는 적 받는 피해 합연산, 취약(받는 피해량 50% 증가)은 적 받는 피해 곱연산입니다. 체크를 끄면 그 줄만 빼고 계산합니다.</p>
+    </div></div>
 
-    <div class="sec"><h3>4. 장비 순위 <span class="note" style="font-family:inherit;font-weight:400">한 칸만 바꿨을 때 기대 데미지 변화</span></h3>
-      <div class="cbox" style="margin-bottom:12px"><p class="note" style="margin:0 0 8px">지금 낀 장비를 고르면 그 장비를 빼고 바꿔 낀 값으로 비교합니다. 모르면 비워 두세요.</p>
+    <div class="sec"><h3>3. 치명 · 공격력 <span class="note" style="font-family:inherit;font-weight:400">전투 중 스테이터스 상세 기준</span></h3><div class="cbox">
+      <div class="cgrid">
+        ${calcNum("cr", "치명확률", "% · 버프 포함")}${calcNum("cd", "치명피해", "% · 버프 포함")}
+        ${calcNum("atk", "공격력", "장비 순위에 필요")}${calcNum("pAtk", "공격력% 합계", "파트너·장비·조각")}
+        ${calcNum("el", "속성 피해량", "% · 위치 미확인")}
+        ${calcSel.type === "fu" ? calcNum("fu", "추가 피해량", "% · 위치 미확인") : ""}
+      </div>
+      <details class="cadv"><summary>고급 설정</summary><div class="cgrid" style="margin-top:10px">
+        ${calcNum("amp", "치명 증폭", "보통 1", "0.01")}
+      </div><p class="note" style="margin:8px 0 0">치명 배율 = 1 + (치명피해 − 100%) × 증폭. 이전 실측에서 로스바이세가 1.25로 측정된 적이 있지만, 그때는 합연산 구조를 반영하지 않은 식이라 다시 확인이 필요합니다.</p></details>
+    </div></div>
+
+    <div class="sec"><h3>4. 피해량 계수</h3><div id="calcOut">${calcOutHtml()}</div></div>
+
+    <div class="sec"><h3>5. 다음 버프 비교 <span class="note" style="font-family:inherit;font-weight:400">같은 수치를 하나 더 얻으면 기대 데미지가 몇 % 오르나</span></h3>
+      <div class="cgrid" style="margin-bottom:10px">${calcNum("step", "비교할 수치", "%")}</div>
+      <div id="calcCmp">${calcCmpHtml()}</div></div>
+
+    <div class="sec"><h3>6. 장비 순위 <span class="note" style="font-family:inherit;font-weight:400">한 칸만 바꿨을 때 기대 데미지 변화</span></h3>
+      <div class="cbox" style="margin-bottom:12px"><p class="note" style="margin:0 0 8px">지금 낀 장비를 고르면 그 장비를 빼고 바꿔 낀 값으로 비교합니다. 모르면 비워 두세요. 장비 효과가 이미 위 버프 줄에 들어가 있다면 두 번 세지 않도록 그 줄을 꺼 주세요.</p>
         <div class="cgrid">${CALC_SLOTS.map(curSel).join("")}</div>
         <div class="cchks">${calcChk("cond", "조건부 효과도 충족으로 보고 순위 매기기 (* 표시)")}</div></div>
-      <div id="calcEq">${ready ? calcEquipHtml() : ""}</div></div>
+      <div id="calcEq">${rankReady ? calcEquipHtml() : CALC_RANK_WAIT}</div></div>
 
-    <div class="sec"><h3>5. 기억의 조각 순위 <span class="note" style="font-family:inherit;font-weight:400">지금 상태에 더했을 때 기대 데미지 변화</span></h3>
-      <div id="calcFr">${ready ? calcFragHtml() : ""}</div>
-      ${ready ? "" : '<div class="empty">캐릭터 상태를 넣으면 순위가 나옵니다.</div>'}</div>
+    <div class="sec"><h3>7. 기억의 조각 순위 <span class="note" style="font-family:inherit;font-weight:400">지금 상태에 더했을 때 기대 데미지 변화</span></h3>
+      <div id="calcFr">${rankReady ? calcFragHtml() : CALC_RANK_WAIT}</div></div>
 
     <div class="sec"><h3>계산식</h3><div class="cbox cform"><ol>
-      <li><b>한 번 타격</b><code>공격력 × 카드 표시 % × 0.135 × (1 + 속성 피해량) × 치명 배율 × (1 + 적 받는 피해 증감)</code>
-        <span class="note">카드 표시 %는 전투 중 대상에 올렸을 때의 수치입니다. 잠재력·버프·약점(×1.25)이 이미 들어가 있어 따로 곱하지 않습니다.</span></li>
-      <li><b>표시 % 안의 피해량</b><code>표시 % ∝ (1 + '피해량 +n%' 합) × (1 + '피해량 n% 증가' 합) × 최종 피해량</code>
-        <span class="note">같은 표기끼리는 더하고 표기가 다르면 곱합니다. 그래서 이미 많이 쌓인 묶음일수록 장비 1%의 효과가 줄어듭니다.</span></li>
-      <li><b>치명 배율</b><code>1 + (치명피해 − 100%) × 증폭</code>
-        <span class="note">세레니엘은 치명피해 128.4% → ×1.284로 그대로, 로스바이세는 증폭 1.25로 측정됐습니다.</span></li>
+      <li><b>피해량 계수</b><code>[기본 피해량 × (1 + 피해량 n% 증가 합) + 피해량 +n% 합 + 적 받는 피해량 +n% 합] × 적 받는 피해 곱연산(취약 ×1.5) × 약점 × 치명</code>
+        <span class="note">'n% 증가'는 기본 피해량에만 곱해지고, '+n%'는 계수에 그대로 더해집니다. 적 받는 피해량 +n%는 '+n%'와 같은 자리라 취약·약점·치명을 모두 받습니다.</span></li>
+      <li><b>표시값</b><code>소수점 첫째 자리에서 올림 (3011.25% → 3012%)</code>
+        <span class="note">핸드 표시는 적 쪽 효과(적 받는 피해·취약·약점)를 빼고 계산합니다. 취약가면처럼 대상 조건이 붙은 'n% 증가'를 넣었다면 핸드 값은 그만큼 게임과 다를 수 있습니다.</span></li>
+      <li><b>치명 배율</b><code>1 + (치명피해 − 100%) × 증폭</code></li>
       <li><b>기대값</b><code>비치명 × (1 + 치명확률 × (치명 배율 − 1))</code></li>
-      <li><b>공격력</b><code>(공격력 − 무기 공격력) ÷ (1 + 공격력% 합) × (1 + 공격력% 합 + 장비 공격력%) + 무기 공격력</code>
-        <span class="note">무기 공격력은 5성 강화 기준 희귀 74 · 전설 82 · 신화 90 (일부 장비는 예외).</span></li>
+      <li><b>효율 비교</b><code>공격력 × 기대 계수 × (1 + 속성 피해량)이 몇 % 오르는지</code>
+        <span class="note">공격력·적 방어력이 실제 데미지에 반영되는 식은 아직 밝혀지지 않아, 공격력은 계수에 곱해진다고 가정한 비율 비교입니다. 속성·추가 피해량의 계산 위치도 미확인이라 따로 곱했습니다. 무기 공격력은 5성 강화 기준 희귀 74 · 전설 82 · 신화 90 (일부 장비는 예외).</span></li>
     </ol>
-    <p class="note" style="margin:10px 0 0">2026-10-29 로스바이세·세레니엘 실측으로 맞춘 비공식 공식입니다. 같은 스테이지에서 오차 1% 안팎, 전투가 바뀌면 ±2% 정도 차이가 납니다. 불굴·취약의 정확한 수치, '+n%' 묶음의 기본값, 추가 피해량의 계산 위치는 아직 확인하지 못했습니다. 조건부 효과(*)는 조건이 계속 충족된다고 보고, 중첩 효과는 최대치로 계산합니다.</p></div></div>
+    <p class="note" style="margin:10px 0 0">출처: <a href="https://arca.live/b/chaoszeronightmare/178511409" target="_blank" rel="noopener">아카라이브 카제나 채널 · 받는 피해 증가 합연산과 곱연산은 어떻게 다른가요? (늑대0)</a>. 비공식 실측 공식이며, 글의 검증 수치 6개(1692 · 2790 · 2940 · 1218 · 2599 · 3012%)와 일치합니다. 조건부 효과(*)는 조건이 계속 충족된다고 보고, 중첩 효과는 최대치로 계산합니다.</p></div></div>
   </section>`;
 }
 
@@ -1794,7 +1917,7 @@ function pageTitle(r) {
   else if (r.view === "teams") t = "조합 찾기";
   else if (r.view === "sim") t = "덱 짜기";
   else if (r.view === "roles") t = "역할별 보기";
-  else if (r.view === "calc") t = "장비 효율 계산기";
+  else if (r.view === "calc") t = "피해량 계수 계산기";
   else if (r.view === "partners") { const pt = partners.find(x => x.id === r.id); t = (pt ? pt.name + " – " : "") + "파트너"; }
   else if (r.view === "db") t = ((r.sub === "equipment" || r.sub === "glossary") && r.arg ? r.arg + " – " : "") + (DB_TITLES[r.sub] || "자료");
   else if (r.view === "list") t = "전투원 목록";
@@ -1809,7 +1932,7 @@ function render() {
   else if (r.view === "teams") app.innerHTML = viewTeams();
   else if (r.view === "sim") app.innerHTML = viewSim();
   else if (r.view === "roles") app.innerHTML = viewRoles();
-  else if (r.view === "calc") app.innerHTML = viewCalc();
+  else if (r.view === "calc") { app.innerHTML = viewCalc(); calcBuffGains(); }
   else if (r.view === "partners") app.innerHTML = r.id ? viewPartner(r.id) : viewPartners();
   else if (r.view === "db") app.innerHTML = viewDb(r.sub, r.arg);
   else if (r.view === "home") app.innerHTML = viewHome();
@@ -1925,8 +2048,12 @@ document.addEventListener("click", e => {
       break;
     }
     case "resetEq": eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.rar = ""; eqSel.sort = ""; eqSel.q = ""; render(); break;
-    case "calcExample": case "calcReset": {
-      if (act.dataset.act === "calcExample") calcExample(); else calcResetAll();
+    case "calcExample": case "calcReset": case "calcAddBuff": case "calcDelBuff": {
+      const a2 = act.dataset.act;
+      if (a2 === "calcExample") calcExample(act.dataset.v);
+      else if (a2 === "calcReset") calcResetAll();
+      else if (a2 === "calcAddBuff") calcSel.buffs.push(calcNewBuff());
+      else { calcSel.buffs = calcSel.buffs.filter(b => String(b.id) !== act.dataset.v); if (!calcSel.buffs.length) calcSel.buffs.push(calcNewBuff()); }
       const y = window.scrollY; render(); window.scrollTo(0, y); break;
     }
     case "calcMore": { const sl = act.dataset.slot; calcSel.more[sl] = !calcSel.more[sl]; calcRefresh(); break; }
@@ -1951,7 +2078,25 @@ document.addEventListener("input", e => {
   else if (box.dataset.in === "gl") { glSel.q = box.value; const l = document.getElementById("glList"); if (l) l.innerHTML = glListHtml(); }
 });
 
-/* 장비 계산기 입력: 숫자는 결과만 다시 그려 입력 포커스를 유지, 선택·체크는 화면 전체를 다시 그림 */
+/* 계산기 버프 줄: 입력·선택 모두 결과만 다시 그려 입력 포커스를 유지 */
+function calcBuffInput(e) {
+  const f = e.target.closest("[data-bf]");
+  if (!f) return false;
+  const row = f.closest("[data-bid]");
+  const b = row && calcSel.buffs.find(x => String(x.id) === row.dataset.bid);
+  if (!b) return true;
+  const k = f.dataset.bf;
+  if (k === "on") { b.on = f.checked; row.classList.toggle("off", !b.on); }
+  else if (k === "kind") b.kind = f.value;
+  else if (k === "name") { b.name = f.value; return true; }
+  else { const n = Number(f.value); b.v = isFinite(n) ? n : 0; }
+  calcRefresh();
+  return true;
+}
+document.addEventListener("input", e => { if (e.target.matches("[data-bf]") && e.target.type !== "checkbox" && e.target.tagName !== "SELECT") calcBuffInput(e); });
+document.addEventListener("change", e => { if (e.target.matches('[data-bf="on"], [data-bf="kind"]')) calcBuffInput(e); });
+
+/* 계산기 입력: 숫자는 결과만 다시 그려 입력 포커스를 유지, 선택·체크는 화면 전체를 다시 그림 */
 document.addEventListener("input", e => {
   const box = e.target.closest("[data-calc]");
   if (!box || box.type === "checkbox") return;
@@ -1964,7 +2109,7 @@ document.addEventListener("change", e => {
   const t = e.target;
   let full = true;
   if (t.matches('[data-calc="cost"]')) calcSel.cost = t.value;
-  else if (t.matches('[data-calc][type="checkbox"]')) { calcSel[t.dataset.calc] = t.checked; full = t.dataset.calc !== "actCrit"; }
+  else if (t.matches('[data-calc][type="checkbox"]')) { calcSel[t.dataset.calc] = t.checked; full = t.dataset.calc === "weak"; }
   else if (t.matches("[data-calcsel]")) {
     const k = t.dataset.calcsel;
     if (k === "char") { calcSel.char = t.value; if (byId[t.value]) calcSel.attr = byId[t.value].attr; }
