@@ -936,7 +936,7 @@ function kitSections(d) {
   if (k.ego) h += `<div class="sec"><h3>에고 스킬<span class="pskn">${esc(k.ego.name)}</span>${k.ego.cost ? ` <span class="note">비용 ${esc(k.ego.cost)}</span>` : ""}</h3>
     ${(k.ego.effect || []).map(t => `<p class="pline">${esc(t)}</p>`).join("")}</div>`;
   if ((k.manifest || []).length) h += `<div class="sec"><h3>에고 발현 (돌파)</h3><div class="ktab">${k.manifest.map(m =>
-    `<div class="kr"><div class="kk">${esc(m.lv)}단계<small>${esc(m.name)}</small></div><div><div class="kt">${esc(m.kind)}</div>${(m.effect || []).map(esc).join("<br>")}</div></div>`).join("")}</div></div>`;
+    `<div class="kr"><div class="kk">${esc(m.lv)}단계<small>${esc(m.name)}</small></div><div><div class="kt">${esc(m.kind)}</div>${(m.effect || []).map(esc).join("<br>")}${m.src ? `<div class="note" style="margin-top:4px;font-size:11px">${esc(m.src)}</div>` : ""}</div></div>`).join("")}</div></div>`;
   if ((k.potential || []).length) h += `<details class="sec kpot"><summary><h3>잠재력</h3></summary><div class="ktab">${k.potential.map(p =>
     `<div class="kr"><div class="kk">${esc(p.id)}<small>${esc(p.name)}${p.max && p.max !== "-" ? ` · 최대 ${esc(p.max)}` : ""}</small></div><div>${(p.effect || []).map(esc).join("<br>")}</div></div>`).join("")}</div></details>`;
   return h ? h + `<p class="src">고유 카드·번뜩임·에고 스킬·에고 발현·잠재력 출처: <a href="https://namu.wiki/w/${encodeURIComponent(k.page || d.name_ko)}" target="_blank" rel="noopener">나무위키 ${esc(k.page || d.name_ko)}</a> 문서 (CC BY-NC-SA 2.0 KR)</p>` : "";
