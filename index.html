@@ -1630,12 +1630,15 @@ const CALC_POT_KINDS = [["unique", "고유 카드"], ["basic", "기본 카드"],
 // 지속 피해 종류: 균열 = 중첩 × 40% (용어 '턴 종료 시 균열 중첩당 지속 피해 40%', 최대 30중첩) · 직접 입력 = 계수 %를 그대로
 const CALC_DOT_KINDS = [["rift", "균열 (중첩당 40%)"], ["manual", "직접 입력 (계수 %)"]];
 const CALC_RIFT_PER = 40, CALC_RIFT_MAX = 30;
+// 추가 공격 종류: 카드에서 나온 추가 공격(발리스타 등)은 카드처럼 잠재력·카드 효과를 넣고,
+// 카드가 아닌 추가 공격(표식·협공·데시벨 같은 고유 효과)은 지속 피해처럼 잠재력·카드에 붙는 효과를 뺀다
+const CALC_FU_KINDS = [["card", "카드에서 나온 추가 공격 (발리스타 등)"], ["free", "카드가 아닌 추가 공격 (표식·협공·고유 효과)"]];
 const CALC_POT_ID = { basic: "02", common: "03", unique: "04" };
 // 공격력% 장비의 계산 그룹. 여기 없는 공격력% 장비는 A그룹(장비·파트너 합연산)으로 본다.
 // 심록·숲의 클로버는 시즌 4부터 A그룹 (공식 개발자 노트 2026-07-21). 최후의 명령어는 위치 미확인이라 별도 곱으로 둔다.
 const CALC_ATK_GROUP = { "최후의 명령어": "atkX" };
 const CALC_DEF = {
-  char: "", card: "", attr: "", cost: "", bind: false, basic: false, exhaust: false, weak: false, type: "card", dotKind: "rift", dotStack: 0,
+  char: "", card: "", attr: "", cost: "", bind: false, basic: false, exhaust: false, weak: false, type: "card", dotKind: "rift", dotStack: 0, fuKind: "card",
   base: 0, hits: 1, defBased: false, weakMul: 125, potKind: "unique", potLv: 0, potAdd: 0, egoLv: 0, bStack: 0, bPer: 0,
   cr: 0, cd: 150, amp: 1, el: 0, fu: 0, dot: 0, def: 0,
   // pAtk·pDmg: 파트너 패시브 자동값 · dmAtk: 데이터 변이 공격력% · oAtk: 그 밖의 A그룹 공격력%
@@ -1660,6 +1663,11 @@ const calcIsRift = () => calcIsDot() && calcSel.dotKind !== "manual";
 const calcRiftStack = () => Math.min(CALC_RIFT_MAX, Math.max(0, Math.floor(calcNum0(calcSel.dotStack))));
 const calcBasePct = () => calcIsRift() ? calcRiftStack() * CALC_RIFT_PER : calcNum0(calcSel.base);
 const calcHits = () => calcIsDot() ? 1 : Math.max(1, calcNum0(calcSel.hits) || 1);
+// 카드가 아닌 추가 공격: 잠재력·카드에 붙는 효과·약점을 지속 피해와 같이 뺀다 (formula.json 'fu')
+const calcIsFreeFu = () => calcSel.type === "fu" && calcSel.fuKind === "free";
+// 카드 배율·카드 효과가 없는 피해 (지속 피해, 카드가 아닌 추가 공격)
+const calcNoCard = () => calcIsDot() || calcIsFreeFu();
+const calcHitUnit = () => calcNoCard() ? "회" : "타";
 
 // 장비·조각 효과 문구에서 데미지 관련 수치와 조건을 뽑는다.
 // 조건은 카드 조건(속성·비용·결속·기본 카드·약점·공격 종류)으로 자동 판정하고, 나머지 문구는 '조건부'로 남긴다.
@@ -1797,7 +1805,7 @@ function calcIsStatComp(comp) {
 function calcCost() { const c = String(calcSel.cost).trim(); return c === "" || isNaN(Number(c)) ? null : Number(c); }
 // 'auto' 조건만 보면 되는지 판정: 카드 조건이 하나라도 안 맞으면 false
 function calcAutoOk(c) {
-  if (c.card && calcIsDot()) return false; // 카드에 붙는 효과는 지속 피해에 안 붙음
+  if (c.card && calcNoCard()) return false; // 카드에 붙는 효과는 지속 피해·카드가 아닌 추가 공격에 안 붙음
   if (c.attrs.length && !c.attrs.includes(calcSel.attr)) return false;
   if (c.types.length && !c.types.includes(calcSel.type)) return false;
   if (c.cost) {
@@ -1808,7 +1816,8 @@ function calcAutoOk(c) {
   if (c.bind && !calcSel.bind) return false;
   if (c.basic && !calcSel.basic) return false;
   if (c.exhaust && !calcSel.exhaust) return false;
-  if (c.weak && !calcWeakOn()) return false;
+  // '약점 공격 시' 효과는 약점 배율이 붙는 카드 공격에서만 (추가 공격에는 WEAK 표시·1.25배가 없음: syoyougame 실측)
+  if (c.weak && !calcWeakApplies()) return false;
   if (calcSitMiss(c)) return false;
   return true;
 }
@@ -1960,12 +1969,12 @@ function calcEgoBonus() {
     return s + (x ? Number(x[1]) : 0);
   }, 0), 0);
 }
-// 잠재력(카드 강화·가산)과 기본 피해량 가산은 카드 배율이라 지속 피해에는 넣지 않는다
-function calcPotMul() { return calcSel.potKind === "none" || calcIsDot() ? 0 : (calcNum0(calcSel.potLv) + calcEgoBonus()) * 2; }
-const calcPotAdd = () => calcIsDot() ? 0 : calcNum0(calcSel.potAdd);
+// 잠재력(카드 강화·가산)과 기본 피해량 가산은 카드 배율이라 지속 피해·카드가 아닌 추가 공격에는 넣지 않는다
+function calcPotMul() { return calcSel.potKind === "none" || calcNoCard() ? 0 : (calcNum0(calcSel.potLv) + calcEgoBonus()) * 2; }
+const calcPotAdd = () => calcNoCard() ? 0 : calcNum0(calcSel.potAdd);
 // 기본 피해량 가산 (검수처럼 스택 × 배율): 잠재력 곱 뒤, 피해량 증가 곱 앞에 더한다
-const calcBaseAdd = () => calcIsDot() ? 0 : calcNum0(calcSel.bStack) * calcNum0(calcSel.bPer);
-const calcDefBased = () => !calcIsDot() && !!calcSel.defBased;
+const calcBaseAdd = () => calcNoCard() ? 0 : calcNum0(calcSel.bStack) * calcNum0(calcSel.bPer);
+const calcDefBased = () => !calcNoCard() && !!calcSel.defBased;
 function calcMechPct(st) { return calcSel.type === "fu" ? st.fu : calcSel.type === "dot" ? st.dot : 0; }
 // 계수·공격력·예상 피해. score는 효율 비교용 (같은 조건에서의 기대 피해)
 function calcCoef(st) {
@@ -2091,7 +2100,7 @@ function calcPickCard(key) {
   calcSel.hits = c.hits;
   calcSel.defBased = c.defBased;
   calcSel.cost = /^\d+$/.test(String(c.v.cost)) ? String(c.v.cost) : "";
-  calcSel.type = "card";
+  if (calcSel.type !== "fu") calcSel.type = "card"; // '카드에서 나온 추가 공격'으로 카드를 고르면 추가 공격 그대로
   calcSel.potKind = "unique"; // 고유 카드·번뜩임 목록이므로
   calcSel.exhaust = (c.v.tags || []).some(t => /^소멸/.test(t)); // 카드 태그 '소멸 n'이면 소멸 카드
   const d = byId[calcSel.char];
@@ -2187,8 +2196,8 @@ function calcHelp(key, shown, rest, style) {
 function calcPinHtml() {
   if (!calcReady()) return "";
   const d = calcCoef(calcState()), hits = calcHits();
-  const cells = [[calcIsDot() ? (calcIsRift() ? "균열 계수" : "지속 피해 계수") : "핸드 표시", calcPctFmt(d.show)]];
-  if (d.hasAtk) cells.push([`예상 피해${hits > 1 ? ` (${hits}타)` : ""}`, calcDmgFmt(d.dmg.non * hits)], ["기대값", calcDmgFmt(d.dmg.exp * hits)]);
+  const cells = [[calcIsDot() ? (calcIsRift() ? "균열 계수" : "지속 피해 계수") : calcIsFreeFu() ? "추가 공격 계수" : "핸드 표시", calcPctFmt(d.show)]];
+  if (d.hasAtk) cells.push([`예상 피해${hits > 1 ? ` (${hits}${calcHitUnit()})` : ""}`, calcDmgFmt(d.dmg.non * hits)], ["기대값", calcDmgFmt(d.dmg.exp * hits)]);
   else cells.push(["대상 지정", calcPctFmt(d.non)], ["기대값", calcPctFmt(d.exp)]);
   return `<button type="button" class="cpinb" data-act="calcGoOut" aria-label="6번 결과로 이동">${cells.map(([l, v]) => `<span><small>${l}</small><b>${v}</b></span>`).join("")}<em>6번 결과 <i>${calcOutBelow ? "↓" : "↑"}</i></em></button>`;
 }
@@ -2373,8 +2382,8 @@ function calcBuffGains() {
   });
 }
 function calcOutHtml() {
-  const dot = calcIsDot(), rift = calcIsRift();
-  if (!calcReady()) return `<div class="empty">${dot ? (rift ? "1번에 균열 중첩을 넣으면 결과가 나옵니다." : "1번에 지속 피해 계수 %를 넣으면 결과가 나옵니다.") : "카드 피해 %를 넣거나 전투원의 카드를 고르면 결과가 나옵니다. 처음이라면 위의 '실측 예시'를 눌러 보세요."}</div>`;
+  const dot = calcIsDot(), rift = calcIsRift(), freeFu = calcIsFreeFu(), noCard = calcNoCard(), unit = calcHitUnit();
+  if (!calcReady()) return `<div class="empty">${dot ? (rift ? "1번에 균열 중첩을 넣으면 결과가 나옵니다." : "1번에 지속 피해 계수 %를 넣으면 결과가 나옵니다.") : freeFu ? "1번에 추가 공격 계수 %를 넣으면 결과가 나옵니다." : "카드 피해 %를 넣거나 전투원의 카드를 고르면 결과가 나옵니다. 처음이라면 위의 '실측 예시'를 눌러 보세요."}</div>`;
   const st = calcState(), d = calcCoef(st);
   const a = d.atk, potMul = calcPotMul(), potAdd = calcPotAdd();
   const weakOn = calcWeakOn(), weakAp = calcWeakApplies();
@@ -2393,6 +2402,9 @@ function calcOutHtml() {
     const n = calcRiftStack(), over = calcNum0(calcSel.dotStack) > CALC_RIFT_MAX;
     steps.push(li(rift ? `5. 균열 ${n}중첩 × ${CALC_RIFT_PER}%${over ? ` <small>최대 ${CALC_RIFT_MAX}중첩</small>` : ""} <small>발동 1회</small>` : "5. 지속 피해 계수 <small>발동 1회</small>", `${calcNumFmt(d.base)}%`));
     steps.push(li("6. 잠재력·기본 피해량 가산 <small>카드 배율이라 지속 피해에는 안 붙음</small>", `${calcNumFmt(d.base)}% <small>기본 배율</small>`));
+  } else if (freeFu) {
+    steps.push(li("5. 추가 공격 계수 <small>카드가 아닌 추가 공격</small>", `${calcNumFmt(d.base)}%${hits > 1 ? ` × ${hits}회` : ""}`));
+    steps.push(li("6. 잠재력·기본 피해량 가산 <small>카드 배율이라 카드가 아닌 추가 공격에는 안 붙음</small>", `${calcNumFmt(d.base)}% <small>기본 배율</small>`));
   } else {
     steps.push(li("5. 카드 피해", `${calcNumFmt(calcNum0(calcSel.base))}%${hits > 1 ? ` × ${hits}타` : ""}`));
     const egoB = calcSel.potKind === "none" ? 0 : calcEgoBonus();
@@ -2402,7 +2414,7 @@ function calcOutHtml() {
     if (bAdd) steps.push(li(`6-1. + 기본 피해량 가산 ${calcNumFmt(calcNum0(calcSel.bStack))} × ${calcNumFmt(calcNum0(calcSel.bPer))}%p = ${calcNumFmt(bAdd)}%p <small>잠재력 곱 뒤</small>`, `${calcNumFmt(d.base)}% <small>카드 기본 배율</small>`));
   }
   steps.push(li(`7. × (1 + 피해량 n% 증가 합 ${pctx(st.M)})`, `${calcNumFmt(d.mulPart)}%`));
-  steps.push(dot
+  steps.push(noCard
     ? li(`8. + 피해량 +n% 합 ${pctx(st.A)}${d.fin !== 1 ? ` · × 최종 ${calcNumFmt(d.fin)}` : ""}`, `${calcNumFmt(d.hand)}%${d.fin !== 1 ? ` <small>최종 곱 ${calcPctFmt(d.show)}</small>` : ""}`)
     : li(`8. + 피해량 +n% 합 ${pctx(st.A)}${d.fin !== 1 ? ` · 핸드 표시는 × 최종 ${calcNumFmt(d.fin)}` : ""}`, `${calcNumFmt(d.hand)}% <small>핸드 표시 ${calcPctFmt(d.show)}</small>`));
   const tgt = [];
@@ -2420,17 +2432,17 @@ function calcOutHtml() {
   steps.push(li(`11. × 치명 배율 (치명피해 ${calcNumFmt(st.cd)}%, 치명확률 ${calcNumFmt(d.cr * 100)}%)`, `×${calcNumFmt(d.C)} · 기대 ×${calcNumFmt(1 + d.cr * (d.C - 1))}`));
   if (d.hasAtk) {
     const basis = calcDefBased() ? `(공격력 × 0.3 + 방어력 ${calcNumFmt(calcNum0(calcSel.def))} × 2.1)` : "최종 공격력";
-    steps.push(li(`12. 계수 × ${basis} × 0.35 × 적 방어 계수 ${Number(calcNum0(calcSel.defMul).toFixed(3))} <small>추정</small>`, `${calcDmgFmt(d.dmg.non)} · 치명 ${calcDmgFmt(d.dmg.crit)}${hits > 1 ? " (1타)" : ""}`, "tot"));
+    steps.push(li(`12. 계수 × ${basis} × 0.35 × 적 방어 계수 ${Number(calcNum0(calcSel.defMul).toFixed(3))} <small>추정</small>`, `${calcDmgFmt(d.dmg.non)} · 치명 ${calcDmgFmt(d.dmg.crit)}${hits > 1 ? ` (1${unit})` : ""}`, "tot"));
   }
-  const weakNote = weakOn && !weakAp ? `<p class="note" style="margin:8px 0 0">약점 공격을 켰지만 공격 종류가 '${esc((CALC_TYPES.find(t => t[0] === calcSel.type) || [, ""])[1])}'라 약점 배율을 빼고 계산했습니다 (Prydwen: 직접 사용한 카드 공격에만 적용, 실측 미확인).</p>` : "";
+  const weakNote = weakOn && !weakAp ? `<p class="note" style="margin:8px 0 0">약점 공격을 켰지만 공격 종류가 '${esc((CALC_TYPES.find(t => t[0] === calcSel.type) || [, ""])[1])}'라 약점 배율과 '약점 공격 시' 효과를 빼고 계산했습니다 (${calcSel.type === "fu" ? "추가 공격에는 WEAK 표시와 1.25배가 붙지 않음: 일본 실측" : "Prydwen: 직접 사용한 카드 공격에만 적용, 실측 미확인"}).</p>` : "";
   const dmgRow = d.hasAtk ? `<div class="ctot c3" style="margin-top:10px">
-      <div style="--sc:var(--gold)"><div class="cl">예상 피해 (비치명${hits > 1 ? `, ${hits}타 합` : ""})</div><div class="cv">${calcDmgFmt(d.dmg.non * hits)}</div></div>
+      <div style="--sc:var(--gold)"><div class="cl">예상 피해 (비치명${hits > 1 ? `, ${hits}${unit} 합` : ""})</div><div class="cv">${calcDmgFmt(d.dmg.non * hits)}</div></div>
       <div style="--sc:#e08a5a"><div class="cl">예상 피해 (치명)</div><div class="cv">${calcDmgFmt(d.dmg.crit * hits)}</div></div>
       <div style="--sc:#5aa9e6"><div class="cl">예상 피해 (기대값)</div><div class="cv">${calcDmgFmt(d.dmg.exp * hits)}</div></div>
     </div>${calcHelp("dmg", "예상 피해는 0.35 상수와 적 방어 계수(기본 0.389 · 실측 3건 0.381~0.389)를 쓴 <b>추정치</b>입니다.", "실제 숫자와 맞춰 보려면 적 방어 계수를 조정하세요. 장비·버프 비교는 같은 조건의 비율이라 이 값과 상관없이 쓸 수 있습니다.", "margin:6px 0 0")}`
     : '<p class="note" style="margin:8px 0 0">공격력(스테이터스)을 넣으면 1~4단계(공격력)와 12단계(예상 피해)까지 계산합니다.</p>';
   return `<div class="ctot c4">
-      <div style="--sc:var(--muted)"><div class="cl">${dot ? `${rift ? "균열" : "지속 피해"} 계수 (버프 반영)` : "핸드 표시"}</div><div class="cv">${calcPctFmt(d.show)}</div></div>
+      <div style="--sc:var(--muted)"><div class="cl">${dot ? `${rift ? "균열" : "지속 피해"} 계수 (버프 반영)` : freeFu ? "추가 공격 계수 (버프 반영)" : "핸드 표시"}</div><div class="cv">${calcPctFmt(d.show)}</div></div>
       <div style="--sc:var(--gold)"><div class="cl">대상 지정 (비치명)</div><div class="cv">${calcPctFmt(d.non)}</div></div>
       <div style="--sc:#e08a5a"><div class="cl">치명 (×${calcNumFmt(d.C)})</div><div class="cv">${calcPctFmt(d.crit)}</div></div>
       <div style="--sc:#5aa9e6"><div class="cl">기대값 (치명확률 ${calcNumFmt(d.cr * 100)}%)</div><div class="cv">${calcPctFmt(d.exp)}</div></div>
@@ -2476,8 +2488,8 @@ const calcOrderHit = e => !calcItemComps(e).some(c => calcOrderMiss(c.c));
 function calcSitNote(e) {
   if (!e) return "";
   const cs = calcItemComps(e), out = [];
-  // 지속 피해 모드: 카드에 붙는 효과는 빠진다 (카드 순서 조건도 카드 효과라 따로 표시하지 않음)
-  if (calcIsDot() && cs.some(c => c.c.card)) out.push([0, "카드에 붙는 효과는 지속 피해 계산에서 뺐습니다."]);
+  // 지속 피해·카드가 아닌 추가 공격: 카드에 붙는 효과는 빠진다 (카드 순서 조건도 카드 효과라 따로 표시하지 않음)
+  if (calcNoCard() && cs.some(c => c.c.card)) out.push([0, `카드에 붙는 효과는 ${calcIsDot() ? "지속 피해" : "추가 공격"} 계산에서 뺐습니다.`]);
   else if (calcSel.order && cs.some(c => c.c.order)) out.push(calcOrderHit(e) ? [1, `카드 순서(${calcOrderLabel()})에 맞아 순서 조건 효과를 조건 없이 넣었습니다.`] : [0, `카드 순서(${calcOrderLabel()})가 안 맞아 순서 조건 효과는 빠집니다.`]);
   if (cs.some(c => c.c.idle)) out.push(calcSel.idle === "1" ? [1, "직전 턴에 카드로 공격하지 않았다고 보고(1번 설정) 조건 없이 넣었습니다."] : [0, "매 턴 카드로 공격한다고 보고(1번 '직전 턴 카드 공격') 이 효과는 빠집니다."]);
   return out.map(([ok, t]) => `<span class="ceff" style="color:${ok ? "var(--gold)" : "#e08a5a"}">${esc(t)}</span>`).join("");
@@ -2495,7 +2507,7 @@ function calcEquipHtml() {
   const rows = top.map(x => calcComboRow(r.list.indexOf(x) + 1, x.items.map((e, i) => ({ k: CALC_SLOTS[i], name: e.name, sub: e.rarity, rec: calcRecGear(CALC_SLOTS[i]).includes(e.name), cond: calcHasCond(calcMyComps(e, r.allyNames)), title: e.effect, same: !x.cur && calcSel.cur[CALC_SLOTS[i]] === e.name })), x.g, { cur: x.cur })).join("");
   const ms = Math.round(performance.now() - t0);
   const oe = calcOrderEquips();
-  const ord = calcSel.order && !calcIsDot() && oe.length ? ` · 카드 순서: ${esc(calcOrderLabel())} 기준 (빠짐: ${oe.filter(e => !calcOrderHit(e)).map(e => esc(e.name)).join(" · ") || "없음"} / 조건 없이 적용: ${oe.filter(calcOrderHit).map(e => esc(e.name)).join(" · ") || "없음"})` : "";
+  const ord = calcSel.order && !calcNoCard() && oe.length ? ` · 카드 순서: ${esc(calcOrderLabel())} 기준 (빠짐: ${oe.filter(e => !calcOrderHit(e)).map(e => esc(e.name)).join(" · ") || "없음"} / 조건 없이 적용: ${oe.filter(calcOrderHit).map(e => esc(e.name)).join(" · ") || "없음"})` : "";
   const ie = equips.filter(e => calcItemComps(e).some(c => c.c.idle));
   const idleTxt = ie.length ? ` · 직전 턴 카드 공격: ${calcSel.idle === "1" ? "안 함" : "함"} 기준 (${ie.map(e => esc(e.name)).join(" · ")} ${calcSel.idle === "1" ? "조건 없이 적용" : "빠짐"})` : "";
   const cov = r.covered.length ? ` · 아군이 이미 껴서 효과가 중첩되지 않는 장비는 후보에서 뺌 (${r.covered.map(esc).join(" · ")})` : "";
@@ -2604,7 +2616,7 @@ function calcFormulaHtml() {
     <p class="note" style="margin:6px 0 0">출처: ${usedSrc.map(src).join(" · ")}. 비공식 실측과 공략 사이트 자료를 모은 것이며, 조건부 효과(*)는 조건이 계속 충족된다고 보고 중첩 효과는 최대치로 계산합니다.</p>`;
 }
 function calcRefreshFormula() { const el = document.getElementById("calcFormula"); if (el) el.innerHTML = calcFormulaHtml(); }
-const calcRankWait = () => `<div class="empty">${calcIsRift() ? "균열 중첩과" : calcIsDot() ? "지속 피해 계수 %와" : "카드 피해 %와"} 공격력(스테이터스)을 넣으면 순위가 나옵니다.</div>`;
+const calcRankWait = () => `<div class="empty">${calcIsRift() ? "균열 중첩과" : calcIsDot() ? "지속 피해 계수 %와" : calcIsFreeFu() ? "추가 공격 계수 %와" : "카드 피해 %와"} 공격력(스테이터스)을 넣으면 순위가 나옵니다.</div>`;
 function calcRefresh() {
   const parts = {
     calcFragSum: calcFragSumHtml, calcAtkAuto: calcAtkAutoHtml,
@@ -2640,10 +2652,16 @@ function viewCalc() {
   const cardSel = d ? `<label class="cf cwide"><span>카드 <em>${kitState === "ok" ? "고유 카드 · 번뜩임" : "불러오는 중…"}</em></span><select class="csel" data-calcsel="card"><option value="">직접 입력</option>${variants.map(v => `<option value="${esc(v.key)}"${calcSel.card === v.key ? " selected" : ""}>${esc(v.label)}${v.dmg ? ` — ${v.defBased ? "방어 기반 " : ""}${v.dmg}%${v.hits > 1 ? ` × ${v.hits}` : ""}` : ""}</option>`).join("")}</select></label>` : "";
   // 고른 카드의 효과 문구는 칸 밖(카드 줄 아래)에 둔다: 칸 안에 두면 같은 줄 입력칸 높이가 어긋난다
   const cardFx = card ? `<p class="ceff ccardfx">${esc((card.v.effect || []).join("\n"))}${card.v.src ? `\n(${esc(card.v.src)})` : ""}</p>` : "";
-  // 1번: 지속 피해면 카드 칸(카드·타격 수·비용·카드 조건·잠재력·사용 순서)을 숨기고 균열 중첩(또는 계수 %)을 받는다
-  const dot = calcIsDot(), rift = calcIsRift();
+  // 1번: 지속 피해·카드가 아닌 추가 공격이면 카드 칸(카드·비용·카드 조건·잠재력·사용 순서)을 숨긴다
+  // 지속 피해는 균열 중첩(또는 계수 %), 카드가 아닌 추가 공격은 계수 %와 횟수를 받는다
+  const dot = calcIsDot(), rift = calcIsRift(), fu = calcSel.type === "fu", freeFu = calcIsFreeFu();
   const charSel = `<label class="cf"><span>전투원</span><select class="csel" data-calcsel="char"><option value="">직접 입력</option>${byName.map(c => `<option value="${esc(c.id)}"${calcSel.char === c.id ? " selected" : ""}>${esc(c.name_ko)} (${esc(c.attr)})</option>`).join("")}</select></label>`;
-  const attrSel = `<label class="cf"><span>${dot ? "피해 속성 <em>전투원 속성</em>" : "카드 속성"}</span><select class="csel" data-calcsel="attr"><option value="">없음</option>${ATTRS.map(a => `<option${calcSel.attr === a ? " selected" : ""}>${a}</option>`).join("")}</select></label>`;
+  const attrSel = `<label class="cf"><span>${dot || freeFu ? "피해 속성 <em>전투원 속성</em>" : "카드 속성"}</span><select class="csel" data-calcsel="attr"><option value="">없음</option>${ATTRS.map(a => `<option${calcSel.attr === a ? " selected" : ""}>${a}</option>`).join("")}</select></label>`;
+  const fuSel = fu ? calcSelect("fuKind", "추가 공격 종류", CALC_FU_KINDS, "", "cwide") : "";
+  const idleOnly = `<h4 class="csub" style="margin-top:16px">전투 상황 <span class="note" style="font-weight:400">직전 턴 공격이 조건인 장비를 판정</span></h4>
+      <div class="cgrid cend">
+        ${calcSelect("idle", "직전 턴 카드 공격", CALC_IDLES, "흐릿한 가시", "cwide")}
+      </div>`;
   // 파트너 고르기: 고른 전투원의 추천 파트너를 먼저
   const recP = d ? (d.partners || []).map(n => partnerByName[n]).filter(Boolean) : [];
   const otherP = partners.filter(p => !recP.includes(p)).sort((a, b) => a.name.localeCompare(b.name, "ko"));
@@ -2661,7 +2679,7 @@ function viewCalc() {
       <button class="btn" data-act="calcReset">초기화</button></div>
     ${calcPresetHtml()}
 
-    <div class="sec"><h3>1. ${dot ? "지속 피해" : "카드"} <span class="note" style="font-family:inherit;font-weight:400">장비 효과의 조건도 여기로 자동 판정</span></h3><div class="cbox">${dot ? `
+    <div class="sec"><h3>1. ${dot ? "지속 피해" : freeFu ? "추가 공격" : "카드"} <span class="note" style="font-family:inherit;font-weight:400">장비 효과의 조건도 여기로 자동 판정</span></h3><div class="cbox">${dot ? `
       <div class="cgrid cend">
         ${charSel}
         ${calcSelect("dotKind", "지속 피해", CALC_DOT_KINDS)}
@@ -2670,10 +2688,17 @@ function viewCalc() {
         ${calcSelect("type", "공격 종류", CALC_TYPES)}
       </div>
       ${calcHelp("dot", "지속 피해 1회 발동을 계산합니다 (균열 = 중첩 × 40%). 치명·사기·피해량 증가·받는 피해(취약)·속성·지속 피해량은 넣고, 잠재력·카드에 붙는 효과(공격 카드 피해량, 비용·결속 조건 등)·약점 배율은 뺍니다.", "균열을 직접 잰 실측은 아직 없어 일본 위키(아라벨라 설명·고통 실측)와 Game8 설명에 맞춘 추정식입니다. 균열 확장 대상에게 아라벨라가 건 균열(피해량 20% 증가)이나 해체 분석(중첩당 5%)은 3번 버프 줄에 '피해량 n% 증가'로 넣으세요. 균열 2회 발동은 두 번째가 절반 중첩으로 터진다고 보고(추정) 중첩을 바꿔 한 번 더 계산하세요. 고통은 고정 지속 피해라 사기·피해량 증가·취약·약점이 붙지 않아 이 계산과 맞지 않습니다.", "margin:8px 0 0")}
-      <h4 class="csub" style="margin-top:16px">전투 상황 <span class="note" style="font-weight:400">직전 턴 공격이 조건인 장비를 판정</span></h4>
+      ${idleOnly}` : freeFu ? `
       <div class="cgrid cend">
-        ${calcSelect("idle", "직전 턴 카드 공격", CALC_IDLES, "흐릿한 가시", "cwide")}
-      </div>` : `
+        ${charSel}
+        ${calcNum("base", "추가 공격 계수", "% · 1회 기준")}
+        ${calcNum("hits", "횟수", "", "1")}
+        ${attrSel}
+        ${calcSelect("type", "공격 종류", CALC_TYPES)}
+        ${fuSel}
+      </div>
+      ${calcHelp("fu", "카드가 아닌 추가 공격(표식·협공·데시벨 같은 고유 효과)을 계산합니다. 치명·사기·피해량 증가·속성·추가 피해량은 넣고, 잠재력·카드에 붙는 효과(공격 카드 피해량, 비용·결속 조건 등)·약점 배율은 뺍니다.", "표식은 추가 공격 100%, 협공은 그 전투원 공격력의 100%입니다 (협공은 문구가 없지만 추가 피해량이 붙는다는 디시 실측). 추가 피해량·속성 피해량이 붙고 약점 배율이 안 붙는 것은 실측으로 확인됐고, 사기·피해량 증가는 공략 사이트 설명, 잠재력·카드 효과를 빼는 것은 추정입니다. 취약(받는 피해 ×1.5)이 추가 공격에 붙는지는 확인되지 않았고, 3번에 취약을 넣으면 붙는다고 보고 계산합니다. 발리스타처럼 카드에서 나오는 추가 공격은 '추가 공격 종류'를 '카드에서 나온 추가 공격'으로 고르세요.", "margin:8px 0 0")}
+      ${idleOnly}` : `
       <div class="cgrid cend">
         ${charSel}
         ${cardSel}
@@ -2682,8 +2707,10 @@ function viewCalc() {
         ${attrSel}
         <label class="cf"><span>카드 비용</span><input type="text" inputmode="numeric" data-calc="cost" value="${esc(calcSel.cost)}" placeholder="X면 비움"></label>
         ${calcSelect("type", "공격 종류", CALC_TYPES)}
+        ${fuSel}
       </div>
       ${cardFx}
+      ${fu ? calcHelp("fu", "카드에서 나온 추가 공격(발리스타 등)으로 계산합니다. 잠재력·카드 효과는 카드처럼 넣고, 약점 배율과 '약점 공격 시' 효과는 빼고 추가 피해량을 곱합니다.", "베로니카 발리스타는 고유 카드 강화에 따라 피해가 오른다는 실측이 있습니다(루리웹). '공격 카드 피해량' 장비가 추가 공격에 붙는지는 확인되지 않았습니다. 표식·협공·데시벨처럼 카드가 아닌 추가 공격은 '카드가 아닌 추가 공격'을 고르세요.", "margin:8px 0 0") : ""}
       <div class="cchks">${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}${calcChk("exhaust", "소멸 카드")}${calcChk("defBased", "방어 기반 피해")}</div>
       <div class="cgrid cend" style="margin-top:10px">
         ${calcSelect("potKind", "잠재력 카드 강화", CALC_POT_KINDS)}
