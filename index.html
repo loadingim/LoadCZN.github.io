@@ -1977,22 +1977,24 @@ function calcPickPartner() {
   calcSel.pDmg = v.dmg;
 }
 
-// 검증 장면을 그대로 불러온다 (치명·공격력은 글에 없어 비워 둠)
+// 실측 예시: 게임 화면 숫자와 맞춰 본 로스바이세 장면을 계산기 입력 그대로 불러온다 (formula.json user-ross 사례)
+// 명멸검(강화) 600% · 고유 카드 강화 10레벨 + 에고 발현 5단계 +3 = 13레벨(×1.26) · 검수 20장 × 80%p
+const CALC_ROSS_CARD = { char: "rossweisse", card: "0:1", attr: "정의", base: 600, hits: 1, cost: "0", potKind: "unique", potLv: 10, egoLv: 6, bStack: 20, bPer: 80 };
+const CALC_ROSS_BUFFS = [["피해량 증가 합 (실측 화면 값)", "mul", 200], ["키르켄의 가호 · 명멸검 최종", "fin", 20], ["깨어나는 기억 · 최종", "fin", 20], ["순환을 겨누는 검끝 · 명멸검 최종", "fin", 25]];
 const CALC_EXAMPLES = {
-  1: { label: "실측 예시 1 · 취약", base: 480, weak: false, buffs: [
-    ["에너지 충전", "mul", 50], ["아스트리아", "mul", 20], ["아델하이트 프리즘", "mul", 20], ["취약가면", "mul", 35],
-    ["아스트리아", "add", 30], ["6스택", "add", 600], ["행포증 페르소나", "add", 150],
-    ["이야기 속 진실", "eadd", 100], ["취약", "emul", 50]] },
-  2: { label: "실측 예시 2 · 취약 + 약점", base: 480, weak: true, buffs: [
-    ["에너지 충전", "mul", 50], ["아스트리아", "mul", 20], ["프리즘 4스택", "mul", 20], ["취약가면", "mul", 35], ["분쇄", "mul", 20],
-    ["아스트리아", "add", 30], ["3스택", "add", 300],
-    ["이야기 속 진실", "eadd", 100], ["취약", "emul", 50]] },
-  3: { label: "실측 예시 3 · 180% → 227%", base: 180, weak: false, buffs: [["흑요석 검", "mul", 12], ["비정형 큐브", "add", 25]] }
+  1: { label: "실측 · 명멸검 핸드 12,723%", set: CALC_ROSS_CARD, buffs: CALC_ROSS_BUFFS },
+  2: { label: "실측 · 불굴 5중첩 + 약점 15,678%", set: { ...CALC_ROSS_CARD, weak: true }, buffs: [...CALC_ROSS_BUFFS, ["불굴 5중첩", "eadd", -100]] },
+  3: { label: "실측 · 불굴 3중첩 + 취약 + 약점 23,652%", set: { ...CALC_ROSS_CARD, weak: true }, buffs: [...CALC_ROSS_BUFFS, ["불굴 3중첩", "eadd", -60], ["취약", "emul", 50]] },
+  // 계수 277.15% · 스테이터스 공격력 1,079 · 속성 8.4% → 예상 피해 441 (적 방어 계수 0.389)
+  4: { label: "실측 · 예상 피해 441", set: { char: "rossweisse", attr: "정의", base: 277.15, potKind: "none", partner: "시그", pLv: 1, cur: { "무기": "혼돈의 지적", "방어구": "", "장신구": "" }, dmAtk: 14, atk: 1079, el: 8.4, cd: 167 }, ally: ["혼세의 촉수"], buffs: [] }
 };
 function calcExample(n) {
   const ex = CALC_EXAMPLES[n];
   if (!ex) return;
-  Object.assign(calcSel, calcBlank(), { base: ex.base, potKind: "none", weak: ex.weak, weakMul: 125, buffs: ex.buffs.map(([nm, k, v]) => calcNewBuff(nm, k, v)) });
+  Object.assign(calcSel, calcBlank(), JSON.parse(JSON.stringify(ex.set)), { weakMul: 125 });
+  calcSel.buffs = ex.buffs.length ? ex.buffs.map(([nm, k, v]) => calcNewBuff(nm, k, v)) : [calcNewBuff()];
+  calcSel.ally = (ex.ally || []).map(name => ({ id: ++calcBuffSeq, name }));
+  if (calcSel.partner) calcPickPartner();
 }
 function calcResetAll() { Object.assign(calcSel, calcBlank()); }
 
