@@ -1606,7 +1606,9 @@ function calcParse(text) {
       // '[진화하는 전장]: 치명피해 +10%'처럼 다른 줄의 조건으로 얻는 효과는 조건부로 본다 (전장의 진화)
       const tag = raw.match(/^\s*\[([^\]]+)\]\s*:/);
       if (tag && !c.manual) c.manual = `[${tag[1]}] 획득 시`;
-      out.push({ stat, v, c, notes, unclear, ally });
+      // 같은 장비를 여럿이 껴도 한 번만 적용되는 효과: '중첩 불가', '최대 n(회) 중첩'
+      const once = /중첩\s*불가/.test(post) || /최대\s*\d+\s*회?\s*중첩/.test(post);
+      out.push({ stat, v, c, notes, unclear, ally, once });
     });
   });
   return (calcCompCache[text] = out);
@@ -1624,6 +1626,24 @@ const calcItemComps = e => {
 const calcAllyCompCache = {};
 const calcAllyComps = e => calcAllyCompCache[e.name] || (calcAllyCompCache[e.name] = calcItemComps(e).filter(c => c.ally));
 const calcAllyEquips = () => equips.filter(e => calcAllyComps(e).length).sort((a, b) => CALC_SLOTS.indexOf(a.slot) - CALC_SLOTS.indexOf(b.slot) || a.name.localeCompare(b.name, "ko"));
+// 같은 장비를 아군과 내가(또는 아군 둘이) 함께 껴도 한 번만 적용되는 아군 효과 ('중첩 불가'·'최대 n중첩')
+// 최후의 명령어 '최대 6중첩'은 둘이 껴도 6중첩을 같이 쓴다. 중첩 문구가 없는 '아군' 효과는 낀 만큼 쌓이고,
+// '아군'이 붙지 않은 효과는 장착자 본인에게만 적용된다 (사용자 확인 2026-10-31)
+const calcOnceComp = c => c.ally && c.once;
+const calcAllyNames = () => new Set(calcSel.ally.map(a => a.name).filter(n => eqByName[n]));
+// 아군 장비 효과 묶음: 같은 장비를 또 고르면 한 번만 적용되는 효과는 뺀다
+function calcAllyItems() {
+  const seen = new Set();
+  return calcSel.ally.map(a => eqByName[a.name]).filter(Boolean).map(e => {
+    const dup = seen.has(e.name);
+    seen.add(e.name);
+    return { e, comps: dup ? calcAllyComps(e).filter(c => !c.once) : calcAllyComps(e) };
+  });
+}
+// 내 장비 효과: 아군이 같은 장비를 껴서 이미 들어간 '한 번만' 효과는 뺀다
+const calcMyComps = (e, allyNames) => (allyNames || calcAllyNames()).has(e.name) ? calcItemComps(e).filter(c => !calcOnceComp(c)) : calcItemComps(e);
+// 아군이 이미 껴서 내가 껴도 더해지는 효과가 없는 장비 (무기 기본 공격력 말고는 남는 효과가 없음) → 8번 추천에서 뺀다
+const calcAllyCovered = (e, allyNames) => (allyNames || calcAllyNames()).has(e.name) && calcItemComps(e).some(calcOnceComp) && !calcMyComps(e, allyNames).some(c => c.stat !== "atkFlat");
 // 기억의 조각(세트·주옵션·부옵션)의 공격력%는 B그룹
 const calcFragComps = text => calcParse(text).map(c => c.stat === "atk" ? { ...c, stat: "atkB" } : c);
 // 스테이터스 화면에 이미 들어 있는 상시 능력치인지 (조건 없는 공격력·치명·속성·추가 피해량)
@@ -1748,7 +1768,9 @@ function calcState(skipId) {
     s = calcApply(s, comps, 1, calcSel.cond, "battle");
   });
   // 아군 장비와 내 장비: 공격력 계열 상시 능력치는 스테이터스 공격력을 나누는 데 쓰고(이미 화면 값에 포함), 전투 효과는 계산에 더한다.
-  const items = [...calcSel.ally.map(a => eqByName[a.name]).filter(Boolean).map(calcAllyComps), ...CALC_SLOTS.map(slot => eqByName[calcSel.cur[slot]]).filter(Boolean).map(calcItemComps)];
+  // 같은 장비가 겹치면 '중첩 불가'·'최대 n중첩' 아군 효과는 한 번만 (calcAllyItems·calcMyComps)
+  const allyNames = calcAllyNames();
+  const items = [...calcAllyItems().map(x => x.comps), ...CALC_SLOTS.map(slot => eqByName[calcSel.cur[slot]]).filter(Boolean).map(e => calcMyComps(e, allyNames))];
   items.forEach(comps => {
     s = calcApply(s, comps.filter(c => /^atk/.test(c.stat)), 1, true, "stat");
     s = calcApply(s, comps, 1, calcSel.cond, "battle");
@@ -1820,37 +1842,45 @@ const calcRecGear = slot => { const d = byId[calcSel.char]; return d && d.gear ?
 const CALC_COMBO_PER_SLOT = 8;
 function calcEquipCombos() {
   const wOver = calcWOver() !== null;
+  const allyNames = calcAllyNames();
+  const my = e => calcMyComps(e, allyNames); // 아군과 겹치는 '한 번만' 효과는 뺀 내 장비 효과 (calcState와 같은 기준)
   const modes = [false, true].map(m => calcWithCond(m, () => {
     const st = calcState();
     let empty = st;
-    CALC_SLOTS.forEach(slot => { const e = eqByName[calcSel.cur[slot]]; if (e) empty = calcPutItem(empty, calcItemComps(e), -1, m); });
+    CALC_SLOTS.forEach(slot => { const e = eqByName[calcSel.cur[slot]]; if (e) empty = calcPutItem(empty, my(e), -1, m); });
     const hasCur = CALC_SLOTS.some(slot => eqByName[calcSel.cur[slot]]);
     return { m, st, empty, ref: calcCoef(hasCur ? st : empty).score };
   }));
   const put = (mode, items) => {
     let s = mode.empty;
-    items.forEach(e => { s = calcPutItem(s, calcItemComps(e), 1, mode.m); });
+    items.forEach(e => { s = calcPutItem(s, my(e), 1, mode.m); });
     if (wOver) s = { ...s, aC: mode.st.aC }; // 무기 공격력을 직접 넣었다면 그대로 둔다
     return calcWithCond(mode.m, () => calcCoef(s).score);
   };
+  // 아군이 이미 껴서 내가 껴도 더해지는 효과가 없는 장비('중첩 불가' 등)는 후보에서 뺀다. 지금 낀 장비면 '현재' 줄 비교용으로만 남긴다
+  const covered = new Set([...allyNames].filter(n => calcAllyCovered(eqByName[n], allyNames)));
   // 칸별 후보: 혼자 꼈을 때 기본·조건 충족 값 상위 + 추천 장비 + 현재 장비
   const cand = CALC_SLOTS.map(slot => {
     const rec = calcRecGear(slot);
-    const all = equips.filter(e => e.slot === slot && (slot === "무기" || calcItemComps(e).length))
+    const all = equips.filter(e => e.slot === slot && (slot === "무기" || calcItemComps(e).length) && !covered.has(e.name))
       .map(e => ({ e, g: modes.map(md => put(md, [e]) / md.ref - 1) }));
     const pick = new Set();
     [0, 1].forEach(i => all.slice().sort((a, b) => b.g[i] - a.g[i]).slice(0, CALC_COMBO_PER_SLOT).forEach(x => pick.add(x.e)));
     all.forEach(x => { if (rec.includes(x.e.name) || x.e.name === calcSel.cur[slot]) pick.add(x.e); });
+    const curE = eqByName[calcSel.cur[slot]];
+    if (curE && covered.has(curE.name)) pick.add(curE);
     return [...pick];
   });
   const out = [];
   cand[0].forEach(w => cand[1].forEach(a => cand[2].forEach(x => {
     const items = [w, a, x];
     if (items.filter(e => e.rarity === "신화").length > 1) return;
-    out.push({ items, g: modes.map(md => put(md, items) / md.ref - 1), cur: CALC_SLOTS.every((slot, i) => calcSel.cur[slot] === items[i].name) });
+    const cur = CALC_SLOTS.every((slot, i) => calcSel.cur[slot] === items[i].name);
+    if (!cur && items.some(e => covered.has(e.name))) return;
+    out.push({ items, g: modes.map(md => put(md, items) / md.ref - 1), cur });
   })));
   const k = calcSel.cond ? 1 : 0;
-  return { list: out.sort((a, b) => b.g[k] - a.g[k] || b.g[1 - k] - a.g[1 - k]), hasCur: CALC_SLOTS.some(slot => eqByName[calcSel.cur[slot]]), size: cand.map(c => c.length) };
+  return { list: out.sort((a, b) => b.g[k] - a.g[k] || b.g[1 - k] - a.g[1 - k]), hasCur: CALC_SLOTS.some(slot => eqByName[calcSel.cur[slot]]), size: cand.map(c => c.length), covered: [...covered], allyNames };
 }
 // 단일 효과(조각 주옵션·부옵션·세트·가상 버프)의 기대 피해 변화
 function calcGain(comps, withCond) {
@@ -2035,16 +2065,19 @@ function calcCompWhere(c) {
 // 2번 아군 장비 줄
 function calcAllyHtml() {
   const list = calcAllyEquips();
+  const seen = new Set();
   const row = a => {
     const e = eqByName[a.name];
-    const where = e ? calcAllyComps(e).map(calcCompWhere).join("\n") : "";
+    const again = !!e && seen.has(e.name); // 위 줄에 같은 장비가 있으면 '한 번만' 효과는 빠진다
+    if (e) seen.add(e.name);
+    const where = e ? calcAllyComps(e).map(c => calcCompWhere(c) + (again && c.once ? " · 같은 장비가 위에 있어 빠짐 (중첩 안 됨)" : "")).join("\n") : "";
     return `<div class="cally"><label class="cf"><select class="csel" data-ally="${a.id}" aria-label="아군 장비"><option value="">아군 장비 선택</option>${list.map(x => `<option value="${esc(x.name)}"${a.name === x.name ? " selected" : ""}>${esc(x.name)} (${esc(x.slot)} · ${esc(x.rarity)})</option>`).join("")}</select>${e ? `<span class="ceff">${esc(e.effect)}<span class="cwhere">${esc(where)}</span></span>` : ""}</label><button class="cbx" data-act="calcDelAlly" data-v="${a.id}" aria-label="이 아군 장비 삭제">×</button></div>`;
   };
   const named = calcSel.ally.map(a => a.name).filter(Boolean);
   const dup = named.length !== new Set(named).size;
   return `${calcSel.ally.length ? `<div class="callies">${calcSel.ally.map(row).join("")}</div>` : ""}
     <div class="cbar" style="margin:8px 0 0"><button class="btn" data-act="calcAddAlly">+ 아군 장비 추가</button></div>
-    <p class="note" style="margin:6px 0 0">아군이 낀 장비 중 효과를 받는 대상이 '아군'인 장비만 고를 수 있습니다 (${list.length}개). 상시 공격력%(혼세의 촉수 등)는 스테이터스 공격력에 이미 들어 있어 A그룹으로 나누는 데 쓰고, 조건부 효과(*)는 '조건부 효과' 체크를 켜면 더합니다.${dup ? " 같은 장비를 여러 번 고르면 그만큼 더합니다 (게임에서 중첩되는지는 확인하지 못했습니다)." : ""}</p>`;
+    <p class="note" style="margin:6px 0 0">아군이 낀 장비 중 효과를 받는 대상이 '아군'인 장비만 고를 수 있습니다 (${list.length}개). 상시 공격력%(혼세의 촉수 등)는 스테이터스 공격력에 이미 들어 있어 A그룹으로 나누는 데 쓰고, 조건부 효과(*)는 '조건부 효과' 체크를 켜면 더합니다.${dup ? " 같은 장비를 여러 번 고르면 '중첩 불가'·'최대 n중첩' 효과는 한 번만 넣고(최후의 명령어는 6중첩을 같이 씀), 중첩 문구가 없는 아군 효과는 고른 만큼 쌓아 더합니다." : ""}</p>`;
 }
 // 직접 입력을 켜도 자동값을 보여 주려고 잠깐 끄고 계산한다
 function calcAutoState() { const o = calcSel.atkManual; calcSel.atkManual = false; try { return calcState(); } finally { calcSel.atkManual = o; } }
@@ -2054,8 +2087,9 @@ function calcAtkAutoHtml() {
   const A = [];
   const pt = partnerByName[calcSel.partner];
   if (calcNum0(calcSel.pAtk)) A.push([`${pt ? pt.name : "파트너"} ${calcSel.pLv}단계`, calcNum0(calcSel.pAtk)]);
-  CALC_SLOTS.forEach(slot => { const e = eqByName[calcSel.cur[slot]]; const v = e ? calcStatOf(calcItemComps(e), true).aA : 0; if (v) A.push([e.name, v]); });
-  calcSel.ally.forEach(a => { const e = eqByName[a.name]; const v = e ? calcStatOf(calcAllyComps(e), true).aA : 0; if (v) A.push([`아군 ${e.name}`, v]); });
+  const allyNames = calcAllyNames();
+  CALC_SLOTS.forEach(slot => { const e = eqByName[calcSel.cur[slot]]; const v = e ? calcStatOf(calcMyComps(e, allyNames), true).aA : 0; if (v) A.push([e.name, v]); });
+  calcAllyItems().forEach(({ e, comps }) => { const v = calcStatOf(comps, true).aA; if (v) A.push([`아군 ${e.name}`, v]); });
   if (calcNum0(calcSel.dmAtk)) A.push(["데이터 변이", calcNum0(calcSel.dmAtk)]);
   if (calcNum0(calcSel.oAtk)) A.push(["기타", calcNum0(calcSel.oAtk)]);
   const w = eqByName[calcSel.cur["무기"]];
@@ -2192,11 +2226,12 @@ function calcEquipHtml() {
   const top = r.list.slice(0, n);
   const cur = r.list.find(x => x.cur);
   if (cur && !top.includes(cur)) top.push(cur);
-  const rows = top.map(x => calcComboRow(r.list.indexOf(x) + 1, x.items.map((e, i) => ({ k: CALC_SLOTS[i], name: e.name, sub: e.rarity, rec: calcRecGear(CALC_SLOTS[i]).includes(e.name), cond: calcHasCond(calcItemComps(e)), title: e.effect })), x.g, { cur: x.cur })).join("");
+  const rows = top.map(x => calcComboRow(r.list.indexOf(x) + 1, x.items.map((e, i) => ({ k: CALC_SLOTS[i], name: e.name, sub: e.rarity, rec: calcRecGear(CALC_SLOTS[i]).includes(e.name), cond: calcHasCond(calcMyComps(e, r.allyNames)), title: e.effect })), x.g, { cur: x.cur })).join("");
   const ms = Math.round(performance.now() - t0);
+  const cov = r.covered.length ? ` · 아군이 이미 껴서 효과가 중첩되지 않는 장비는 후보에서 뺌 (${r.covered.map(esc).join(" · ")})` : "";
   return `<div class="crk ccombos">${calcComboHead("무기 · 방어구 · 장신구")}${rows || '<p class="note">후보 없음</p>'}
     ${r.list.length > 10 ? `<button class="btn cmore" data-act="calcMore" data-slot="eq">${calcSel.more.eq ? "접기" : "상위 30개 보기"}</button>` : ""}</div>
-    <p class="note" style="margin:6px 0 0">${r.hasCur ? "2번에서 고른 현재 장비 조합 대비" : "장비 없는 상태 대비"} 기대 피해 변화 · 칸마다 기본·조건 충족 상위 ${CALC_COMBO_PER_SLOT}개와 추천·현재 장비로 조합 ${r.list.length.toLocaleString("ko-KR")}개 계산 (무기 ${r.size[0]} × 방어구 ${r.size[1]} × 장신구 ${r.size[2]}, 신화 2개 이상 제외${ms > 50 ? `, ${ms}ms` : ""}) · 정렬: ${calcSel.cond ? "조건 충족" : "기본"} (2번 '조건부 효과' 체크로 바꿈)</p>`;
+    <p class="note" style="margin:6px 0 0">${r.hasCur ? "2번에서 고른 현재 장비 조합 대비" : "장비 없는 상태 대비"} 기대 피해 변화 · 칸마다 기본·조건 충족 상위 ${CALC_COMBO_PER_SLOT}개와 추천·현재 장비로 조합 ${r.list.length.toLocaleString("ko-KR")}개 계산 (무기 ${r.size[0]} × 방어구 ${r.size[1]} × 장신구 ${r.size[2]}, 신화 2개 이상 제외${ms > 50 ? `, ${ms}ms` : ""})${cov} · 정렬: ${calcSel.cond ? "조건 충족" : "기본"} (2번 '조건부 효과' 체크로 바꿈)</p>`;
 }
 // 기억의 조각 추천 표시: 전투원 데이터의 '베일에 싸인 광휘*4', '치명 피해*2'(분류) 같은 표기와 맞춰 본다
 const CALC_SET2_KIND = { "치명 피해": /치명피해/, "공격력": /^공격력/, "체력": /체력/, "방어력": /방어력/, "저주": /저주/, "기본 공격": /기본 카드/ };
@@ -2315,12 +2350,14 @@ function viewCalc() {
   if (kitState === "idle") loadKits();
   const byName = [...chars].sort((a, b) => a.name_ko.localeCompare(b.name_ko, "ko"));
   const d = byId[calcSel.char];
+  const allyNames = calcAllyNames();
   const curSel = slot => {
     const list = equips.filter(e => e.slot === slot).sort((a, b) => a.name.localeCompare(b.name, "ko"));
     const lock = calcMythicElsewhere(slot);
     const opt = e => { const sel = calcSel.cur[slot] === e.name, dis = lock && e.rarity === "신화" && !sel; return `<option value="${esc(e.name)}"${sel ? " selected" : ""}${dis ? " disabled" : ""}>${esc(e.name)} (${esc(e.rarity)}${dis ? " · 신화는 1개만" : ""})</option>`; };
     const e = eqByName[calcSel.cur[slot]];
-    const warn = lock && e && e.rarity === "신화" ? '<span class="ceff" style="color:#e08a5a">신화 장비는 1개만 낄 수 있습니다. 다른 칸의 신화를 빼 주세요.</span>' : "";
+    const warn = (lock && e && e.rarity === "신화" ? '<span class="ceff" style="color:#e08a5a">신화 장비는 1개만 낄 수 있습니다. 다른 칸의 신화를 빼 주세요.</span>' : "")
+      + (e && allyNames.has(e.name) && calcItemComps(e).some(calcOnceComp) ? '<span class="ceff" style="color:#e08a5a">아군 장비에도 있는 장비라 중첩되지 않는 효과(중첩 불가·최대 n중첩)는 한 번만 넣었습니다.</span>' : "");
     return `<label class="cf"><span>${slot}</span><select class="csel" data-calccur="${slot}"><option value="">(없음 · 모름)</option>${list.map(opt).join("")}</select>${e ? `<span class="ceff">${esc(e.effect)}</span>` : ""}${warn}</label>`;
   };
   // 카드 고르기
