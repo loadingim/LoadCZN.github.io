@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CZN 길잡이</title>
 <meta name="description" content="카오스 제로 나이트메어(카제나) 비공식 한국어 가이드 — 전투원 공략, 조합 찾기, 파트너, 장비 획득처, 미확인 구역 이벤트 보상, 기억의 조각, 효과 사전.">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
@@ -37,7 +40,7 @@
   .brand { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-weight: 900; font-size: 18px; letter-spacing: .5px; white-space: nowrap; }
   .sigil { width: 20px; height: 20px; transform: rotate(45deg); border: 2px solid var(--gold); box-shadow: 0 0 10px rgba(212, 162, 76, .45), inset 0 0 6px rgba(212, 162, 76, .4); }
   .tabs { display: flex; height: 100%; }
-  .tabs a { display: flex; align-items: center; padding: 0 16px; color: #bdb7c2; font-weight: 500; border-bottom: 2px solid transparent; }
+  .tabs a { display: flex; align-items: center; padding: 0 16px; color: #bdb7c2; font-weight: 500; border-bottom: 2px solid transparent; white-space: nowrap; }
   .tabs a:hover { color: var(--text); }
   .tabs a.on { color: var(--gold-hi); border-bottom-color: var(--gold); }
   .search { position: relative; margin-left: auto; width: 280px; }
@@ -116,6 +119,7 @@
   .stitle { font-family: var(--serif); font-weight: 900; font-size: 24px; margin: 2px 0 4px; }
   .sbtns { display: flex; gap: 8px; flex-wrap: wrap; }
   .hgo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .hgo > .hcard:last-child:nth-child(3n+1) { grid-column: 1 / -1; } /* 줄에 혼자 남는 마지막 카드는 한 줄 전체 */
   .hcard { display: block; padding: 16px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); transition: border-color .15s, transform .15s; }
   .hcard:hover { border-color: var(--gold); transform: translateY(-2px); }
   .hcard .ht { font-family: var(--serif); font-weight: 900; font-size: 17px; }
@@ -137,6 +141,7 @@
   .badge.red { background: rgba(179, 38, 46, .25); border-color: var(--red); color: #f2a0a5; }
   .rtags { margin: 8px 0 6px; display: flex; flex-wrap: wrap; gap: 6px; }
   .rtext { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .dact { margin-top: 14px; }
   .sec { margin-top: 26px; }
   .sec h3 { font-family: var(--serif); font-size: 17px; margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line); color: var(--gold-hi); }
   .desc { line-height: 1.7; margin: 0 0 10px; }
@@ -293,7 +298,7 @@
   .mx tbody th { background: var(--panel); width: 100px; text-align: left; font-family: var(--serif); color: var(--gold-hi); }
   .mx td { background: #101014; }
   .mx .cell { display: flex; flex-wrap: wrap; gap: 6px; }
-  .mx .cell a { display: flex; flex-direction: column; align-items: center; width: 56px; font-size: 11px; text-align: center; }
+  .mx .cell a { display: flex; flex-direction: column; align-items: center; width: 64px; font-size: 12px; text-align: center; white-space: nowrap; }
   .mx .cell img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; object-position: top; background: var(--panel2); border: 1px solid var(--line); margin-bottom: 2px; }
   .mx .cell a:hover img { border-color: var(--gold); }
   .mx .gap { color: #4a4652; }
@@ -306,6 +311,7 @@
   .dbq { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: #0f0e12; color: var(--text); font: inherit; font-size: 14px; }
   .dbq:focus { outline: none; border-color: var(--gold); }
   .eqgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 10px; }
+  .eqmore { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 14px; }
   .eq { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; word-break: keep-all; overflow-wrap: anywhere; }
   .eq.hit { border-color: var(--gold); }
   .eq .eh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
@@ -354,7 +360,7 @@
   .evr:first-of-type { border-top: none; }
   .evs { color: var(--muted); font-size: 12px; padding-top: 1px; }
   .evch { line-height: 1.55; color: #d5d0d9; }
-  .evi { display: inline-block; margin-top: 3px; font-weight: 700; }
+  .evi { display: inline-block; margin-top: 1px; padding: 3px 0; font-weight: 700; } /* 누르는 높이 24px 이상 */
   .evi:hover { color: var(--gold-hi); }
   .evi small { color: var(--muted); font-weight: 400; }
 
@@ -413,6 +419,7 @@
   .cf input:focus, .csel:focus { outline: none; border-color: var(--gold); }
   .csel:disabled { opacity: .5; }
   .cchks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 10px; }
+  .ccardfx { margin: 8px 0 0; padding: 2px 0 2px 10px; border-left: 2px solid rgba(212, 162, 76, .45); }
   .cchk { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text); cursor: pointer; }
   .cchk input { accent-color: var(--gold); width: 16px; height: 16px; margin: 0; flex: none; }
   .csets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -525,11 +532,54 @@
   .cform li { margin-bottom: 12px; }
   .cform li b { color: var(--gold-hi); }
   .cform code { display: block; margin: 4px 0; padding: 7px 10px; background: var(--panel2); border: 1px solid var(--line); border-radius: 6px; font-family: inherit; font-size: 13px; color: var(--text); word-break: keep-all; }
+  /* 접기: 계산식 표 · 2번 아군 장비·기억의 조각 · 세팅 저장 (펼침 상태는 calcFold에 기억) */
+  .fold > summary { list-style: none; cursor: pointer; }
+  .fold > summary::-webkit-details-marker { display: none; }
+  .fold > summary h3::after, .fold > summary h4::after { content: " ▾"; font-family: "Noto Sans KR", system-ui, sans-serif; font-size: 13px; font-weight: 400; color: var(--muted); }
+  .fold[open] > summary h3::after, .fold[open] > summary h4::after { content: " ▴"; }
+  .fold > summary:hover h3::after, .fold > summary:hover h4::after { color: var(--gold-hi); }
+  .cfold { margin-top: 16px; }
+  .cfold > summary { padding-bottom: 8px; }
+  .cfold > summary .csub { margin: 0; }
+  .cfsum { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+  .cfold[open] > summary .cfsum { display: none; }
+  .cpbox { margin: 2px 0 6px; }
+  .cpbox > summary { padding: 6px 0; font-size: 13px; }
+  .cpbox > summary::after { content: " ▾"; color: var(--muted); }
+  .cpbox[open] > summary::after { content: " ▴"; }
+  .cpbox > summary .note { margin-left: 6px; font-size: 12px; }
+  /* 긴 안내 문구: 앞부분만 보이고 '자세히'로 펼침 */
+  .chelp .chrest { display: none; }
+  .chelp.open .chrest { display: inline; }
+  .chbtn { padding: 0 2px; background: none; border: 0; color: var(--gold); font-size: 12px; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+  .chbtn:hover { color: var(--gold-hi); }
+  /* 실측 예시: PC는 버튼, 휴대폰은 선택 상자 하나 */
+  .cexbtns { display: contents; }
+  .cexbar .cexsel { display: none; }
+  /* 8·9번 순위 줄: 지금과 같은 칸은 흐리게 */
+  .ccombo .cnames > span.same { opacity: .45; }
+  .cally .csel { max-width: 560px; }
+  /* 결과 요약 고정 줄 (6번이 화면 밖일 때만) */
+  #calcResult { scroll-margin-top: 70px; }
+  body.oncalc footer { padding-bottom: 92px; } /* 맨 아래까지 내려도 요약 줄이 저작권 문구를 가리지 않게 */
+  .cpin { position: fixed; left: 50%; bottom: 14px; z-index: 25; width: min(720px, calc(100% - 24px)); transform: translateX(-50%); }
+  .cpin[hidden] { display: none; }
+  .cpinb { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 14px; border-radius: 12px; border: 1px solid rgba(212, 162, 76, .6); background: rgba(21, 21, 26, .97); box-shadow: 0 8px 24px rgba(0, 0, 0, .6); cursor: pointer; text-align: left; }
+  .cpinb:hover { border-color: var(--gold); }
+  .cpinb span { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .cpinb small { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cpinb b { font-family: var(--serif); font-weight: 900; font-size: 18px; color: var(--gold-hi); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cpinb em { flex: none; font-style: normal; font-size: 12px; color: var(--gold); }
+  .cpinb em i { font-style: normal; }
 
   /* 태블릿 */
   @media (max-width: 1099px) {
     .grid { grid-template-columns: repeat(4, 1fr); }
     .dtop { grid-template-columns: 240px 1fr; }
+    /* 메뉴 7개가 한 줄에 들어가도록: 글자 줄바꿈 대신 간격과 검색칸을 줄인다 */
+    .hd .wrap { gap: 14px; }
+    .tabs a { padding: 0 8px; font-size: 14px; }
+    .search { width: auto; flex: 1; min-width: 120px; max-width: 280px; }
   }
   /* 모바일 */
   @media (max-width: 699px) {
@@ -537,7 +587,7 @@
     .hd .wrap { gap: 12px; height: 54px; }
     .tabs { display: none; }
     .brand { font-size: 16px; }
-    .search { width: auto; flex: 1; min-width: 0; }
+    .search { width: auto; flex: 1; min-width: 0; max-width: none; }
     body { padding-bottom: 60px; }
     .bottombar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; height: 58px; background: #0e0d11; border-top: 1px solid var(--line); }
     .bottombar a { flex: 1; display: flex; align-items: center; justify-content: center; color: #bdb7c2; font-size: 13px; white-space: nowrap; border-top: 2px solid transparent; }
@@ -546,7 +596,7 @@
     h1 { font-size: 24px; margin-bottom: 12px; }
     .grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .card .nm { font-size: 13px; padding: 6px 6px 0; }
-    .card .meta { font-size: 11px; padding: 0 6px 8px; }
+    .card .meta { font-size: 12px; padding: 0 6px 8px; }
     .mfbar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .filters { display: none; }
     .filters.open { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; max-height: 80vh; overflow-y: auto; margin: 0; border-radius: 16px 16px 0 0; border-top: 2px solid var(--gold); padding-bottom: 20px; }
@@ -567,6 +617,8 @@
     .hero { padding: 18px 0 16px; }
     .hero h1 { font-size: 30px; }
     .hgo { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .hgo > .hcard:last-child:nth-child(3n+1) { grid-column: auto; }
+    .hgo > .hcard:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .hcard { padding: 12px; }
     .hcard .hdesc { display: none; }
     .home .grid { grid-template-columns: repeat(3, 1fr); }
@@ -581,7 +633,7 @@
     .ccombo .cnames { flex-direction: column; gap: 2px; }
     .ctot.c4 { grid-template-columns: 1fr 1fr; }
     .ctot .cv { font-size: 20px; }
-    .cbuff { grid-template-columns: 18px minmax(0, 1fr) 80px 30px; grid-template-areas: "on name name del" ". kind kind kind" ". val gain gain"; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+    .cbuff { grid-template-columns: 22px minmax(0, 1fr) 80px 40px; grid-template-areas: "on name name del" ". kind kind kind" ". val gain gain"; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
     .cbuff:last-child { border-bottom: 0; }
     .cbg { text-align: left; }
     .cgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -595,6 +647,27 @@
     .ctab.cft td:first-child { color: var(--text); }
     .ctab.cft td[data-label]::before { content: attr(data-label) " "; color: var(--muted); font-size: 11px; }
     .bottombar a { font-size: 12px; }
+    /* 터치 크기: 입력·선택·버튼은 40px 이상, 체크박스는 글자까지 감싼 큰 칸 */
+    .cf input, .csel, .cbin, .cpreset input[type=text], .dbq { min-height: 40px; }
+    .btn { min-height: 40px; }
+    .cocr label.btn { display: inline-flex; align-items: center; }
+    .cbx { width: 40px; height: 40px; }
+    .cfrow { grid-template-columns: minmax(0, 1fr) 84px 40px; }
+    .cally { grid-template-columns: minmax(0, 1fr) 40px; }
+    .cchks { gap: 8px; }
+    .cchk { min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel2); }
+    .cchk input, .cbon { width: 20px; height: 20px; }
+    .chbtn { padding: 4px 2px; }
+    .cadv summary { padding: 6px 0; }
+    .evi { padding: 4px 0; }
+    /* 휴대폰 계산기 맨 위: 실측 예시는 선택 상자 하나로 */
+    .cexbtns { display: none; }
+    .cexbar .cexsel { display: block; flex: 1 1 0; width: auto; }
+    /* 결과 요약 줄은 하단 탭 위에 */
+    .cpin { bottom: 66px; width: calc(100% - 16px); }
+    .cpinb { padding: 7px 10px; gap: 6px; }
+    .cpinb b { font-size: 16px; }
+    body.oncalc footer { padding-bottom: 76px; }
   }
 </style>
 </head>
@@ -609,7 +682,7 @@
       <a href="#/roles" data-tab="roles">역할</a>
       <a href="#/partners" data-tab="partners">파트너</a>
       <a href="#/db" data-tab="db">자료</a>
-      <!--<a href="#/calc" data-tab="calc">계산기</a>-->
+      <a href="#/calc" data-tab="calc">계산기</a>
     </nav>
     <div class="search">
       <input id="q" type="search" placeholder="전투원·파트너·장비·효과 검색" autocomplete="off" aria-label="전투원·파트너·장비·효과 검색">
@@ -629,7 +702,7 @@
   <a href="#/roles" data-tab="roles">역할</a>
   <a href="#/partners" data-tab="partners">파트너</a>
   <a href="#/db" data-tab="db">자료</a>
-  <!--<a href="#/calc" data-tab="calc">계산기</a>-->
+  <a href="#/calc" data-tab="calc">계산기</a>
 </nav>
 
 <div class="lb" id="lb" hidden>
@@ -673,7 +746,8 @@ function ownedCount() { return chars.filter(d => owned.has(d.id)).length; }
 function ownedFilterOn() { return teamSel.ownedOnly && ownedCount() > 0; }
 let equips = [], eqByName = {}, frags = null, gloss = [], extraState = "loading";
 let formulaData = null, formulaState = "loading"; // 계산식 근거·실측 사례 (data/formula.json)
-const eqSel = { slot: "", grp: "", chaos: "", rar: "", sort: "", q: "", applied: "" };
+const EQ_PAGE = 30; // 장비 획득처: 처음에 그리는 장비 수, '더 보기'마다 30개씩 (필터·검색을 바꾸면 처음으로)
+const eqSel = { slot: "", grp: "", chaos: "", rar: "", sort: "", q: "", applied: "", limit: EQ_PAGE };
 const RARITY_ORDER = ["신화", "전설", "희귀"]; // 등급순 정렬·필터 순서
 const glSel = { type: "", q: "", applied: "" };
 const EQ_GROUPS = ["공용", "시즌 공용", "투기장", "미확인 구역", "세력"];
@@ -691,6 +765,8 @@ function updLine(key) {
   const i = DATA_INFO[key];
   return i ? `<p class="upd">자료 갱신 ${esc(i.date)}${i.note ? ` · ${esc(i.note)}` : ""}</p>` : "";
 }
+// 대문에 보여 줄 사이트 전체 자료 갱신일: 위 자료 중 가장 최근 날짜
+const DATA_LATEST = Object.values(DATA_INFO).map(i => i.date).sort().pop();
 const PARTNER_JOBS = ["스트라이커", "레인저", "뱅가드", "헌터", "컨트롤러", "사이오닉"]; // 나무위키 파트너 문서 순서
 let partners = [], partnerByName = {}, partnerState = "loading";
 const CHAOS = ["푸른 항아리", "쌍성의 그림자", "안개의 도시", "심판의 늪", "도래된 혼돈", "제 0 연구소", "타오르는 생명", "허상의 극장", "만화경의 부화장", "천상의 방벽"];
@@ -838,6 +914,7 @@ function viewHome() {
     ["#/partners", "파트너", partners.length ? `${partners.length}명` : "패시브·에고 스킬", "패시브·에고 스킬과 이 파트너를 쓰는 전투원."],
     ["#/db/equipment", "장비 획득처", equips.length ? `${equips.length}종` : "효과·획득처", "효과와 얻는 곳, 카오스별로 보기."],
     ["#/db/glossary", "효과 사전", gloss.length ? `${gloss.length}개` : "용어 설명", "취약·작열 같은 용어 설명."],
+    ["#/calc", "피해량 계산기", "카드 계수 · 장비 추천", "카드·장비·기억의 조각으로 예상 피해를 계산하고 장비 조합 순위를 봅니다."],
   ];
   return `<section class="page home">
     <div class="hero">
@@ -854,7 +931,7 @@ function viewHome() {
     </div>
     <div class="sec"><h3>바로가기</h3><div class="hgo">${go.map(([h, t, m, d]) => `<a class="hcard" href="${h}"><div class="ht">${t}</div><div class="hm">${m}</div><div class="hdesc">${d}</div></a>`).join("")}</div></div>
     ${recent.length ? `<div class="sec"><h3>최근 출시 전투원 <a class="more" href="#/chars">전체 ${chars.length}명 보기 →</a></h3><div class="grid">${recent.map(charCard).join("")}</div></div>` : ""}
-    <p class="upd" style="margin-top:22px">자료 갱신 ${esc(DATA_INFO.teams.date)} · 조합은 카제나 조합 가이드, 장비는 나무위키·카오스 빌드·Prydwen, 파트너·번뜩임은 나무위키 기준</p>
+    <p class="upd" style="margin-top:22px">자료 갱신 ${esc(DATA_LATEST)} · 조합은 카제나 조합 가이드, 장비는 나무위키·카오스 빌드·Prydwen, 파트너·번뜩임은 나무위키 기준</p>
   </section>`;
 }
 function charCard(d) {
@@ -928,6 +1005,7 @@ function viewChar(id) {
         ${d.release ? `<div class="rtext">출시: ${esc(d.release)}</div>` : ""}
         ${updLine("combatants")}
         ${(d.tags || []).length ? `<div class="chips" style="margin-top:10px">${d.tags.map(t => `<button class="chip" data-act="goTag" data-v="${esc(t)}">#${esc(t)}</button>`).join("")}</div>` : ""}
+        <div class="dact"><button class="btn" data-act="calcFromChar" data-v="${esc(d.id)}" title="계산기에 이 전투원과 추천 파트너·추천 장비를 채워 엽니다">이 전투원으로 피해 계산 →</button></div>
       </div>
     </div>
     <div class="sec"><h3>역할 요약</h3><p class="desc rsum">${esc(d.desc) || '<span class="note">자료 준비 중입니다.</span>'}</p>${buildsHtml(d)}</div>
@@ -1237,6 +1315,8 @@ function viewSim() {
 /* ---------- 역할별 보기 ---------- */
 /* ---------- 파트너 ---------- */
 function partnerImg(p, kind) { return "images/partners/" + kind + "/" + p.id + ".webp"; }
+// 목록은 가로 400px 썸네일(images/partners/thumb, tools/make-thumbs.py로 만듦)을 쓰고, 없으면 원본(full)으로 한 번 더 시도
+const PARTNER_THUMB_FALLBACK = "if(!this.dataset.fb&&/\\/thumb\\//.test(this.src)){this.dataset.fb=1;this.src=this.src.replace('/thumb/','/full/')}else{this.style.visibility='hidden'}";
 function partnerUsers(p) { // 이 파트너를 추천 파트너로 둔 전투원 수 (combatants.json 표기가 별칭이어도 집계)
   const names = [p.name, ...(p.aliases || [])];
   return chars.filter(d => (d.partners || []).some(x => names.includes(x)));
@@ -1258,7 +1338,7 @@ function viewPartners() {
   const card = p => {
     const users = partnerUsers(p);
     return `<a class="card" href="#/partners/${encodeURIComponent(p.id)}" style="--ac:var(--gold)">
-      <div class="pf"><img src="${encodeURI(partnerImg(p, "full"))}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.visibility='hidden'"></div>
+      <div class="pf"><img src="${encodeURI(partnerImg(p, "thumb"))}" alt="${esc(p.name)}" loading="lazy" onerror="${PARTNER_THUMB_FALLBACK}"></div>
       <div class="nm">${esc(p.name)}</div>
       <div class="meta">★${esc(p.rarity)}${users.length ? `<span class="dot">·</span>추천 전투원 ${users.length}명` : ""}</div>
     </a>`;
@@ -1391,14 +1471,17 @@ function eqListHtml(focus) {
   const rank = e => { const i = RARITY_ORDER.indexOf(e.rarity); return i < 0 ? 99 : i; };
   if (eqSel.sort === "name") list.sort(byName);
   else if (eqSel.sort === "rarity") list.sort((a, b) => rank(a) - rank(b) || byName(a, b)); // 기본값("")은 기존 자료 순서 그대로
-  return `<div class="cnt" style="display:block;margin:0 0 10px">${list.length}개 장비</div>
-    <div class="eqgrid">${list.length ? list.map(e => eqCard(e, e.name === focus)).join("") : '<div class="empty">조건에 맞는 장비가 없습니다.</div>'}</div>`;
+  const shown = list.slice(0, eqSel.limit), rest = list.length - shown.length;
+  return `<div class="cnt" style="display:block;margin:0 0 10px">${list.length}개 장비${rest > 0 ? ` · 앞의 ${shown.length}개 표시` : ""}</div>
+    <div class="eqgrid">${list.length ? shown.map(e => eqCard(e, e.name === focus)).join("") : '<div class="empty">조건에 맞는 장비가 없습니다.</div>'}</div>
+    ${rest > 0 ? `<div class="eqmore"><button class="btn" data-act="eqMore">${Math.min(EQ_PAGE, rest)}개 더 보기</button><button class="btn" data-act="eqAll">모두 보기 (남은 ${rest}개)</button></div>` : ""}`;
 }
 function viewEquip(focus) {
-  // 전투원 페이지에서 장비를 눌러 들어온 경우 한 번만 그 장비로 검색 (이후 필터 조작은 유지)
+  // 전투원 페이지에서 장비를 눌러 들어오거나(장비 이름) 상단 검색의 '장비 검색'으로 들어온 경우(검색어)
+  // 한 번만 그 말로 검색 (이후 필터 조작은 유지)
   if (focus !== eqSel.applied) {
     eqSel.applied = focus;
-    if (focus && eqByName[focus]) { eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.rar = ""; eqSel.q = focus; }
+    if (focus) { eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.rar = ""; eqSel.q = focus; eqSel.limit = EQ_PAGE; }
   }
   const chip = (key, v, label) => `<button class="chip${eqSel[key] === v ? " on" : ""}" data-eq="${key}" data-v="${esc(v)}">${esc(label)}</button>`;
   return `<div class="filters" style="display:block;position:static">
@@ -2039,6 +2122,66 @@ function calcExample(n) {
   if (calcSel.partner) calcPickPartner();
 }
 function calcResetAll() { Object.assign(calcSel, calcBlank()); }
+// 전투원 상세의 '이 전투원으로 피해 계산': 그 전투원과 추천 파트너(첫 번째), 추천 장비(칸마다 첫 번째, 신화는 세 칸 통틀어 1개)를 채워 연다.
+// 계산기가 이미 같은 전투원이면 지금 입력을 그대로 둔다.
+function calcFromChar(id) {
+  const d = byId[id];
+  if (!d) return;
+  if (calcSel.char !== id) {
+    calcResetAll();
+    calcSel.char = d.id;
+    calcSel.attr = d.attr || "";
+    const p = (d.partners || []).map(n => partnerByName[n]).find(Boolean);
+    if (p) { calcSel.partner = p.name; calcPickPartner(); }
+    const g = d.gear || {};
+    CALC_SLOTS.forEach(slot => {
+      const lock = calcMythicElsewhere(slot);
+      const e = (g[slot] || []).map(x => eqByName[gearName(x)]).find(x => x && x.slot === slot && !(lock && x.rarity === "신화"));
+      if (e) calcSel.cur[slot] = e.name;
+    });
+  }
+  location.hash = "#/calc";
+}
+
+/* 계산기 화면 접기 상태 (이번 방문 동안만 기억하고 세팅 저장에는 넣지 않음). null = 아직 안 건드림 → 기본값 */
+const calcFold = { form: null, ally: null, frag: null, preset: null };
+const calcFoldOpen = (k, def) => calcFold[k] === null ? def : calcFold[k];
+const calcIsMobile = () => !!(window.matchMedia && window.matchMedia("(max-width: 699px)").matches);
+// 예시·저장한 세팅을 불러오면 채워진 2번 아군 장비·기억의 조각은 접어 요약 한 줄만 보이게 한다 (빈 곳은 펼침)
+function calcFoldAfterLoad() {
+  calcFold.ally = !calcSel.ally.some(a => eqByName[a.name]);
+  calcFold.frag = !calcSel.frag.some(f => f.set || f.main || String(f.mv).trim() !== "" || (f.subs || []).length);
+}
+// 긴 안내 문구: 앞부분만 보이고 나머지는 '자세히'로 펼친다 (펼친 것은 다시 그려도 유지)
+const calcHelpOpen = new Set();
+function calcHelp(key, shown, rest, style) {
+  const open = calcHelpOpen.has(key);
+  return `<p class="note chelp${open ? " open" : ""}"${style ? ` style="${style}"` : ""}>${shown}${rest ? ` <span class="chrest">${rest}</span> <button type="button" class="chbtn" data-act="calcHelp" data-v="${key}" aria-expanded="${open}">${open ? "접기" : "자세히"}</button>` : ""}</p>`;
+}
+// 화면 아래 결과 요약 줄 (6번이 화면에 보이면 숨김, 누르면 6번으로 이동)
+function calcPinHtml() {
+  if (!calcReady()) return "";
+  const d = calcCoef(calcState()), hits = Math.max(1, calcNum0(calcSel.hits) || 1);
+  const cells = [["핸드 표시", calcPctFmt(d.show)]];
+  if (d.hasAtk) cells.push([`예상 피해${hits > 1 ? ` (${hits}타)` : ""}`, calcDmgFmt(d.dmg.non * hits)], ["기대값", calcDmgFmt(d.dmg.exp * hits)]);
+  else cells.push(["대상 지정", calcPctFmt(d.non)], ["기대값", calcPctFmt(d.exp)]);
+  return `<button type="button" class="cpinb" data-act="calcGoOut" aria-label="6번 결과로 이동">${cells.map(([l, v]) => `<span><small>${l}</small><b>${v}</b></span>`).join("")}<em>6번 결과 <i>${calcOutBelow ? "↓" : "↑"}</i></em></button>`;
+}
+let calcOutBelow = true, calcPinRaf = 0;
+// 6번 결과가 화면에 충분히 보이면 숨기고, 아니면 위·아래 방향 화살표와 함께 보인다 (스크롤·다시 그릴 때마다 확인)
+function calcPinShow() {
+  const pin = document.getElementById("calcPin"), out = document.getElementById("calcOut");
+  if (!pin || !out) return;
+  const r = out.getBoundingClientRect(), vh = window.innerHeight;
+  const seen = r.top < vh - 90 && r.bottom > 90;
+  calcOutBelow = r.top > 0;
+  pin.hidden = seen || !pin.firstElementChild;
+  const i = pin.querySelector(".cpinb i");
+  if (i) i.textContent = calcOutBelow ? "↓" : "↑";
+}
+const calcPinCheck = () => { if (calcPinRaf || !document.getElementById("calcPin")) return; calcPinRaf = requestAnimationFrame(() => { calcPinRaf = 0; calcPinShow(); }); };
+window.addEventListener("scroll", calcPinCheck, { passive: true });
+window.addEventListener("resize", calcPinCheck);
 
 function calcNum(k, label, unit, step) {
   return `<label class="cf"><span>${esc(label)}${unit ? ` <em>${esc(unit)}</em>` : ""}</span><input type="number" inputmode="decimal" step="${step || "any"}" data-calc="${k}" value="${esc(calcSel[k])}"></label>`;
@@ -2046,8 +2189,8 @@ function calcNum(k, label, unit, step) {
 function calcChk(k, label) {
   return `<label class="cchk"><input type="checkbox" data-calc="${k}"${calcSel[k] ? " checked" : ""}> ${esc(label)}</label>`;
 }
-function calcSelect(k, label, opts, note) {
-  return `<label class="cf"><span>${esc(label)}${note ? ` <em>${esc(note)}</em>` : ""}</span><select class="csel" data-calcsel="${k}">${opts.map(([v, l]) => `<option value="${esc(v)}"${String(calcSel[k]) === String(v) ? " selected" : ""}>${esc(l)}</option>`).join("")}</select></label>`;
+function calcSelect(k, label, opts, note, cls) {
+  return `<label class="cf${cls ? " " + cls : ""}"><span>${esc(label)}${note ? ` <em>${esc(note)}</em>` : ""}</span><select class="csel" data-calcsel="${k}">${opts.map(([v, l]) => `<option value="${esc(v)}"${String(calcSel[k]) === String(v) ? " selected" : ""}>${esc(l)}</option>`).join("")}</select></label>`;
 }
 function calcBuffRow(b) {
   return `<div class="cbuff${b.on ? "" : " off"}" data-bid="${b.id}">
@@ -2136,7 +2279,20 @@ function calcAllyHtml() {
   const dup = named.length !== new Set(named).size;
   return `${calcSel.ally.length ? `<div class="callies">${calcSel.ally.map(row).join("")}</div>` : ""}
     <div class="cbar" style="margin:8px 0 0"><button class="btn" data-act="calcAddAlly">+ 아군 장비 추가</button></div>
-    <p class="note" style="margin:6px 0 0">아군이 낀 장비 중 효과를 받는 대상이 '아군'인 장비만 고를 수 있습니다 (${list.length}개). 상시 공격력%(혼세의 촉수 등)는 스테이터스 공격력에 이미 들어 있어 A그룹으로 나누는 데 쓰고, 조건부 효과(*)는 '조건부 효과' 체크를 켜면 더합니다.${dup ? " 같은 장비를 여러 번 고르면 '중첩 불가'·'최대 n중첩' 효과는 한 번만 넣고(최후의 명령어는 6중첩을 같이 씀), 중첩 문구가 없는 아군 효과는 고른 만큼 쌓아 더합니다." : ""}</p>`;
+    ${calcHelp("ally", `아군이 낀 장비 중 효과를 받는 대상이 '아군'인 장비만 고를 수 있습니다 (${list.length}개).${dup ? " 같은 장비를 여러 번 고르면 '중첩 불가'·'최대 n중첩' 효과는 한 번만 넣고(최후의 명령어는 6중첩을 같이 씀), 중첩 문구가 없는 아군 효과는 고른 만큼 쌓아 더합니다." : ""}`, "상시 공격력%(혼세의 촉수 등)는 스테이터스 공격력에 이미 들어 있어 A그룹으로 나누는 데 쓰고, 조건부 효과(*)는 '조건부 효과' 체크를 켜면 더합니다.", "margin:6px 0 0")}`;
+}
+// 2번 '아군 장비' 접었을 때 요약 한 줄
+function calcAllyFoldHtml() {
+  const names = calcSel.ally.map(a => a.name).filter(n => eqByName[n]);
+  return names.length ? `${names.length}개: ${names.map(esc).join(" · ")}` : "고른 장비 없음";
+}
+// 2번 '기억의 조각' 접었을 때 요약 한 줄 (수치를 바꿀 때마다 calcRefresh가 다시 그림)
+function calcFragFoldHtml() {
+  if (!frags) return "";
+  const filled = calcSel.frag.filter(f => f.set || f.main || String(f.mv).trim() !== "" || f.subs.some(x => x.name)).length;
+  const sets = calcFragSets(), uniq = [...new Set(sets.map(s => s.name))].map(n => { const x = sets.filter(s => s.name === n); return `${esc(n)} ${x[0].pieces}세트${x.length > 1 ? ` ×${x.length}` : ""}`; });
+  const b = calcFragSum().tot.atkB + calcSetStat().aB;
+  return `${filled}/6칸 입력 · ${uniq.length ? uniq.join(" · ") : "세트 없음"} · B그룹 공격력% ${calcNumFmt(b)}%`;
 }
 // 직접 입력을 켜도 자동값을 보여 주려고 잠깐 끄고 계산한다
 function calcAutoState() { const o = calcSel.atkManual; calcSel.atkManual = false; try { return calcState(); } finally { calcSel.atkManual = o; } }
@@ -2173,6 +2329,8 @@ function calcAtkAutoHtml() {
     const need = fs.tot[k] + ss[k];
     if (need > 0 && calcNum0(calcSel[k]) < need) warn.push(`${n} 화면 값(${calcNumFmt(calcNum0(calcSel[k]))}%)이 조각·세트 합(${calcNumFmt(need)}%)보다 작습니다. 화면 값을 넣었는지 확인하세요.`);
   });
+  // 기대 피해는 치명확률만큼만 치명 배율을 반영하므로, 치명확률 0%면 치명피해 장비·옵션의 이득이 모두 0으로 나온다
+  if (calcReady() && s.cr <= 0) warn.push("치명확률이 0%라 치명피해를 올리는 장비·조각·옵션은 7~9번에서 +0%로 나옵니다. 스테이터스 화면의 치명확률(전투 중 버프는 3번 '치명확률 +n%' 줄)을 넣었는지 확인하세요.");
   return `<div class="csum">${rows.join("")}${warn.map(t => `<div class="cfwarn">⚠ ${esc(t)}</div>`).join("")}</div>`;
 }
 // 각 버프 줄 오른쪽의 기여도 (이 버프가 지금 기대 피해를 몇 % 올리고 있는지)
@@ -2235,7 +2393,7 @@ function calcOutHtml() {
       <div style="--sc:var(--gold)"><div class="cl">예상 피해 (비치명${hits > 1 ? `, ${hits}타 합` : ""})</div><div class="cv">${calcDmgFmt(d.dmg.non * hits)}</div></div>
       <div style="--sc:#e08a5a"><div class="cl">예상 피해 (치명)</div><div class="cv">${calcDmgFmt(d.dmg.crit * hits)}</div></div>
       <div style="--sc:#5aa9e6"><div class="cl">예상 피해 (기대값)</div><div class="cv">${calcDmgFmt(d.dmg.exp * hits)}</div></div>
-    </div><p class="note" style="margin:6px 0 0">예상 피해는 0.35 상수와 적 방어 계수(기본 0.389 · 실측 3건 0.381~0.389)를 쓴 <b>추정치</b>입니다. 실제 숫자와 맞춰 보려면 적 방어 계수를 조정하세요. 장비·버프 비교는 같은 조건의 비율이라 이 값과 상관없이 쓸 수 있습니다.</p>`
+    </div>${calcHelp("dmg", "예상 피해는 0.35 상수와 적 방어 계수(기본 0.389 · 실측 3건 0.381~0.389)를 쓴 <b>추정치</b>입니다.", "실제 숫자와 맞춰 보려면 적 방어 계수를 조정하세요. 장비·버프 비교는 같은 조건의 비율이라 이 값과 상관없이 쓸 수 있습니다.", "margin:6px 0 0")}`
     : '<p class="note" style="margin:8px 0 0">공격력(스테이터스)을 넣으면 1~4단계(공격력)와 12단계(예상 피해)까지 계산합니다.</p>';
   return `<div class="ctot c4">
       <div style="--sc:var(--muted)"><div class="cl">핸드 표시</div><div class="cv">${calcPctFmt(d.show)}</div></div>
@@ -2275,7 +2433,7 @@ const calcHasCond = comps => comps.some(c => calcManual(c.c) && calcAutoOk(c.c))
 function calcComboRow(rank, parts, g, opts) {
   const o = opts || {};
   const v = (n, l) => `<b data-l="${l}" class="${n > 0.00005 ? "up" : n < -0.00005 ? "dn" : ""}">${o.cur ? "현재" : calcPct(n * 100)}</b>`;
-  return `<div class="ccombo${o.cur ? " cur" : ""}"><span class="cno">${rank}</span><span class="cnames">${parts.map(p => `<span${p.title ? ` title="${esc(p.title)}"` : ""}><em>${esc(p.k)}</em>${p.rec ? '<i class="crec" title="추천">★</i>' : ""}${esc(p.name)}${p.cond ? "*" : ""}${p.sub ? ` <small>${esc(p.sub)}</small>` : ""}</span>`).join("")}</span><span class="cvals">${v(g[0], "기본")}${v(g[1], "조건 충족")}</span></div>`;
+  return `<div class="ccombo${o.cur ? " cur" : ""}"><span class="cno">${rank}</span><span class="cnames">${parts.map(p => `<span${p.same ? ' class="same"' : ""}${p.title ? ` title="${esc(p.title)}"` : ""}><em>${esc(p.k)}</em>${p.rec ? '<i class="crec" title="추천">★</i>' : ""}${esc(p.name)}${p.cond ? "*" : ""}${p.sub ? ` <small>${esc(p.sub)}</small>` : ""}</span>`).join("")}</span><span class="cvals">${v(g[0], "기본")}${v(g[1], "조건 충족")}</span></div>`;
 }
 const calcComboHead = label => `<div class="ccombo chead"><span class="cno">#</span><span class="cnames">${label}</span><span class="cvals"><b>기본${calcSel.rankSort ? "" : " ▼"}</b><b>조건 충족${calcSel.rankSort ? " ▼" : ""}</b></span></div>`;
 // 카드 순서가 조건인 장비: 1번 '이번 턴 사용 순서'에 따라 빠지는지·조건 없이 들어가는지 (모름이면 표시 안 함)
@@ -2297,7 +2455,8 @@ function calcEquipHtml() {
   const top = r.list.slice(0, n);
   const cur = r.list.find(x => x.cur);
   if (cur && !top.includes(cur)) top.push(cur);
-  const rows = top.map(x => calcComboRow(r.list.indexOf(x) + 1, x.items.map((e, i) => ({ k: CALC_SLOTS[i], name: e.name, sub: e.rarity, rec: calcRecGear(CALC_SLOTS[i]).includes(e.name), cond: calcHasCond(calcMyComps(e, r.allyNames)), title: e.effect })), x.g, { cur: x.cur })).join("");
+  // same: 지금 낀 장비와 같은 칸 (흐리게 보여 바뀌는 칸만 눈에 띄게)
+  const rows = top.map(x => calcComboRow(r.list.indexOf(x) + 1, x.items.map((e, i) => ({ k: CALC_SLOTS[i], name: e.name, sub: e.rarity, rec: calcRecGear(CALC_SLOTS[i]).includes(e.name), cond: calcHasCond(calcMyComps(e, r.allyNames)), title: e.effect, same: !x.cur && calcSel.cur[CALC_SLOTS[i]] === e.name })), x.g, { cur: x.cur })).join("");
   const ms = Math.round(performance.now() - t0);
   const oe = calcOrderEquips();
   const ord = calcSel.order && oe.length ? ` · 카드 순서: ${esc(calcOrderLabel())} 기준 (빠짐: ${oe.filter(e => !calcOrderHit(e)).map(e => esc(e.name)).join(" · ") || "없음"} / 조건 없이 적용: ${oe.filter(calcOrderHit).map(e => esc(e.name)).join(" · ") || "없음"})` : "";
@@ -2306,7 +2465,7 @@ function calcEquipHtml() {
   const cov = r.covered.length ? ` · 아군이 이미 껴서 효과가 중첩되지 않는 장비는 후보에서 뺌 (${r.covered.map(esc).join(" · ")})` : "";
   return `${calcSortBar()}<div class="crk ccombos">${calcComboHead("무기 · 방어구 · 장신구")}${rows || '<p class="note">후보 없음</p>'}
     ${r.list.length > 10 ? `<button class="btn cmore" data-act="calcMore" data-slot="eq">${calcSel.more.eq ? "접기" : "상위 30개 보기"}</button>` : ""}</div>
-    <p class="note" style="margin:6px 0 0">${r.hasCur ? "2번에서 고른 현재 장비 조합 대비" : "장비 없는 상태 대비"} 기대 피해 변화 · 칸마다 기본·조건 충족 상위 ${CALC_COMBO_PER_SLOT}개와 추천·현재 장비로 조합 ${r.list.length.toLocaleString("ko-KR")}개 계산 (무기 ${r.size[0]} × 방어구 ${r.size[1]} × 장신구 ${r.size[2]}, 신화 2개 이상 제외${ms > 50 ? `, ${ms}ms` : ""})${cov}${ord}${idleTxt} · 정렬: ${calcSel.rankSort ? "조건 충족" : "기본"} (위 정렬 버튼으로 바꿈)</p>`;
+    ${calcHelp("eqnote", `${r.hasCur ? "2번에서 고른 현재 장비 조합 대비" : "장비 없는 상태 대비"} 기대 피해 변화${cov}${ord}${idleTxt} · 정렬: ${calcSel.rankSort ? "조건 충족" : "기본"} (위 정렬 버튼으로 바꿈)`, `칸마다 기본·조건 충족 상위 ${CALC_COMBO_PER_SLOT}개와 추천·현재 장비로 조합 ${r.list.length.toLocaleString("ko-KR")}개 계산 (무기 ${r.size[0]} × 방어구 ${r.size[1]} × 장신구 ${r.size[2]}, 신화 2개 이상 제외${ms > 50 ? `, ${ms}ms` : ""})`, "margin:6px 0 0")}`;
 }
 // 기억의 조각 추천 표시: 전투원 데이터의 '베일에 싸인 광휘*4', '치명 피해*2'(분류) 같은 표기와 맞춰 본다
 const CALC_SET2_KIND = { "치명 피해": /치명피해/, "공격력": /^공격력/, "체력": /체력/, "방어력": /방어력/, "저주": /저주/, "기본 공격": /기본 카드/ };
@@ -2346,7 +2505,8 @@ function calcFragHtml() {
   const top = list.slice(0, n);
   const cur = list.find(x => x.cur);
   if (cur && !top.includes(cur)) top.push(cur);
-  const rows = top.map(x => calcComboRow(list.indexOf(x) + 1, x.sets.map(set => ({ k: `${set.pieces}세트`, name: set.name, rec: calcRecSet(set), cond: calcHasCond(calcFragComps(set.effect)), title: set.effect })), x.g, { cur: x.cur })).join("");
+  const curSets = calcFragSets().map(s => s.name);
+  const rows = top.map(x => calcComboRow(list.indexOf(x) + 1, x.sets.map(set => ({ k: `${set.pieces}세트`, name: set.name, rec: calcRecSet(set), cond: calcHasCond(calcFragComps(set.effect)), title: set.effect, same: !x.cur && curSets.includes(set.name) })), x.g, { cur: x.cur })).join("");
   // 주옵션 (4~6번): 금색 최대치 한 줄씩, 전투원 추천 주옵션에 ★
   // 2번에 그 칸의 주옵션을 넣었다면 '지금 주옵션을 빼고 이 주옵션(금색 최대)으로 바꿀 때', 비었으면 '더할 때'의 변화
   const d = byId[calcSel.char];
@@ -2372,7 +2532,7 @@ function calcFragHtml() {
   return `<h4 class="csub">세트 조합 <span class="note" style="font-weight:400">6개 = 4세트 + 2세트 또는 2세트 × 3</span></h4>
     ${calcSortBar()}<div class="crk ccombos">${calcComboHead("세트")}${rows}
     <button class="btn cmore" data-act="calcMore" data-slot="fr">${calcSel.more.fr ? "접기" : "상위 30개 보기"}</button></div>
-    <p class="note" style="margin:6px 0 0">${calcFragSets().length ? "2번에서 고른 현재 세트 대비" : "세트 없는 상태 대비"} · 세트 효과만 비교하고 각 조각의 주옵션·부옵션은 그대로 둡니다 · 같은 2세트 중복은 중첩 여부를 확인하지 못해 뺐습니다 · ★ 전투원 추천 · * 조건부 효과 (조건 충족 값에만 반영, 그 전투원이 조건을 만족할 수 있는지는 직접 확인)</p>
+    ${calcHelp("frnote", `${calcFragSets().length ? "2번에서 고른 현재 세트 대비" : "세트 없는 상태 대비"} · ★ 전투원 추천 · * 조건부 효과 (조건 충족 값에만 반영) · 흐린 이름은 지금 세트와 같음`, "세트 효과만 비교하고 각 조각의 주옵션·부옵션은 그대로 둡니다 · 같은 2세트 중복은 중첩 여부를 확인하지 못해 뺐습니다 · 조건부 효과는 그 전투원이 조건을 만족할 수 있는지 직접 확인하세요", "margin:6px 0 0")}
     <h4 class="csub">주옵션 (4~6번) <span class="note" style="font-weight:400">2번에 넣은 그 칸의 주옵션을 빼고 이 주옵션(금색 최대)으로 바꿀 때 · 비었으면 더할 때</span></h4><div class="crank">${mains}</div>
     <p class="note" style="margin:6px 0 0">'현재' 줄은 지금 주옵션을 금색 최대까지 올렸을 때의 변화입니다. 속성 피해량은 카드 속성과 같은 속성 조각이라고 보고 계산합니다.</p>`;
 }
@@ -2414,10 +2574,12 @@ function calcRefresh() {
     calcFragSum: calcFragSumHtml, calcAtkAuto: calcAtkAutoHtml,
     calcOut: calcOutHtml, calcCmp: calcCmpHtml,
     calcEq: () => calcRankReady() ? calcEquipHtml() : CALC_RANK_WAIT,
-    calcFr: () => calcRankReady() ? calcFragHtml() : CALC_RANK_WAIT
+    calcFr: () => calcRankReady() ? calcFragHtml() : CALC_RANK_WAIT,
+    calcFragFold: calcFragFoldHtml, calcPin: calcPinHtml
   };
   Object.entries(parts).forEach(([id, f]) => { const el = document.getElementById(id); if (el) el.innerHTML = f(); });
   calcBuffGains();
+  calcPinShow();
 }
 function viewCalc() {
   const head = `<div class="eyebrow">계산기</div><h1>피해량 계산기</h1>`;
@@ -2439,7 +2601,9 @@ function viewCalc() {
   // 카드 고르기
   const variants = d ? calcCardVariants(d.id) : [];
   const card = variants.find(x => x.key === calcSel.card);
-  const cardSel = d ? `<label class="cf cwide"><span>카드 <em>${kitState === "ok" ? "고유 카드 · 번뜩임" : "불러오는 중…"}</em></span><select class="csel" data-calcsel="card"><option value="">직접 입력</option>${variants.map(v => `<option value="${esc(v.key)}"${calcSel.card === v.key ? " selected" : ""}>${esc(v.label)}${v.dmg ? ` — ${v.defBased ? "방어 기반 " : ""}${v.dmg}%${v.hits > 1 ? ` × ${v.hits}` : ""}` : ""}</option>`).join("")}</select>${card ? `<span class="ceff">${esc((card.v.effect || []).join("\n"))}${card.v.src ? `\n(${esc(card.v.src)})` : ""}</span>` : ""}</label>` : "";
+  const cardSel = d ? `<label class="cf cwide"><span>카드 <em>${kitState === "ok" ? "고유 카드 · 번뜩임" : "불러오는 중…"}</em></span><select class="csel" data-calcsel="card"><option value="">직접 입력</option>${variants.map(v => `<option value="${esc(v.key)}"${calcSel.card === v.key ? " selected" : ""}>${esc(v.label)}${v.dmg ? ` — ${v.defBased ? "방어 기반 " : ""}${v.dmg}%${v.hits > 1 ? ` × ${v.hits}` : ""}` : ""}</option>`).join("")}</select></label>` : "";
+  // 고른 카드의 효과 문구는 칸 밖(카드 줄 아래)에 둔다: 칸 안에 두면 같은 줄 입력칸 높이가 어긋난다
+  const cardFx = card ? `<p class="ceff ccardfx">${esc((card.v.effect || []).join("\n"))}${card.v.src ? `\n(${esc(card.v.src)})` : ""}</p>` : "";
   // 파트너 고르기: 고른 전투원의 추천 파트너를 먼저
   const recP = d ? (d.partners || []).map(n => partnerByName[n]).filter(Boolean) : [];
   const otherP = partners.filter(p => !recP.includes(p)).sort((a, b) => a.name.localeCompare(b.name, "ko"));
@@ -2451,12 +2615,14 @@ function viewCalc() {
   // 고급 설정에 기본값이 아닌 값이 있으면 펼쳐 둔다 (숨은 값을 놓치지 않게)
   const advOpen = calcNum0(calcSel.gAtk) || calcNum0(calcSel.xAtk) || Number(calcSel.amp) !== 1;
   return `<section class="page">${head}
-    <p class="note" style="margin:-8px 0 16px">카드와 버프를 넣으면 게임 화면에 뜨는 피해량 계수를 계산하고, 공격력까지 넣으면 공격력 단계와 예상 피해, 장비·조각 효율 순위를 보여 줍니다. 계산 단계마다 근거와 검증 상태는 맨 아래 표에 있습니다.</p>
-    <div class="cbar">${Object.entries(CALC_EXAMPLES).map(([n, ex]) => `<button class="btn gold" data-act="calcExample" data-v="${n}">${esc(ex.label)}</button>`).join("")}<button class="btn" data-act="calcReset">초기화</button></div>
+    <p class="note" style="margin:-8px 0 16px">카드와 버프를 넣으면 게임 화면에 뜨는 피해량 계수를 계산하고, 공격력까지 넣으면 공격력 단계와 예상 피해, 장비·조각 효율 순위를 보여 줍니다. 계산 단계마다 근거와 검증 상태는 맨 아래 '계산식 · 검증 상태'(눌러서 펼침)에 있습니다.</p>
+    <div class="cbar cexbar"><span class="cexbtns">${Object.entries(CALC_EXAMPLES).map(([n, ex]) => `<button class="btn gold" data-act="calcExample" data-v="${n}">${esc(ex.label)}</button>`).join("")}</span>
+      <select class="csel cexsel" aria-label="실측 예시 불러오기"><option value="">실측 예시 불러오기…</option>${Object.entries(CALC_EXAMPLES).map(([n, ex]) => `<option value="${n}">${esc(ex.label)}</option>`).join("")}</select>
+      <button class="btn" data-act="calcReset">초기화</button></div>
     ${calcPresetHtml()}
 
     <div class="sec"><h3>1. 카드 <span class="note" style="font-family:inherit;font-weight:400">장비 효과의 조건도 여기로 자동 판정</span></h3><div class="cbox">
-      <div class="cgrid">
+      <div class="cgrid cend">
         <label class="cf"><span>전투원</span><select class="csel" data-calcsel="char"><option value="">직접 입력</option>${byName.map(c => `<option value="${esc(c.id)}"${calcSel.char === c.id ? " selected" : ""}>${esc(c.name_ko)} (${esc(c.attr)})</option>`).join("")}</select></label>
         ${cardSel}
         ${calcNum("base", "카드 피해", "% · 1타 기준")}
@@ -2464,10 +2630,10 @@ function viewCalc() {
         <label class="cf"><span>카드 속성</span><select class="csel" data-calcsel="attr"><option value="">없음</option>${ATTRS.map(a => `<option${calcSel.attr === a ? " selected" : ""}>${a}</option>`).join("")}</select></label>
         <label class="cf"><span>카드 비용</span><input type="text" inputmode="numeric" data-calc="cost" value="${esc(calcSel.cost)}" placeholder="X면 비움"></label>
         ${calcSelect("type", "공격 종류", CALC_TYPES)}
-        ${calcSelect("order", "이번 턴 사용 순서", CALC_ORDERS, "순서 조건 장비")}
-        ${calcSelect("idle", "직전 턴 카드 공격", CALC_IDLES, "흐릿한 가시")}
       </div>
-      <div class="cgrid" style="margin-top:10px">
+      ${cardFx}
+      <div class="cchks">${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}${calcChk("exhaust", "소멸 카드")}${calcChk("defBased", "방어 기반 피해")}</div>
+      <div class="cgrid cend" style="margin-top:10px">
         ${calcSelect("potKind", "잠재력 카드 강화", CALC_POT_KINDS)}
         ${calcSel.potKind !== "none" ? calcNum("potLv", `레벨 (0~${potMax})`, `레벨당 2%${calcEgoBonus() ? ` · 에고 +${calcEgoBonus()}` : ""}`, "1") : ""}
         ${kits[calcSel.char] && (kits[calcSel.char].manifest || []).length ? calcSelect("egoLv", "에고 발현", [[0, "없음"], 1, 2, 3, 4, 5, 6].map(v => Array.isArray(v) ? v : [v, `${v}단계`]), "잠재력 레벨 자동 가산") : ""}
@@ -2476,7 +2642,11 @@ function viewCalc() {
         ${calcNum("bPer", "스택당 배율", "%p · 잠재력 곱 뒤에 더함")}
         ${calcSel.defBased ? calcNum("def", "방어력", "방어 기반 피해") : ""}
       </div>
-      <div class="cchks">${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}${calcChk("exhaust", "소멸 카드")}${calcChk("defBased", "방어 기반 피해")}</div>
+      <h4 class="csub" style="margin-top:16px">전투 상황 <span class="note" style="font-weight:400">카드 순서·직전 턴 공격이 조건인 장비를 판정</span></h4>
+      <div class="cgrid cend">
+        ${calcSelect("order", "이번 턴 사용 순서", CALC_ORDERS, "순서 조건 장비", "cwide")}
+        ${calcSelect("idle", "직전 턴 카드 공격", CALC_IDLES, "흐릿한 가시", "cwide")}
+      </div>
     </div></div>
 
     <div class="sec"><h3>2. 파트너 · 장비 · 기억의 조각 <span class="note" style="font-family:inherit;font-weight:400">고른 장비의 전투 효과는 자동으로 계산에 들어갑니다</span></h3><div class="cbox">
@@ -2487,22 +2657,24 @@ function viewCalc() {
         ${CALC_SLOTS.map(curSel).join("")}
       </div>
       ${pt ? `<p class="note" style="margin:8px 0 0">${esc(pt.name)} 패시브: ${(pt.passive.desc || []).map(esc).join(" / ")}<br>상시 공격력% ${calcNumFmt(calcNum0(calcSel.pAtk))}%${calcSel.pDmg ? ` · 상시 피해량 ${calcNumFmt(calcNum0(calcSel.pDmg))}% 증가` : ""}를 자동으로 넣었습니다. 조건이 붙은 효과는 버프 줄에 직접 넣으세요.</p>` : ""}
-      <h4 class="csub" style="margin-top:16px">아군 장비 <span class="note" style="font-weight:400">파티원이 낀 장비 중 아군에게 주는 효과</span></h4>
+      <details class="fold cfold" data-fold="ally"${calcFoldOpen("ally", true) ? " open" : ""}><summary><h4 class="csub">아군 장비 <span class="note" style="font-weight:400">파티원이 낀 장비 중 아군에게 주는 효과</span></h4><span class="cfsum">${calcAllyFoldHtml()}</span></summary>
       ${calcAllyHtml()}
-      <h4 class="csub" style="margin-top:16px">기억의 조각 <span class="note" style="font-weight:400">6칸 · 세트는 칸에 고른 개수로 자동 판정</span></h4>
+      </details>
+      <details class="fold cfold" data-fold="frag"${calcFoldOpen("frag", true) ? " open" : ""}><summary><h4 class="csub">기억의 조각 <span class="note" style="font-weight:400">6칸 · 세트는 칸에 고른 개수로 자동 판정</span></h4><span class="cfsum" id="calcFragFold">${calcFragFoldHtml()}</span></summary>
       ${frags ? `<div class="cbar cocr"><label class="btn gold" for="calcOcrFile">스크린샷으로 채우기</label><input type="file" id="calcOcrFile" accept="image/*" multiple hidden><span class="note">게임 '기억의 조각' 화면(오른쪽에 옵션이 보이는 화면)을 칸마다 찍어 1~6장 고르세요. 붙여넣기(Ctrl+V)도 됩니다. 사진은 이 기기 안에서만 읽고 보내지 않습니다.</span></div>
       <div id="calcOcrMsg">${calcOcrNote}</div>` : ""}
       ${frags ? `<div class="cfrags">${calcSel.frag.map((f, i) => calcFragCardHtml(i)).join("")}</div>
       <div id="calcFragSum">${calcFragSumHtml()}</div>` : '<p class="note">기억의 조각 자료를 불러오지 못했습니다.</p>'}
-      ${fragSets.length ? `<p class="note" style="margin:8px 0 0">${fragSets.map(f => `${esc(f.name)} (${f.pieces}세트): ${esc(f.effect)}`).join("<br>")}<br>세트의 상시 공격력%는 B그룹으로 공격력을 나누는 데 쓰고, 치명피해 같은 다른 상시 능력치는 스테이터스 값에 이미 들어 있다고 보고 전투 중 효과만 계산에 더합니다.</p>` : ""}
+      ${fragSets.length ? calcHelp("sets", fragSets.map(f => `${esc(f.name)} (${f.pieces}세트): ${esc(f.effect)}`).join("<br>"), "세트의 상시 공격력%는 B그룹으로 공격력을 나누는 데 쓰고, 치명피해 같은 다른 상시 능력치는 스테이터스 값에 이미 들어 있다고 보고 전투 중 효과만 계산에 더합니다.", "margin:8px 0 0") : ""}
+      </details>
       <div class="cchks">${calcChk("cond", "조건부 효과도 충족된 것으로 계산 (* 표시)")}</div>
-      <p class="note" style="margin:8px 0 0">장비의 공격력%·무기 공격력·치명 같은 상시 능력치는 아래 스테이터스 값에 이미 들어 있다고 보고 공격력을 나누는 데만 씁니다. '피해량 n% 증가'처럼 전투 중에 붙는 효과는 자동으로 더하니 버프 줄에 따로 넣지 마세요.</p>
+      ${calcHelp("gear", "'피해량 n% 증가'처럼 전투 중에 붙는 효과는 자동으로 더하니 버프 줄에 따로 넣지 마세요.", "장비의 공격력%·무기 공격력·치명 같은 상시 능력치는 아래 스테이터스 값에 이미 들어 있다고 보고 공격력을 나누는 데만 씁니다.", "margin:8px 0 0")}
     </div></div>
 
     <div class="sec"><h3>3. 버프 · 디버프 <span class="note" style="font-family:inherit;font-weight:400">오른쪽 % = 그 버프가 지금 기대 피해를 올리는 몫</span></h3><div class="cbox">
       <div class="cbuffs">${calcSel.buffs.map(calcBuffRow).join("")}</div>
       <div class="cbar" style="margin:10px 0 0"><button class="btn" data-act="calcAddBuff">+ 줄 추가</button></div>
-      <p class="note" style="margin:10px 0 0">종류는 효과 문구로 고릅니다. '피해량 50% <b>증가</b>'는 곱연산, '피해량 <b>+</b>150%'·사기(1당 +20%)는 합연산, '대상이 받는 피해량 +100%'는 적 받는 피해 합연산, 취약(받는 피해량 50% 증가)은 적 받는 피해 곱연산입니다. 적의 불굴(중첩당 받는 피해 20% 감소)은 적 받는 피해 합연산에 음수로 넣습니다 (5중첩이면 −100). '최종 피해량 n% 증가'는 줄마다 따로 곱하고 핸드 표시에도 들어갑니다. 체크를 끄면 그 줄만 빼고 계산합니다. 시즌 카드 '아군의 공격력 +6%'처럼 전투 중에 붙는 공격력 버프는 '공격력 +n%' 줄로, 시그 패시브처럼 스테이터스 화면에 안 잡히는 전투 중 치명확률·치명피해 버프만 '치명확률 +n%'·'치명피해 +n%' 줄로 넣으세요 (2번 장비·세트의 치명 효과는 자동으로 더하니 넣지 마세요).</p>
+      ${calcHelp("buff", "종류는 효과 문구로 고릅니다. '피해량 50% <b>증가</b>'는 곱연산, '피해량 <b>+</b>150%'·사기(1당 +20%)는 합연산, '대상이 받는 피해량 +100%'는 적 받는 피해 합연산, 취약(받는 피해량 50% 증가)은 적 받는 피해 곱연산입니다.", "적의 불굴(중첩당 받는 피해 20% 감소)은 적 받는 피해 합연산에 음수로 넣습니다 (5중첩이면 −100). '최종 피해량 n% 증가'는 줄마다 따로 곱하고 핸드 표시에도 들어갑니다. 체크를 끄면 그 줄만 빼고 계산합니다. 시즌 카드 '아군의 공격력 +6%'처럼 전투 중에 붙는 공격력 버프는 '공격력 +n%' 줄로, 시그 패시브처럼 스테이터스 화면에 안 잡히는 전투 중 치명확률·치명피해 버프만 '치명확률 +n%'·'치명피해 +n%' 줄로 넣으세요 (2번 장비·세트의 치명 효과는 자동으로 더하니 넣지 마세요).", "margin:10px 0 0")}
     </div></div>
 
     <div class="sec"><h3>4. 스테이터스 <span class="note" style="font-family:inherit;font-weight:400">전투 중 상세 화면 값 그대로 · 공격력%는 2번 선택으로 자동</span></h3><div class="cbox">
@@ -2517,12 +2689,12 @@ function viewCalc() {
       <div id="calcAtkAuto" style="margin-top:10px">${calcAtkAutoHtml()}</div>
       ${calcSel.atkManual ? "" : '<p class="note" style="margin:8px 0 0">데이터 변이·기타 공격력%는 스테이터스 화면 값에 들어 있지만 2번 선택으로 알 수 없는 A그룹 공격력%를 넣는 칸입니다 (예: 데이터 변이 공증 14%).</p>'}
       <div class="cchks">${calcChk("atkManual", "A그룹·B그룹·무기 공격력 직접 입력 (자동값 대신 사용)")}</div>
-      ${calcSel.atkManual ? `<div class="cgrid" style="margin-top:10px">
+      ${calcSel.atkManual ? `<div class="cgrid cend" style="margin-top:10px">
         ${calcNum("mA", "A그룹 공격력% 합", "장비·파트너·아군·데이터 변이 전부")}
         ${calcNum("mB", "B그룹 공격력% 합", "기억의 조각 전부 (세트 포함)")}
         <label class="cf"><span>무기 기본 공격력 <em>비우면 무기 등급으로 자동</em></span><input type="text" inputmode="decimal" data-calc="wAtk" value="${esc(calcSel.wAtk)}" placeholder="희귀 74 · 전설 82 · 신화 90"></label>
       </div><p class="note" style="margin:8px 0 0">직접 입력 중에는 2번 조각의 공격력%와 데이터 변이·기타 칸 대신 이 값을 씁니다. 장비 조합 추천(8번)은 이 합에서 지금 장비 몫을 빼고 다시 더해 비교합니다.</p>` : ""}
-      <details class="cadv"${advOpen ? " open" : ""}><summary>고급 설정</summary><div class="cgrid" style="margin-top:10px">
+      <details class="cadv"${advOpen ? " open" : ""}><summary>고급 설정</summary><div class="cgrid cend" style="margin-top:10px">
         ${calcNum("gAtk", "전투 중 공격력%", "스테이터스에 없는 버프 · A그룹 합연산")}
         ${calcNum("xAtk", "기타 전투 공격력%", "위치 미확인 · 별도 곱")}
         ${calcNum("amp", "치명 증폭", "보통 1", "0.01")}
@@ -2530,7 +2702,7 @@ function viewCalc() {
     </div></div>
 
     <div class="sec"><h3>5. 적 <span class="note" style="font-family:inherit;font-weight:400">취약·받는 피해 증가는 3번 버프 줄에</span></h3><div class="cbox">
-      <div class="cgrid">
+      <div class="cgrid cend">
         ${calcSelect("enemyAttr", "적 약점 속성", [["", "모름 · 없음"], ...ATTRS.map(a => [a, a])], "카드 속성과 같으면 약점")}
         ${calcWeakOn() ? calcNum("weakMul", "약점 배율", "% · 기본 125") : ""}
         ${calcNum("dr", "적 피해 감소", "%")}
@@ -2539,20 +2711,21 @@ function viewCalc() {
       <div class="cchks">${calcChk("weak", "약점 공격 (직접 지정)")}${calcChk("weaken", "약화 상태 (공격자, ×0.75)")}</div>
     </div></div>
 
-    <div class="sec"><h3>6. 결과 · 계산 과정</h3><div id="calcOut">${calcOutHtml()}</div></div>
+    <div class="sec" id="calcResult"><h3>6. 결과 · 계산 과정</h3><div id="calcOut">${calcOutHtml()}</div></div>
 
     <div class="sec"><h3>7. 다음 버프 비교 <span class="note" style="font-family:inherit;font-weight:400">같은 수치를 하나 더 얻으면 기대 피해가 몇 % 오르나</span></h3>
       <div class="cgrid" style="margin-bottom:10px">${calcNum("step", "비교할 수치", "%")}</div>
       <div id="calcCmp">${calcCmpHtml()}</div></div>
 
     <div class="sec"><h3>8. 장비 조합 추천 <span class="note" style="font-family:inherit;font-weight:400">무기 · 방어구 · 장신구 3칸 조합의 기대 피해 변화</span></h3>
-      <p class="note" style="margin:-4px 0 10px">기본 = 조건부 효과(*)가 안 붙을 때, 조건 충족 = 조건이 계속 충족될 때입니다. 신화 장비는 세 칸을 통틀어 1개만 낄 수 있어 신화 2개 이상인 조합은 뺍니다. 치명피해 장비는 치명확률만큼만 기대 피해를 올리므로, 전투 중 붙는 치명확률까지 3번 '치명확률 +n%' 줄에 넣어야 제대로 비교됩니다. ★는 전투원 추천 장비, *는 조건부 효과가 있는 장비입니다. 조건 충족 값은 조건을 모두 만족한다고 본 값이라, 그 전투원이 조건을 만족할 수 있는지는 효과 문구(이름에 마우스를 올리면 표시)로 확인하세요.</p>
+      ${calcHelp("eqtop", "기본 = 조건부 효과(*)가 안 붙을 때, 조건 충족 = 조건이 계속 충족될 때입니다. ★는 전투원 추천 장비, *는 조건부 효과가 있는 장비이고, 흐린 이름은 지금 낀 장비와 같은 칸입니다.", "신화 장비는 세 칸을 통틀어 1개만 낄 수 있어 신화 2개 이상인 조합은 뺍니다. 치명피해 장비는 치명확률만큼만 기대 피해를 올리므로, 전투 중 붙는 치명확률까지 3번 '치명확률 +n%' 줄에 넣어야 제대로 비교됩니다. 조건 충족 값은 조건을 모두 만족한다고 본 값이라, 그 전투원이 조건을 만족할 수 있는지는 효과 문구(이름에 마우스를 올리면 표시)로 확인하세요.", "margin:-4px 0 10px")}
       <div id="calcEq">${rankReady ? calcEquipHtml() : CALC_RANK_WAIT}</div></div>
 
     <div class="sec"><h3>9. 기억의 조각 추천 <span class="note" style="font-family:inherit;font-weight:400">세트 조합과 주옵션의 기대 피해 변화</span></h3>
       <div id="calcFr">${rankReady ? calcFragHtml() : CALC_RANK_WAIT}</div></div>
 
-    <div class="sec"><h3>계산식 · 검증 상태</h3><div class="cbox cform" id="calcFormula">${calcFormulaHtml()}</div></div>
+    <details class="sec fold" data-fold="form"${calcFoldOpen("form", false) ? " open" : ""}><summary><h3>계산식 · 검증 상태 <span class="note" style="font-family:inherit;font-weight:400">단계별 근거와 실측 사례 대조</span></h3></summary><div class="cbox cform" id="calcFormula">${calcFormulaHtml()}</div></details>
+    <div class="cpin" id="calcPin" hidden>${calcPinHtml()}</div>
   </section>`;
 }
 
@@ -2615,7 +2788,7 @@ function render() {
   else if (r.view === "teams") app.innerHTML = viewTeams();
   else if (r.view === "sim") app.innerHTML = viewSim();
   else if (r.view === "roles") app.innerHTML = viewRoles();
-  else if (r.view === "calc") { app.innerHTML = viewCalc(); calcBuffGains(); }
+  else if (r.view === "calc") { app.innerHTML = viewCalc(); calcBuffGains(); calcPinCheck(); }
   else if (r.view === "partners") app.innerHTML = r.id ? viewPartner(r.id) : viewPartners();
   else if (r.view === "db") app.innerHTML = viewDb(r.sub, r.arg);
   else if (r.view === "home") app.innerHTML = viewHome();
@@ -2625,6 +2798,7 @@ function render() {
   const tab = r.view === "char" || r.view === "list" ? "list" : r.view === "team" ? "teams" : r.view;
   document.querySelectorAll("[data-tab]").forEach(a => a.classList.toggle("on", a.dataset.tab === tab));
   document.body.classList.toggle("lock", r.view === "list" && sheetOpen);
+  document.body.classList.toggle("oncalc", r.view === "calc"); // 계산기 결과 요약 줄 자리 (footer 아래 여백)
   const sort = document.getElementById("sort");
   if (sort) sort.onchange = () => { sel.sort = sort.value; render(); };
   return r.view;
@@ -2664,7 +2838,7 @@ document.addEventListener("click", e => {
     return;
   }
   const eqc = e.target.closest("[data-eq]");
-  if (eqc) { eqSel[eqc.dataset.eq] = eqc.dataset.v; render(); return; }
+  if (eqc) { eqSel[eqc.dataset.eq] = eqc.dataset.v; eqSel.limit = EQ_PAGE; render(); return; }
   const evc = e.target.closest("[data-ev]");
   if (evc) { evSel.chaos = evc.dataset.ev; render(); return; }
   const glc = e.target.closest("[data-gl]");
@@ -2708,7 +2882,7 @@ document.addEventListener("click", e => {
     }
     case "homeQ": if (homeSearch) homeSearch.set(v); break;
     case "goSeasonEvents": evSel.chaos = CURRENT_SEASON.chaos; evSel.q = ""; location.hash = "#/db/events"; break;
-    case "goSeasonEquip": eqSel.slot = ""; eqSel.grp = ""; eqSel.q = ""; eqSel.chaos = CURRENT_SEASON.chaos; eqSel.applied = ""; location.hash = "#/db/equipment"; break;
+    case "goSeasonEquip": eqSel.slot = ""; eqSel.grp = ""; eqSel.q = ""; eqSel.chaos = CURRENT_SEASON.chaos; eqSel.applied = ""; eqSel.limit = EQ_PAGE; location.hash = "#/db/equipment"; break;
     case "removeParty": teamSel.parties.splice(Number(v), 1); saveOwned(); render(); break;
     case "clearParties": teamSel.parties = []; saveOwned(); render(); break;
     case "toggleOwnedOnly": teamSel.ownedOnly = !ownedFilterOn(); saveOwned(); render(); break;
@@ -2730,11 +2904,16 @@ document.addEventListener("click", e => {
       else show("자동 복사가 안 되어 입력칸에 코드를 넣었습니다. 직접 복사해 주세요.");
       break;
     }
-    case "resetEq": eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.rar = ""; eqSel.sort = ""; eqSel.q = ""; render(); break;
+    case "resetEq": eqSel.slot = ""; eqSel.grp = ""; eqSel.chaos = ""; eqSel.rar = ""; eqSel.sort = ""; eqSel.q = ""; eqSel.limit = EQ_PAGE; render(); break;
+    case "eqMore": case "eqAll": {
+      eqSel.limit = act.dataset.act === "eqAll" ? Infinity : eqSel.limit + EQ_PAGE;
+      const l = document.getElementById("eqList"); if (l) l.innerHTML = eqListHtml(parseRoute().arg);
+      break;
+    }
     case "calcExample": case "calcReset": case "calcAddBuff": case "calcDelBuff": {
       const a2 = act.dataset.act;
-      if (a2 === "calcExample") calcExample(act.dataset.v);
-      else if (a2 === "calcReset") calcResetAll();
+      if (a2 === "calcExample") { calcExample(act.dataset.v); calcFoldAfterLoad(); }
+      else if (a2 === "calcReset") { calcResetAll(); calcFoldAfterLoad(); }
       else if (a2 === "calcAddBuff") calcSel.buffs.push(calcNewBuff());
       else { calcSel.buffs = calcSel.buffs.filter(b => String(b.id) !== act.dataset.v); if (!calcSel.buffs.length) calcSel.buffs.push(calcNewBuff()); }
       const y = window.scrollY; render(); window.scrollTo(0, y); break;
@@ -2754,6 +2933,15 @@ document.addEventListener("click", e => {
       else calcSel.ally = calcSel.ally.filter(a => String(a.id) !== act.dataset.v);
       const y = window.scrollY; render(); window.scrollTo(0, y); break;
     }
+    case "calcFromChar": calcFromChar(v); break;
+    case "calcHelp": {
+      const open = !calcHelpOpen.has(v);
+      if (open) calcHelpOpen.add(v); else calcHelpOpen.delete(v);
+      const p = act.closest(".chelp"); if (p) p.classList.toggle("open", open);
+      act.textContent = open ? "접기" : "자세히"; act.setAttribute("aria-expanded", String(open));
+      break;
+    }
+    case "calcGoOut": { const s = document.getElementById("calcResult"); if (s) s.scrollIntoView({ block: "start", behavior: "smooth" }); break; }
     case "calcRankSort": calcSel.rankSort = act.dataset.v === "1" ? 1 : 0; calcRefresh(); break;
     case "calcMore": { const sl = act.dataset.slot; calcSel.more[sl] = !calcSel.more[sl]; calcRefresh(); break; }
     case "zoom": openLb(act.dataset.src, act.dataset.cap); break;
@@ -2761,6 +2949,18 @@ document.addEventListener("click", e => {
   }
 });
 lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+// 계산기 접기: 사용자가 펼치거나 접은 상태를 기억해 화면을 다시 그려도 유지 (클릭 시점의 open은 바뀌기 전 값)
+document.addEventListener("click", e => {
+  const sm = e.target.closest("details[data-fold] > summary");
+  if (sm && sm.parentElement.dataset.fold in calcFold) calcFold[sm.parentElement.dataset.fold] = !sm.parentElement.open;
+});
+// 휴대폰 계산기 맨 위 '실측 예시 불러오기' 선택 상자
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (!t.matches || !t.matches(".cexsel") || !t.value) return;
+  calcExample(t.value); calcFoldAfterLoad();
+  const y = window.scrollY; render(); window.scrollTo(0, y);
+});
 // 장비 정렬: 목록만 다시 그림
 document.addEventListener("change", e => {
   const sel = e.target.closest("[data-eqsort]");
@@ -2772,7 +2972,7 @@ document.addEventListener("change", e => {
 document.addEventListener("input", e => {
   const box = e.target.closest("[data-in]");
   if (!box) return;
-  if (box.dataset.in === "eq") { eqSel.q = box.value; const l = document.getElementById("eqList"); if (l) l.innerHTML = eqListHtml(""); }
+  if (box.dataset.in === "eq") { eqSel.q = box.value; eqSel.limit = EQ_PAGE; const l = document.getElementById("eqList"); if (l) l.innerHTML = eqListHtml(""); }
   else if (box.dataset.in === "ev") { evSel.q = box.value; const l = document.getElementById("evList"); if (l) l.innerHTML = evListHtml(); }
   else if (box.dataset.in === "gl") { glSel.q = box.value; const l = document.getElementById("glList"); if (l) l.innerHTML = glListHtml(); }
 });
@@ -2958,6 +3158,7 @@ function calcPresetLoad(name) {
   if (!Array.isArray(calcSel.ally)) calcSel.ally = [];
   // 줄 번호(id)가 겹치지 않게 다음 번호를 불러온 값 뒤로
   [...calcSel.buffs, ...calcSel.ally, ...calcSel.frag.flatMap(f => f.subs || [])].forEach(x => { if (Number(x.id) > calcBuffSeq) calcBuffSeq = Number(x.id); });
+  calcFoldAfterLoad();
   calcPresetNote = `'${name}' 불러왔습니다 (${p.at} 저장).`;
   calcPresetPick = name;
 }
@@ -2969,14 +3170,16 @@ function calcPresetDel(name) {
 }
 function calcPresetHtml() {
   const list = calcPresets();
-  return `<div class="cbar cpreset">
+  // PC는 펼친 채로, 휴대폰은 접어 두고 요약만 (한 번 열고 닫으면 그 상태를 기억)
+  return `<details class="fold cpbox" data-fold="preset"${calcFoldOpen("preset", !calcIsMobile()) ? " open" : ""}><summary>세팅 저장 · 불러오기 <span class="note">저장한 세팅 ${list.length}개</span></summary>
+    <div class="cbar cpreset">
       <input type="text" id="calcPresetName" maxlength="30" placeholder="세팅 이름 (예: 로스바이세 보스전)" aria-label="저장할 세팅 이름" value="${esc(calcPresetPick)}">
       <button class="btn" data-act="calcPresetSave">저장</button>
       <select class="csel" id="calcPresetSel" aria-label="저장한 세팅"><option value="">저장한 세팅 (${list.length})</option>${list.map(p => `<option value="${esc(p.name)}"${p.name === calcPresetPick ? " selected" : ""}>${esc(p.name)} · ${esc(p.at)}</option>`).join("")}</select>
       <button class="btn" data-act="calcPresetLoad">불러오기</button>
       <button class="btn" data-act="calcPresetDel">삭제</button>
     </div>
-    <p class="note" style="margin:0 0 8px">${calcPresetNote ? esc(calcPresetNote) + " · " : ""}계산기 입력 전체(카드·장비·조각·버프·스테이터스)를 이 기기 브라우저에만 저장합니다. 다른 기기와는 공유되지 않고, 브라우저 데이터를 지우면 사라집니다.</p>`;
+    <p class="note" style="margin:0 0 8px">${calcPresetNote ? esc(calcPresetNote) + " · " : ""}계산기 입력 전체(카드·장비·조각·버프·스테이터스)를 이 기기 브라우저에만 저장합니다. 다른 기기와는 공유되지 않고, 브라우저 데이터를 지우면 사라집니다.</p></details>`;
 }
 
 function calcFragSet(t) {
@@ -3049,8 +3252,15 @@ document.addEventListener("change", e => {
 /* 헤더 검색 */
 const q = document.getElementById("q"), results = document.getElementById("results");
 // 전투원 → 파트너 → 장비 → 효과 순으로 묶어 보여 준다 (자료가 아직 안 불러와졌으면 그 묶음은 건너뜀)
-function searchHits(s) {
+// 끝의 '더 찾기': 이름에는 없지만 장비 효과 문구·용어 설명에 있는 말(예: 치명)이면 그 화면의 검색으로 보낸다
+function searchHits(s, raw) {
   const has = (...xs) => xs.some(x => x && String(x).toLowerCase().includes(s));
+  const term = raw || s;
+  const eqName = equips.filter(e => has(e.name, e.en)).length, eqAll = equips.filter(e => has(e.name, e.en, e.effect)).length;
+  const glName = gloss.filter(g => has(g.name, g.en)).length, glAll = gloss.filter(g => has(g.name, g.en, g.desc)).length;
+  const more = [];
+  if (eqAll > eqName) more.push({ href: "#/db/equipment/" + encodeURIComponent(term), name: `"${term}" 장비 효과`, meta: `장비 ${eqAll}개 · 장비 획득처에서 보기`, pic: '<span class="ric">찾기</span>' });
+  if (glAll > glName) more.push({ href: "#/db/glossary/" + encodeURIComponent(term), name: `"${term}" 용어 설명`, meta: `용어 ${glAll}개 · 효과 사전에서 보기`, pic: '<span class="ric">찾기</span>' });
   const groups = [
     ["전투원", chars.filter(d => has(d.name_ko, d.name)).slice(0, 6).map(d => ({
       href: charLink(d.id), pic: img(d), name: d.name_ko, meta: `◆${d.attr} · ${d.job}` }))],
@@ -3061,6 +3271,7 @@ function searchHits(s) {
       href: "#/db/equipment/" + encodeURIComponent(e.name), name: e.name, meta: `${e.slot} · ${e.rarity} · ${eqShort(e)}`, pic: '<span class="ric">장비</span>' }))],
     ["효과", gloss.filter(g => has(g.name, g.en)).slice(0, 4).map(g => ({
       href: "#/db/glossary/" + encodeURIComponent(g.name), name: g.name, meta: g.desc.length > 38 ? g.desc.slice(0, 38) + "…" : g.desc, pic: '<span class="ric">효과</span>' }))],
+    ["더 찾기", more],
   ];
   return groups.filter(([, list]) => list.length);
 }
@@ -3068,9 +3279,9 @@ function searchHits(s) {
 function makeSearch(input, box) {
   let hits = [], hl = 0;
   function draw() {
-    const s = input.value.trim().toLowerCase();
+    const raw = input.value.trim(), s = raw.toLowerCase();
     if (!s) { box.hidden = true; return; }
-    const groups = searchHits(s);
+    const groups = searchHits(s, raw);
     hits = groups.flatMap(([, list]) => list);
     hl = Math.min(hl, Math.max(hits.length - 1, 0));
     let i = 0;
