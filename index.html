@@ -396,6 +396,13 @@
 
   /* 장비 계산기 */
   .cbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .cpreset { align-items: center; }
+  .cpreset input[type=text] { flex: 1 1 180px; min-width: 0; box-sizing: border-box; background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 14px; font-family: inherit; }
+  .cpreset input[type=text]:focus { outline: none; border-color: var(--gold); }
+  .cpreset .csel { flex: 1 1 200px; min-width: 0; width: auto; }
+  .cocr { align-items: center; margin: 4px 0 8px; }
+  .cocr .note { flex: 1 1 240px; min-width: 0; }
+  .cocr label.btn { cursor: pointer; }
   .cbox { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
   .cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
   .cgrid .cwide { grid-column: span 2; }
@@ -2382,6 +2389,7 @@ function viewCalc() {
   return `<section class="page">${head}
     <p class="note" style="margin:-8px 0 16px">카드와 버프를 넣으면 게임 화면에 뜨는 피해량 계수를 계산하고, 공격력까지 넣으면 공격력 단계와 예상 피해, 장비·조각 효율 순위를 보여 줍니다. 계산 단계마다 근거와 검증 상태는 맨 아래 표에 있습니다.</p>
     <div class="cbar">${Object.entries(CALC_EXAMPLES).map(([n, ex]) => `<button class="btn gold" data-act="calcExample" data-v="${n}">${esc(ex.label)}</button>`).join("")}<button class="btn" data-act="calcReset">초기화</button></div>
+    ${calcPresetHtml()}
 
     <div class="sec"><h3>1. 카드 <span class="note" style="font-family:inherit;font-weight:400">장비 효과의 조건도 여기로 자동 판정</span></h3><div class="cbox">
       <div class="cgrid">
@@ -2416,6 +2424,8 @@ function viewCalc() {
       <h4 class="csub" style="margin-top:16px">아군 장비 <span class="note" style="font-weight:400">파티원이 낀 장비 중 아군에게 주는 효과</span></h4>
       ${calcAllyHtml()}
       <h4 class="csub" style="margin-top:16px">기억의 조각 <span class="note" style="font-weight:400">6칸 · 세트는 칸에 고른 개수로 자동 판정</span></h4>
+      ${frags ? `<div class="cbar cocr"><label class="btn gold" for="calcOcrFile">스크린샷으로 채우기</label><input type="file" id="calcOcrFile" accept="image/*" multiple hidden><span class="note">게임 '기억의 조각' 화면(오른쪽에 옵션이 보이는 화면)을 칸마다 찍어 1~6장 고르세요. 붙여넣기(Ctrl+V)도 됩니다. 사진은 이 기기 안에서만 읽고 보내지 않습니다.</span></div>
+      <div id="calcOcrMsg">${calcOcrNote}</div>` : ""}
       ${frags ? `<div class="cfrags">${calcSel.frag.map((f, i) => calcFragCardHtml(i)).join("")}</div>
       <div id="calcFragSum">${calcFragSumHtml()}</div>` : '<p class="note">기억의 조각 자료를 불러오지 못했습니다.</p>'}
       ${fragSets.length ? `<p class="note" style="margin:8px 0 0">${fragSets.map(f => `${esc(f.name)} (${f.pieces}세트): ${esc(f.effect)}`).join("<br>")}<br>세트의 상시 공격력%는 B그룹으로 공격력을 나누는 데 쓰고, 치명피해 같은 다른 상시 능력치는 스테이터스 값에 이미 들어 있다고 보고 전투 중 효과만 계산에 더합니다.</p>` : ""}
@@ -2663,6 +2673,13 @@ document.addEventListener("click", e => {
       else { calcSel.buffs = calcSel.buffs.filter(b => String(b.id) !== act.dataset.v); if (!calcSel.buffs.length) calcSel.buffs.push(calcNewBuff()); }
       const y = window.scrollY; render(); window.scrollTo(0, y); break;
     }
+    case "calcPresetSave": case "calcPresetLoad": case "calcPresetDel": {
+      const a2 = act.dataset.act, pick = (document.getElementById("calcPresetSel") || {}).value || "";
+      if (a2 === "calcPresetSave") calcPresetSave((document.getElementById("calcPresetName") || {}).value);
+      else if (a2 === "calcPresetLoad") calcPresetLoad(pick);
+      else { if (pick && !confirm(`'${pick}' 세팅을 지울까요?`)) break; calcPresetDel(pick); }
+      const y = window.scrollY; render(); window.scrollTo(0, y); break;
+    }
     case "calcAddSub": case "calcDelSub": case "calcAddAlly": case "calcDelAlly": {
       const a2 = act.dataset.act, f = calcSel.frag[Number(act.dataset.i)];
       if (a2 === "calcAddSub") { if (f && f.subs.length < CALC_SUB_MAX) f.subs.push({ id: ++calcBuffSeq, name: "", v: "" }); }
@@ -2712,6 +2729,189 @@ document.addEventListener("input", e => { if (e.target.matches("[data-bf]") && e
 document.addEventListener("change", e => { if (e.target.matches('[data-bf="on"], [data-bf="kind"]')) calcBuffInput(e); });
 
 /* 기억의 조각 칸·아군 장비: 수치 입력은 결과만 다시 그려 포커스를 유지, 세트·옵션·장비 선택은 화면 전체를 다시 그림 */
+/* 기억의 조각 스크린샷 인식: 게임 '기억의 조각' 화면 오른쪽 옵션 패널을 브라우저 안에서 읽어 6칸을 채운다
+   (Tesseract 엔진·한국어 데이터는 vendor/ocr 에 두고 처음 쓸 때만 불러옴, 사진은 밖으로 보내지 않음) */
+const CALC_OCR_SLOTS = { "충격": 1, "억압": 2, "부정": 3, "이상": 4, "갈망": 5, "상상": 6 };
+let calcOcrEngine = null, calcOcrBusy = false, calcOcrNote = "";
+const calcOcrSimd = () => { try { return WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 96, 0, 1, 123, 3, 2, 1, 0, 10, 10, 1, 8, 0, 65, 0, 253, 15, 253, 98, 11])); } catch (e) { return false; } };
+function calcOcrInit() {
+  if (calcOcrEngine) return calcOcrEngine;
+  calcOcrEngine = (async () => {
+    await new Promise((ok, no) => {
+      const s = document.createElement("script");
+      s.src = calcOcrSimd() ? "vendor/ocr/tesseract-core-simd-lstm.wasm.js" : "vendor/ocr/tesseract-core-lstm.wasm.js";
+      s.onload = ok; s.onerror = () => no(new Error("인식 엔진을 불러오지 못했습니다"));
+      document.head.appendChild(s);
+    });
+    const M = await window.TesseractCore();
+    const res = await fetch("vendor/ocr/kor.traineddata");
+    if (!res.ok) throw new Error("한국어 인식 데이터를 불러오지 못했습니다");
+    M.FS.writeFile("kor.traineddata", new Uint8Array(await res.arrayBuffer()));
+    const api = new M.TessBaseAPI();
+    if (api.Init(null, "kor") !== 0) throw new Error("인식 엔진을 시작하지 못했습니다");
+    api.SetVariable("tessedit_pageseg_mode", "6");
+    return { M, api };
+  })();
+  calcOcrEngine.catch(() => { calcOcrEngine = null; }); // 실패하면 다음에 다시 시도
+  return calcOcrEngine;
+}
+// 화면 오른쪽 30%(옵션 패널)만 잘라 확대·흑백·대비 조정
+async function calcOcrPrep(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => no(new Error("이미지를 열 수 없습니다")); i.src = url; });
+    const x0 = Math.round(img.naturalWidth * 0.71), w = img.naturalWidth - x0, h = img.naturalHeight, k = Math.min(2, 2400 / h);
+    const c = document.createElement("canvas"); c.width = Math.round(w * k); c.height = Math.round(h * k);
+    const g = c.getContext("2d"); g.imageSmoothingQuality = "high"; g.drawImage(img, x0, 0, w, h, 0, 0, c.width, c.height);
+    const d = g.getImageData(0, 0, c.width, c.height), p = d.data; let lo = 255, hi = 0;
+    for (let i = 0; i < p.length; i += 4) { const y = 0.299 * p[i] + 0.587 * p[i + 1] + 0.114 * p[i + 2]; p[i] = y; if (y < lo) lo = y; if (y > hi) hi = y; }
+    const s = 255 / Math.max(1, hi - lo);
+    for (let i = 0; i < p.length; i += 4) { const y = (p[i] - lo) * s; p[i] = p[i + 1] = p[i + 2] = y; }
+    g.putImageData(d, 0, 0);
+    return new Uint8Array(await (await new Promise(r => c.toBlob(r, "image/png"))).arrayBuffer());
+  } finally { URL.revokeObjectURL(url); }
+}
+// 인식한 글 → { set, slot, main, subs[] }. 'X 충격' 같은 제목 줄 다음 5줄이 주옵션·유효옵 (오른쪽 숫자가 값, 이름 뒤 '+2'는 강화 횟수)
+function calcOcrParse(text) {
+  const lines = String(text).split("\n").map(s => s.trim()).filter(Boolean);
+  const hi = lines.findIndex(l => /(충격|억압|부정|이상|갈망|상상)\s*$/.test(l) && !/세트/.test(l));
+  if (hi < 0) return null;
+  const head = lines[hi].match(/^(.*?)\s*(충격|억압|부정|이상|갈망|상상)\s*$/);
+  const out = { set: head[1].trim(), slot: CALC_OCR_SLOTS[head[2]], slotName: head[2], main: null, subs: [], miss: [] };
+  for (let i = hi + 1; i < lines.length && i <= hi + 6; i++) {
+    if (/세트/.test(lines[i])) break;
+    const m = lines[i].replace(/^[^가-힣A-Za-z]+/, "").match(/^(.+?)\s*(?:\+\s*\d)?\s+(\+?\s*\d+(?:[.,]\d+)?\s*%?)$/);
+    if (!m) { out.miss.push(lines[i]); continue; }
+    const raw = m[2].replace(/\s/g, "").replace(",", ".");
+    const item = { name: m[1].replace(/\s*\+\s*\d$/, "").trim(), v: parseFloat(raw.replace(/[+%]/g, "")), pct: raw.endsWith("%") };
+    if (!out.main) out.main = item; else out.subs.push(item);
+  }
+  return out;
+}
+// 글자 두 개씩 묶어 겹치는 비율 (인식이 한두 글자 틀려도 이름을 찾도록)
+function calcOcrSim(a, b) {
+  const bi = s => { const t = s.replace(/\s/g, ""), o = []; for (let i = 0; i < t.length - 1; i++) o.push(t.slice(i, i + 2)); return o; };
+  const x = bi(a), y = bi(b); if (!x.length || !y.length) return a.replace(/\s/g, "") === b.replace(/\s/g, "") ? 1 : 0;
+  let hit = 0; const pool = [...y]; x.forEach(g => { const k = pool.indexOf(g); if (k >= 0) { hit++; pool.splice(k, 1); } });
+  return 2 * hit / (x.length + y.length);
+}
+const calcOcrBest = (s, names, min) => { let best = "", sc = 0; names.forEach(n => { const v = calcOcrSim(s, n); if (v > sc) { sc = v; best = n; } }); return sc >= min ? best : ""; };
+// 화면 옵션 이름 → 계산기 옵션 이름 (공격력 22 → 공격력+, 공격력 2.7% → 공격력%)
+function calcOcrStat(it) {
+  if (/속\s*성\s*피\s*해/.test(it.name)) return "속성 피해량";
+  const base = calcOcrBest(it.name, ["공격력", "방어력", "체력", "치명확률", "치명피해", "에고회복력", "추가피해량", "지속피해량"], 0.5);
+  return ({ "공격력": it.pct ? "공격력%" : "공격력+", "방어력": it.pct ? "방어력%" : "방어력+", "체력": it.pct ? "체력%" : "체력+",
+    "치명확률": "치명 확률", "치명피해": "치명 피해", "에고회복력": "에고 회복력", "추가피해량": "추가 피해량", "지속피해량": "지속 피해량" })[base] || "";
+}
+// 인식 결과 한 장을 해당 칸에 넣고, 보여 줄 요약을 돌려준다
+function calcOcrApply(r) {
+  const i = r.slot - 1, f = calcSel.frag[i], slot = calcFragSlot(i), warn = [];
+  const set = calcOcrBest(r.set, frags.sets.map(s => s.name), 0.5);
+  f.set = set; if (!set) warn.push(`세트 '${r.set}'를 찾지 못함`);
+  if (r.main) {
+    const st = calcOcrStat(r.main);
+    if (calcFragFixed(i)) { f.mv = calcFragStat(slot.rows[0][0]) ? String(r.main.v) : ""; }
+    else {
+      const row = slot.rows.find(rw => rw[0] === st || (st === "속성 피해량" && rw[0].startsWith("속성 피해량")));
+      f.main = row ? row[0] : ""; f.mv = row && calcFragStat(row[0]) ? String(r.main.v) : "";
+      if (!row) warn.push(`주옵션 '${r.main.name}'을 찾지 못함`);
+    }
+  } else warn.push("주옵션을 읽지 못함");
+  const names = calcSubNames(); let skip = 0;
+  f.subs = [];
+  r.subs.forEach(s => {
+    const n = calcOcrStat(s);
+    if (n && names.includes(n) && !f.subs.some(x => x.name === n) && f.subs.length < CALC_SUB_MAX) f.subs.push({ id: ++calcBuffSeq, name: n, v: String(s.v) });
+    else if (n) skip++; else warn.push(`유효옵 '${s.name}'을 읽지 못함`);
+  });
+  if (r.subs.length + r.miss.length < 4) warn.push(`유효옵이 ${r.subs.length}줄만 보임`);
+  r.miss.forEach(l => warn.push(`못 읽은 줄: ${l}`));
+  const mainTxt = r.main ? `${calcFragMain(i) ? calcShortOpt(calcFragMain(i)) : r.main.name} ${r.main.v}${r.main.pct ? "%" : ""}` : "?";
+  return { i, ok: !warn.length, text: `${slot.slot} ${set || "?"} · ${mainTxt} · 유효옵 ${f.subs.length}개${skip ? ` (계산 무관 ${skip}개 뺌)` : ""}`, warn };
+}
+async function calcOcrFiles(list) {
+  const files = [...list].filter(f => f && /^image\//.test(f.type));
+  if (!files.length || calcOcrBusy || !frags) return;
+  calcOcrBusy = true;
+  const say = html => { calcOcrNote = html; const el = document.getElementById("calcOcrMsg"); if (el) el.innerHTML = html; };
+  const rows = [], seen = {};
+  try {
+    say('<p class="note">인식 엔진 준비 중… (처음 한 번 약 5MB를 받습니다)</p>');
+    const E = await calcOcrInit();
+    for (let n = 0; n < files.length; n++) {
+      say(`<p class="note">${n + 1}/${files.length}장 읽는 중…</p>`);
+      E.M.FS.writeFile("/input", await calcOcrPrep(files[n]));
+      E.api.SetImageFile();
+      const r = calcOcrParse(E.api.GetUTF8Text());
+      if (!r) { rows.push({ i: 9, ok: false, text: `${esc(files[n].name || "사진")}: 기억의 조각 화면이 아니거나 칸 이름을 읽지 못함`, warn: [] }); continue; }
+      const a = calcOcrApply(r);
+      if (seen[a.i]) a.warn.push("같은 칸 사진이 여러 장이라 마지막 사진으로 채움");
+      seen[a.i] = true;
+      rows.push({ i: a.i, ok: a.ok, text: esc(a.text), warn: a.warn.map(esc) });
+    }
+    const filled = Object.keys(seen).length;
+    rows.sort((x, y) => x.i - y.i);
+    calcOcrNote = `<div class="csum"><div><span class="clab">스크린샷</span> <b>${filled}칸 채움</b>${filled < 6 ? ` · 나머지 ${6 - filled}칸은 그대로` : ""} — 칸마다 수치를 한 번 확인해 주세요</div>${rows.map(x => `<div>${x.ok ? "✓" : "⚠"} ${x.text}${x.warn.length ? `<div class="cfwarn">${x.warn.join(" · ")}</div>` : ""}</div>`).join("")}</div>`;
+  } catch (e) {
+    calcOcrNote = `<div class="cfwarn">⚠ ${esc(e.message || String(e))}. 새로고침 뒤 다시 시도하거나 직접 입력해 주세요.</div>`;
+  } finally {
+    calcOcrBusy = false;
+    const y = window.scrollY; render(); window.scrollTo(0, y);
+  }
+}
+document.addEventListener("change", e => { if (e.target.id === "calcOcrFile") { calcOcrFiles(e.target.files); e.target.value = ""; } });
+// 계산기 화면에서 이미지를 붙여넣어도 인식 (Ctrl+V)
+document.addEventListener("paste", e => {
+  if (!/^#\/calc/.test(location.hash) || !e.clipboardData) return;
+  const imgs = [...e.clipboardData.items].filter(it => it.kind === "file" && /^image\//.test(it.type)).map(it => it.getAsFile());
+  if (imgs.length) { e.preventDefault(); calcOcrFiles(imgs); }
+});
+
+/* 계산기 세팅 저장·불러오기: 이 브라우저(localStorage)에만 저장 */
+const CALC_PRESET_KEY = "czn-calc-presets";
+let calcPresetPick = "", calcPresetNote = "";
+function calcPresets() { try { const a = JSON.parse(localStorage.getItem(CALC_PRESET_KEY) || "[]"); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+function calcPresetsPut(a) { try { localStorage.setItem(CALC_PRESET_KEY, JSON.stringify(a)); return true; } catch (e) { return false; } }
+function calcPresetSave(name) {
+  name = String(name || "").trim().slice(0, 30);
+  if (!name) { calcPresetNote = "저장할 이름을 넣어 주세요."; return; }
+  const data = JSON.parse(JSON.stringify({ ...calcSel, more: {} }));
+  const list = calcPresets().filter(p => p.name !== name);
+  list.unshift({ name, at: new Date().toISOString().slice(0, 16).replace("T", " "), data });
+  if (list.length > 30) list.length = 30;
+  calcPresetNote = calcPresetsPut(list) ? `'${name}' 저장했습니다.` : "저장하지 못했습니다 (브라우저 저장소를 쓸 수 없음).";
+  calcPresetPick = name;
+}
+function calcPresetLoad(name) {
+  const p = calcPresets().find(x => x.name === name);
+  if (!p) { calcPresetNote = "불러올 세팅을 골라 주세요."; return; }
+  Object.assign(calcSel, calcBlank(), p.data, { more: {} });
+  if (!Array.isArray(calcSel.frag) || calcSel.frag.length !== CALC_FRAG_N) calcSel.frag = calcFragBlank();
+  if (!Array.isArray(calcSel.buffs) || !calcSel.buffs.length) calcSel.buffs = [calcNewBuff()];
+  if (!Array.isArray(calcSel.ally)) calcSel.ally = [];
+  // 줄 번호(id)가 겹치지 않게 다음 번호를 불러온 값 뒤로
+  [...calcSel.buffs, ...calcSel.ally, ...calcSel.frag.flatMap(f => f.subs || [])].forEach(x => { if (Number(x.id) > calcBuffSeq) calcBuffSeq = Number(x.id); });
+  calcPresetNote = `'${name}' 불러왔습니다 (${p.at} 저장).`;
+  calcPresetPick = name;
+}
+function calcPresetDel(name) {
+  const list = calcPresets(), next = list.filter(x => x.name !== name);
+  if (next.length === list.length) { calcPresetNote = "지울 세팅을 골라 주세요."; return; }
+  calcPresetNote = calcPresetsPut(next) ? `'${name}' 지웠습니다.` : "지우지 못했습니다.";
+  calcPresetPick = "";
+}
+function calcPresetHtml() {
+  const list = calcPresets();
+  return `<div class="cbar cpreset">
+      <input type="text" id="calcPresetName" maxlength="30" placeholder="세팅 이름 (예: 로스바이세 보스전)" aria-label="저장할 세팅 이름" value="${esc(calcPresetPick)}">
+      <button class="btn" data-act="calcPresetSave">저장</button>
+      <select class="csel" id="calcPresetSel" aria-label="저장한 세팅"><option value="">저장한 세팅 (${list.length})</option>${list.map(p => `<option value="${esc(p.name)}"${p.name === calcPresetPick ? " selected" : ""}>${esc(p.name)} · ${esc(p.at)}</option>`).join("")}</select>
+      <button class="btn" data-act="calcPresetLoad">불러오기</button>
+      <button class="btn" data-act="calcPresetDel">삭제</button>
+    </div>
+    <p class="note" style="margin:0 0 8px">${calcPresetNote ? esc(calcPresetNote) + " · " : ""}계산기 입력 전체(카드·장비·조각·버프·스테이터스)를 이 기기 브라우저에만 저장합니다. 다른 기기와는 공유되지 않고, 브라우저 데이터를 지우면 사라집니다.</p>`;
+}
+
 function calcFragSet(t) {
   const f = calcSel.frag[Number(t.dataset.i)];
   if (!f) return false;
