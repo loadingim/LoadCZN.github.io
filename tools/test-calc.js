@@ -20,9 +20,11 @@ for (const c of F.cases) {
     const r = C.coefficient(c.input);
     const key = Object.keys(c.expect)[0];
     want = c.expect[key];
-    got = key === "base" ? r.base : C.ceilShow(r[key]);
+    // expect.hand 는 게임 카드의 핸드 표시 = 핸드 계수 × 최종 피해 (r.show)
+    const raw = key === "base" ? r.base : key === "hand" ? r.show : r[key];
+    got = key === "base" ? r.base : C.ceilShow(raw);
     const err = want ? Math.abs(got - want) / want * 100 : 0;
-    line = `${c.id.padEnd(16)} ${String(key).padEnd(4)} 실측 ${want} · 계산 ${got} (원값 ${(key === "base" ? r.base : r[key]).toFixed(2)}) · 오차 ${err.toFixed(2)}%`;
+    line = `${c.id.padEnd(16)} ${String(key).padEnd(4)} 실측 ${want} · 계산 ${got} (원값 ${raw.toFixed(2)}) · 오차 ${err.toFixed(2)}%`;
     ok(got === want, `${c.id}: 기대 ${want}, 계산 ${got}`);
   } else if (c.kind === "ratio") {
     // 같은 입력에서 한 요소만 바꿨을 때의 배율을 계산식으로 구해, 실측 '전' 값에 곱한다.
@@ -69,6 +71,9 @@ console.log("3) 계수 식 성질");
   ok(near(r.hand, 260, 1e-9), "핸드 계수 = 200 × 1.2 + 20 이어야 함");
   // 잠재력 가산은 잠재력 곱보다 먼저
   ok(near(C.cardBase(100, 20, 20), 144, 1e-9), "잠재력 가산·곱 순서 오류");
+  // 핸드 표시는 최종 피해까지 곱하고, 받는 피해·약점은 넣지 않는다
+  const f = C.coefficient({ base: 100, M: 100, E: 50, weak: 1.25, fin: 1.5 });
+  ok(near(f.show, 300, 1e-9) && near(f.non, (200 + 50) * 1.25 * 1.5, 1e-9), "핸드 표시(최종 포함)·대상 계수 오류");
   // 치명: 치명피해 150% → 1.5배, 기대값은 치명확률로 가중
   const k = C.coefficient({ base: 100, cr: 50, cd: 150 });
   ok(near(k.crit, 150, 1e-9) && near(k.exp, 125, 1e-9), "치명 배율·기대값 오류");

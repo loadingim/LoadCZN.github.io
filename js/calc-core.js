@@ -58,6 +58,7 @@
 
   /* 3) 피해량 계수 ----------------------------------------------------------------
    * 핸드 계수 = 카드 기본 배율 × (1 + Σ'피해량 n% 증가') + Σ'피해량 +n%'
+   * 핸드 표시 = 핸드 계수 × 최종 피해 (게임 카드에 뜨는 값)
    * 대상 계수 = (핸드 계수 + Σ'대상이 받는 피해량 +n%') × Π(1 + 받는 피해 곱연산) × 약점 × 최종 피해 × (1 − 피해 감소) × 약화
    * 치명 배율 = 1 + (치명피해 − 100%) × 증폭   (화면의 치명피해는 기본 100%를 포함한 값)
    * 기대 계수 = 대상 계수 × (1 + 치명확률 × (치명 배율 − 1))
@@ -80,12 +81,15 @@
     const fin = s.fin === undefined ? 1 : num(s.fin);
     const drMul = Math.max(0, 1 - pct(s.dr));
     const weakenMul = s.weaken ? WEAKEN_MUL : 1;
+    // 핸드 표시(카드에 뜨는 값)는 최종 피해량까지 곱한 값이다. 받는 피해·약점은 적 위에 올렸을 때만 들어간다.
+    // (로스바이세 명멸검 실측 2026-10-31: 2356 × 3.0 × 1.8 = 12722.4 → 12723%)
+    const show = hand * fin;
     const non = pre * V * weak * fin * drMul * weakenMul;
     const C = critMul(s.cd, s.amp);
     const cr = Math.min(1, Math.max(0, pct(s.cr)));
     const crit = non * C;
     const exp = non * (1 + cr * (C - 1));
-    return { base, mulPart, hand, pre, V, weak, fin, drMul, weakenMul, non, C, cr, crit, exp };
+    return { base, mulPart, hand, show, pre, V, weak, fin, drMul, weakenMul, non, C, cr, crit, exp };
   }
 
   /* 4) 최종 피해 (추정) -------------------------------------------------------------
