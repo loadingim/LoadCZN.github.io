@@ -1514,7 +1514,7 @@ const CALC_DEF = {
   base: 0, hits: 1, defBased: false, weakMul: 125, potKind: "unique", potLv: 0, potAdd: 0, egoLv: 0, bStack: 0, bPer: 0,
   cr: 0, cd: 150, amp: 1, el: 0, fu: 0, dot: 0, def: 0,
   atk: 0, pAtk: 0, pDmg: 0, fAtk: 0, wAtk: "", gAtk: 0, xAtk: 0,
-  partner: "", pLv: 1, fragMode: "4+2", set4: "", set2a: "", set2b: "", set2c: "", enemyAttr: "", dr: 0, weaken: false, defMul: 0.375,
+  partner: "", pLv: 1, fragMode: "4+2", set4: "", set2a: "", set2b: "", set2c: "", enemyAttr: "", dr: 0, weaken: false, defMul: 0.389,
   step: 10, cond: false
 };
 let calcBuffSeq = 0;
@@ -1931,14 +1931,14 @@ function calcOutHtml() {
   steps.push(li(`11. × 치명 배율 (치명피해 ${calcNumFmt(st.cd)}%, 치명확률 ${calcNumFmt(d.cr * 100)}%)`, `×${calcNumFmt(d.C)} · 기대 ×${calcNumFmt(1 + d.cr * (d.C - 1))}`));
   if (d.hasAtk) {
     const basis = calcSel.defBased ? `(공격력 × 0.3 + 방어력 ${calcNumFmt(calcNum0(calcSel.def))} × 2.1)` : "최종 공격력";
-    steps.push(li(`12. 계수 × ${basis} × 0.35 × 적 방어 계수 ${calcNumFmt(calcNum0(calcSel.defMul))} <small>추정</small>`, `${calcDmgFmt(d.dmg.non)} · 치명 ${calcDmgFmt(d.dmg.crit)}${hits > 1 ? " (1타)" : ""}`, "tot"));
+    steps.push(li(`12. 계수 × ${basis} × 0.35 × 적 방어 계수 ${Number(calcNum0(calcSel.defMul).toFixed(3))} <small>추정</small>`, `${calcDmgFmt(d.dmg.non)} · 치명 ${calcDmgFmt(d.dmg.crit)}${hits > 1 ? " (1타)" : ""}`, "tot"));
   }
   const weakNote = weakOn && !weakAp ? `<p class="note" style="margin:8px 0 0">약점 공격을 켰지만 공격 종류가 '${esc((CALC_TYPES.find(t => t[0] === calcSel.type) || [, ""])[1])}'라 약점 배율을 빼고 계산했습니다 (Prydwen: 직접 사용한 카드 공격에만 적용, 실측 미확인).</p>` : "";
   const dmgRow = d.hasAtk ? `<div class="ctot c3" style="margin-top:10px">
       <div style="--sc:var(--gold)"><div class="cl">예상 피해 (비치명${hits > 1 ? `, ${hits}타 합` : ""})</div><div class="cv">${calcDmgFmt(d.dmg.non * hits)}</div></div>
       <div style="--sc:#e08a5a"><div class="cl">예상 피해 (치명)</div><div class="cv">${calcDmgFmt(d.dmg.crit * hits)}</div></div>
       <div style="--sc:#5aa9e6"><div class="cl">예상 피해 (기대값)</div><div class="cv">${calcDmgFmt(d.dmg.exp * hits)}</div></div>
-    </div><p class="note" style="margin:6px 0 0">예상 피해는 0.35 상수와 적 방어 계수(기본 0.375 · 실측 2건 0.373~0.381)를 쓴 <b>추정치</b>입니다. 실제 숫자와 맞춰 보려면 적 방어 계수를 조정하세요. 장비·버프 비교는 같은 조건의 비율이라 이 값과 상관없이 쓸 수 있습니다.</p>`
+    </div><p class="note" style="margin:6px 0 0">예상 피해는 0.35 상수와 적 방어 계수(기본 0.389 · 실측 3건 0.381~0.389)를 쓴 <b>추정치</b>입니다. 실제 숫자와 맞춰 보려면 적 방어 계수를 조정하세요. 장비·버프 비교는 같은 조건의 비율이라 이 값과 상관없이 쓸 수 있습니다.</p>`
     : '<p class="note" style="margin:8px 0 0">공격력(스테이터스)을 넣으면 1~4단계(공격력)와 12단계(예상 피해)까지 계산합니다.</p>';
   return `<div class="ctot c4">
       <div style="--sc:var(--muted)"><div class="cl">핸드 표시</div><div class="cv">${calcPctFmt(d.show)}</div></div>
@@ -2196,7 +2196,7 @@ function viewCalc() {
         ${calcSelect("enemyAttr", "적 약점 속성", [["", "모름 · 없음"], ...ATTRS.map(a => [a, a])], "카드 속성과 같으면 약점")}
         ${calcWeakOn() ? calcNum("weakMul", "약점 배율", "% · 기본 125") : ""}
         ${calcNum("dr", "적 피해 감소", "%")}
-        ${calcNum("defMul", "적 방어 계수", "실측 0.37~0.38 · 1이면 미적용", "0.01")}
+        ${calcNum("defMul", "적 방어 계수", "실측 0.38~0.39 · 1이면 미적용", "0.001")}
       </div>
       <div class="cchks">${calcChk("weak", "약점 공격 (직접 지정)")}${calcChk("weaken", "약화 상태 (공격자, ×0.75)")}</div>
     </div></div>
