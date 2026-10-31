@@ -1492,10 +1492,10 @@ const CALC_POT_ID = { basic: "02", common: "03", unique: "04" };
 const CALC_ATK_GROUP = { "최후의 명령어": "atkX" };
 const CALC_DEF = {
   char: "", card: "", attr: "", cost: "", bind: false, basic: false, weak: false, type: "card",
-  base: 0, hits: 1, defBased: false, weakMul: 125, potKind: "unique", potLv: 0, potAdd: 0,
+  base: 0, hits: 1, defBased: false, weakMul: 125, potKind: "unique", potLv: 0, potAdd: 0, egoLv: 0, bStack: 0, bPer: 0,
   cr: 0, cd: 150, amp: 1, el: 0, fu: 0, dot: 0, def: 0,
   atk: 0, pAtk: 0, pDmg: 0, fAtk: 0, wAtk: "", gAtk: 0, xAtk: 0,
-  partner: "", pLv: 1, set4: "", enemyAttr: "", dr: 0, weaken: false, defMul: 1,
+  partner: "", pLv: 1, fragMode: "4+2", set4: "", set2a: "", set2b: "", set2c: "", enemyAttr: "", dr: 0, weaken: false, defMul: 1,
   step: 10, cond: false
 };
 let calcBuffSeq = 0;
@@ -1622,7 +1622,11 @@ function calcApply(st, comps, sign, withCond, filter) {
   });
   return s;
 }
-const calcSet4 = () => frags && calcSel.set4 ? frags.sets.find(s => s.name === calcSel.set4 && s.pieces === 4) : null;
+// 기억의 조각은 6개: 4세트 + 2세트 또는 2세트 + 2세트 + 2세트
+const calcSet4 = () => frags && calcSel.fragMode !== "2+2+2" && calcSel.set4 ? frags.sets.find(s => s.name === calcSel.set4 && s.pieces === 4) : null;
+const calcSet2Keys = () => calcSel.fragMode === "2+2+2" ? ["set2a", "set2b", "set2c"] : ["set2a"];
+const calcSet2s = () => frags ? calcSet2Keys().map(k => frags.sets.find(s => s.name === calcSel[k] && s.pieces === 2)).filter(Boolean) : [];
+const calcFragSets = () => [calcSet4(), ...calcSet2s()].filter(Boolean);
 // 지금 입력한 상태. 스테이터스 값(공격력·치명 등)은 현재 장비·파트너·조각이 들어간 화면 값이고,
 // 현재 장비의 전투 효과(피해량 증가, 조건부 치명 등)와 4세트 효과는 여기서 더한다.
 function calcState(skipId) {
@@ -1633,8 +1637,8 @@ function calcState(skipId) {
     M: calcNum0(calcSel.pDmg), A: 0, E: 0, V: 1, fin: 1
   };
   calcSel.buffs.forEach(b => { if (b.on && b.id !== skipId) calcAddBuff(s, b.kind, Number(b.v) || 0, 1); });
-  const set4 = calcSet4();
-  if (set4) s = calcApply(s, calcFragComps(set4.effect), 1, calcSel.cond, "battle");
+  // 세트 효과 중 상시 능력치(공격력%·치명피해 등)는 스테이터스 값에 이미 들어 있으므로 전투 효과만 더한다
+  calcFragSets().forEach(set => { s = calcApply(s, calcFragComps(set.effect), 1, calcSel.cond, "battle"); });
   CALC_SLOTS.forEach(slot => {
     const e = eqByName[calcSel.cur[slot]];
     if (!e) return;
@@ -1652,12 +1656,24 @@ function calcState(skipId) {
 function calcWeakOn() { return !!(calcSel.weak || (calcSel.enemyAttr && calcSel.enemyAttr === calcSel.attr)); }
 // 약점 배율은 직접 사용한 카드 공격에만 (Prydwen: 추가 공격·반격·지속 피해 같은 비활성 피해에는 붙지 않음, 실측 미확인)
 const calcWeakApplies = () => calcWeakOn() && calcSel.type === "card";
-function calcPotMul() { return calcSel.potKind === "none" ? 0 : calcNum0(calcSel.potLv) * 2; }
+// 에고 발현으로 오르는 잠재력 레벨: 고른 전투원의 발현 데이터에서 '잠재력 … 레벨이 n 증가' 문구를 선택한 단계까지 더한다
+// (데이터상 4성은 3·5단계 두 번 +6, 5성은 5단계 한 번 +3)
+function calcEgoBonus() {
+  const k = kits[calcSel.char], lv = calcNum0(calcSel.egoLv);
+  if (!k || !lv) return 0;
+  return (k.manifest || []).filter(m => Number(m.lv) <= lv).reduce((n, m) => n + (m.effect || []).reduce((s, e) => {
+    const x = /잠재력.*레벨이\s*(\d+)\s*증가/.exec(e);
+    return s + (x ? Number(x[1]) : 0);
+  }, 0), 0);
+}
+function calcPotMul() { return calcSel.potKind === "none" ? 0 : (calcNum0(calcSel.potLv) + calcEgoBonus()) * 2; }
+// 기본 피해량 가산 (검수처럼 스택 × 배율): 잠재력 곱 뒤, 피해량 증가 곱 앞에 더한다
+const calcBaseAdd = () => calcNum0(calcSel.bStack) * calcNum0(calcSel.bPer);
 function calcMechPct(st) { return calcSel.type === "fu" ? st.fu : calcSel.type === "dot" ? st.dot : 0; }
 // 계수·공격력·예상 피해. score는 효율 비교용 (같은 조건에서의 기대 피해)
 function calcCoef(st) {
   const r = CZNCalc.coefficient({
-    base: calcSel.base, potAdd: calcSel.potAdd, potMul: calcPotMul(),
+    base: calcSel.base, potAdd: calcSel.potAdd, potMul: calcPotMul(), bAdd: calcBaseAdd(),
     M: st.M, A: st.A, E: st.E, V: st.V, fin: st.fin,
     weak: calcWeakApplies() ? calcNum0(calcSel.weakMul) / 100 : 1,
     dr: calcSel.dr, weaken: calcSel.weaken, cr: st.cr, cd: st.cd, amp: calcSel.amp
@@ -1848,7 +1864,11 @@ function calcOutHtml() {
     steps.push(li(`4. 전투 중 공격력% A그룹 +${pctx(st.aAb)} · B그룹 +${pctx(st.aBb)} (합연산)${st.aX ? ` · 기타 × ${pctx(st.aX)}` : ""}`, `${calcNumFmt(a.final)} <small>최종 공격력</small>`, "tot"));
   }
   steps.push(li("5. 카드 피해", `${calcNumFmt(calcNum0(calcSel.base))}%${hits > 1 ? ` × ${hits}타` : ""}`));
-  steps.push(li(`6. 잠재력 (+${calcNumFmt(potAdd)}%p) × (1 + ${calcNumFmt(potMul)}%)`, `${calcNumFmt(d.base)}% <small>카드 기본 배율</small>`));
+  const egoB = calcSel.potKind === "none" ? 0 : calcEgoBonus();
+  const potLvTxt = egoB ? ` <small>레벨 ${calcNumFmt(calcNum0(calcSel.potLv))} + 에고 발현 ${egoB}</small>` : "";
+  steps.push(li(`6. 잠재력 (+${calcNumFmt(potAdd)}%p) × (1 + ${calcNumFmt(potMul)}%)${potLvTxt}`, `${calcNumFmt(d.potBase)}%${d.base === d.potBase ? " <small>카드 기본 배율</small>" : ""}`));
+  const bAdd = calcBaseAdd();
+  if (bAdd) steps.push(li(`6-1. + 기본 피해량 가산 ${calcNumFmt(calcNum0(calcSel.bStack))} × ${calcNumFmt(calcNum0(calcSel.bPer))}%p = ${calcNumFmt(bAdd)}%p <small>잠재력 곱 뒤</small>`, `${calcNumFmt(d.base)}% <small>카드 기본 배율</small>`));
   steps.push(li(`7. × (1 + 피해량 n% 증가 합 ${pctx(st.M)})`, `${calcNumFmt(d.mulPart)}%`));
   steps.push(li(`8. + 피해량 +n% 합 ${pctx(st.A)}${d.fin !== 1 ? ` · 핸드 표시는 × 최종 ${calcNumFmt(d.fin)}` : ""}`, `${calcNumFmt(d.hand)}% <small>핸드 표시 ${calcPctFmt(d.show)}</small>`));
   const tgt = [];
@@ -1943,7 +1963,7 @@ function calcFragHtml() {
   const setCol = pieces => {
     const rows = frags.sets.filter(s => s.pieces === pieces).map(s => {
       const comps = calcFragComps(s.effect);
-      const isCur = pieces === 4 && s.name === calcSel.set4;
+      const isCur = pieces === 4 ? !!calcSet4() && s.name === calcSel.set4 : calcSet2s().some(x => x.name === s.name);
       // 지금 낀 4세트와 비교할 때는 현재 세트를 뺀 상태에서 더한다
       const base4 = pieces === 4 && calcSet4() && !isCur ? calcFragComps(calcSet4().effect) : null;
       const gain = withCond => {
@@ -2025,6 +2045,8 @@ function viewCalc() {
   const pOpts = [["", "없음 · 직접 입력"], ...recP.map(p => [p.name, `${p.name} (추천)`]), ...otherP.map(p => [p.name, `${p.name} · ${p.cls}`])];
   const pt = partnerByName[calcSel.partner];
   const set4Opts = [["", "없음"], ...(frags ? frags.sets.filter(s => s.pieces === 4).map(s => [s.name, s.name]) : [])];
+  const set2Opts = [["", "없음"], ...(frags ? frags.sets.filter(s => s.pieces === 2).map(s => [s.name, s.name]) : [])];
+  const fragSets = calcFragSets();
   const potMax = calcPotMax();
   const rankReady = calcRankReady();
   return `<section class="page">${head}
@@ -2043,8 +2065,11 @@ function viewCalc() {
       </div>
       <div class="cgrid" style="margin-top:10px">
         ${calcSelect("potKind", "잠재력 카드 강화", CALC_POT_KINDS)}
-        ${calcSel.potKind !== "none" ? calcNum("potLv", `레벨 (0~${potMax})`, "레벨당 2%", "1") : ""}
+        ${calcSel.potKind !== "none" ? calcNum("potLv", `레벨 (0~${potMax})`, `레벨당 2%${calcEgoBonus() ? ` · 에고 +${calcEgoBonus()}` : ""}`, "1") : ""}
+        ${kits[calcSel.char] && (kits[calcSel.char].manifest || []).length ? calcSelect("egoLv", "에고 발현", [[0, "없음"], 1, 2, 3, 4, 5, 6].map(v => Array.isArray(v) ? v : [v, `${v}단계`]), "잠재력 레벨 자동 가산") : ""}
         ${calcNum("potAdd", "잠재력 가산", "%p · 기본 카드 숙련 등")}
+        ${calcNum("bStack", "기본 피해량 가산 · 스택", "검수 등", "1")}
+        ${calcNum("bPer", "스택당 배율", "%p · 잠재력 곱 뒤에 더함")}
         ${calcSel.defBased ? calcNum("def", "방어력", "방어 기반 피해") : ""}
       </div>
       <div class="cchks">${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}${calcChk("defBased", "방어 기반 피해")}</div>
@@ -2055,10 +2080,12 @@ function viewCalc() {
         ${calcSelect("partner", "파트너", pOpts)}
         ${calcSel.partner ? calcSelect("pLv", "패시브 단계", [1, 2, 3, 4, 5].map(n => [n, n + "단계"])) : ""}
         ${CALC_SLOTS.map(curSel).join("")}
-        ${calcSelect("set4", "기억의 조각 4세트", set4Opts)}
+        ${calcSelect("fragMode", "기억의 조각 구성", [["4+2", "4세트 + 2세트"], ["2+2+2", "2세트 + 2세트 + 2세트"]], "6개")}
+        ${calcSel.fragMode !== "2+2+2" ? calcSelect("set4", "4세트", set4Opts) : ""}
+        ${calcSet2Keys().map((k, i) => calcSelect(k, calcSel.fragMode === "2+2+2" ? `2세트 ${i + 1}` : "2세트", set2Opts)).join("")}
       </div>
       ${pt ? `<p class="note" style="margin:8px 0 0">${esc(pt.name)} 패시브: ${(pt.passive.desc || []).map(esc).join(" / ")}<br>상시 공격력% ${calcNumFmt(calcNum0(calcSel.pAtk))}%${calcSel.pDmg ? ` · 상시 피해량 ${calcNumFmt(calcNum0(calcSel.pDmg))}% 증가` : ""}를 자동으로 넣었습니다. 조건이 붙은 효과는 버프 줄에 직접 넣으세요.</p>` : ""}
-      ${calcSet4() ? `<p class="note" style="margin:8px 0 0">${esc(calcSel.set4)}: ${esc(calcSet4().effect)}</p>` : ""}
+      ${fragSets.length ? `<p class="note" style="margin:8px 0 0">${fragSets.map(f => `${esc(f.name)} (${f.pieces}세트): ${esc(f.effect)}`).join("<br>")}<br>공격력%·치명피해 같은 상시 능력치는 스테이터스 값에 이미 들어 있다고 보고, 전투 중 효과만 계산에 더합니다.${new Set(calcSet2s().map(x => x.name)).size < calcSet2s().length ? " 같은 2세트를 두 번 고르면 두 번 더합니다 (게임에서 중첩되는지는 확인하지 못했습니다)." : ""}</p>` : ""}
       <div class="cchks">${calcChk("cond", "조건부 효과도 충족된 것으로 계산 (* 표시)")}</div>
       <p class="note" style="margin:8px 0 0">장비의 공격력%·무기 공격력·치명 같은 상시 능력치는 아래 스테이터스 값에 이미 들어 있다고 보고 공격력을 나누는 데만 씁니다. '피해량 n% 증가'처럼 전투 중에 붙는 효과는 자동으로 더하니 버프 줄에 따로 넣지 마세요.</p>
     </div></div>

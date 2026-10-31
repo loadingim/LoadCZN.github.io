@@ -57,13 +57,14 @@
   }
 
   /* 3) 피해량 계수 ----------------------------------------------------------------
+   * 카드 기본 배율에 기본 피해량 가산(bAdd, 검수 등 스택 × 배율)을 더한 뒤
    * 핸드 계수 = 카드 기본 배율 × (1 + Σ'피해량 n% 증가') + Σ'피해량 +n%'
    * 핸드 표시 = 핸드 계수 × 최종 피해 (게임 카드에 뜨는 값)
    * 대상 계수 = (핸드 계수 + Σ'대상이 받는 피해량 +n%') × Π(1 + 받는 피해 곱연산) × 약점 × 최종 피해 × (1 − 피해 감소) × 약화
    * 치명 배율 = 1 + (치명피해 − 100%) × 증폭   (화면의 치명피해는 기본 100%를 포함한 값)
    * 기대 계수 = 대상 계수 × (1 + 치명확률 × (치명 배율 − 1))
    *
-   * s: { base, potAdd, potMul, M(Σ n% 증가), A(Σ +n%), E(Σ 받는 피해 +n%), V(받는 피해 곱 배율),
+   * s: { base, potAdd, potMul, bAdd(잠재력 곱 뒤 기본 피해량 가산), M(Σ n% 증가), A(Σ +n%), E(Σ 받는 피해 +n%), V(받는 피해 곱 배율),
    *      fin(최종 피해 배율), weak(약점 배율, 1이면 없음), dr(피해 감소 %), weaken(true/false), cr, cd, amp }
    */
   function critMul(cd, amp) {
@@ -72,7 +73,10 @@
   }
   function coefficient(s) {
     s = s || {};
-    const base = cardBase(s.base, s.potAdd, s.potMul);
+    // 잠재력 곱 뒤에 더하는 기본 피해량 (검수처럼 스택 × 배율로 쌓이는 값). 잠재력 곱을 받지 않는다.
+    // (로스바이세 실측: 600 × 1.26 + 검수 20 × 80 = 2356)
+    const potBase = cardBase(s.base, s.potAdd, s.potMul);
+    const base = potBase + num(s.bAdd);
     const mulPart = base * (1 + pct(s.M));
     const hand = mulPart + num(s.A);
     const pre = hand + num(s.E);
@@ -89,7 +93,7 @@
     const cr = Math.min(1, Math.max(0, pct(s.cr)));
     const crit = non * C;
     const exp = non * (1 + cr * (C - 1));
-    return { base, mulPart, hand, show, pre, V, weak, fin, drMul, weakenMul, non, C, cr, crit, exp };
+    return { potBase, base, mulPart, hand, show, pre, V, weak, fin, drMul, weakenMul, non, C, cr, crit, exp };
   }
 
   /* 4) 최종 피해 (추정) -------------------------------------------------------------
