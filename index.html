@@ -1549,14 +1549,14 @@ const CALC_POT_ID = { basic: "02", common: "03", unique: "04" };
 // 심록·숲의 클로버는 시즌 4부터 A그룹 (공식 개발자 노트 2026-07-21). 최후의 명령어는 위치 미확인이라 별도 곱으로 둔다.
 const CALC_ATK_GROUP = { "최후의 명령어": "atkX" };
 const CALC_DEF = {
-  char: "", card: "", attr: "", cost: "", bind: false, basic: false, weak: false, type: "card",
+  char: "", card: "", attr: "", cost: "", bind: false, basic: false, exhaust: false, weak: false, type: "card",
   base: 0, hits: 1, defBased: false, weakMul: 125, potKind: "unique", potLv: 0, potAdd: 0, egoLv: 0, bStack: 0, bPer: 0,
   cr: 0, cd: 150, amp: 1, el: 0, fu: 0, dot: 0, def: 0,
   // pAtk·pDmg: 파트너 패시브 자동값 · dmAtk: 데이터 변이 공격력% · oAtk: 그 밖의 A그룹 공격력%
   // atkManual: A그룹·B그룹·무기 공격력을 자동값 대신 직접 입력 (mA·mB·wAtk)
   atk: 0, pAtk: 0, pDmg: 0, dmAtk: 0, oAtk: 0, wAtk: "", gAtk: 0, xAtk: 0, atkManual: false, mA: 0, mB: 0,
   partner: "", pLv: 1, enemyAttr: "", dr: 0, weaken: false, defMul: 0.389,
-  step: 10, cond: false, rankSort: 0, order: ""
+  step: 10, cond: false, rankSort: 0, order: "", idle: ""
 };
 let calcBuffSeq = 0;
 const calcNewBuff = (name, kind, v, on) => ({ id: ++calcBuffSeq, on: on !== false, name: name || "", kind: kind || "mul", v: v || 0 });
@@ -1601,7 +1601,7 @@ function calcParse(text) {
       else if (stack && Number(stack[1]) > 1) { v *= Number(stack[1]); notes.push(`${stack[1]}중첩`); }
       const perTurn = post.match(/턴당\s*(\d+)\s*회/);
       if (perTurn) notes.push(`턴당 ${perTurn[1]}회`);
-      const c = { attrs: [], cost: "", bind: false, basic: false, weak: false, types: [], manual: "" };
+      const c = { attrs: [], cost: "", bind: false, basic: false, exhaust: false, weak: false, types: [], manual: "" };
       ATTRS.forEach(a => { if (pre.includes(a)) { c.attrs.push(a); pre = pre.split(a).join(" "); } });
       if (/추가\s*공격/.test(pre)) { c.types.push("fu"); pre = pre.replace(/추가\s*공격/g, " "); }
       if (/반격/.test(pre)) { c.types.push("counter"); pre = pre.replace(/반격/g, " "); }
@@ -1611,13 +1611,20 @@ function calcParse(text) {
       // '결속 카드가 중첩될 때마다 … 공격 카드'(과부하 동력 기관)는 발동 조건이라 '조건부'로 남긴다.
       if (/결속\s*(공격\s*)?카드(의)?\s*$/.test(pre)) { c.bind = true; pre = pre.replace(/결속\s*(공격\s*)?카드(의)?\s*$/, " "); }
       if (/기본\s*(공격\s*)?카드/.test(pre)) { c.basic = true; pre = pre.replace(/기본\s*(공격\s*)?카드/g, " "); }
+      // '소멸 (공격) 카드 피해량'처럼 효과를 받는 카드가 소멸 카드일 때만 (찬란한 영겁의 불꽃, 짐승의 염원). '카드 소멸 시'는 발동 조건이라 조건부로 남긴다
+      if (/소멸\s*(공격\s*)?카드(의)?\s*$/.test(pre)) { c.exhaust = true; pre = pre.replace(/소멸\s*(공격\s*)?카드(의)?\s*$/, " "); }
       if (/약점\s*공격\s*시/.test(pre)) { c.weak = true; pre = pre.replace(/(공격\s*카드로\s*)?약점\s*공격\s*시/g, " "); }
       if (/전투당/.test(post)) pre += " 전투당 " + (post.match(/전투당\s*(\d+)/) || [, ""])[1] + "회";
       const rest = pre.replace(CALC_REST_RE, "");
       if (rest) c.manual = calcManualText(pre);
-      // 이번 턴 카드 사용 순서가 조건이면 따로 표시: 1번 '이번 턴 사용 순서'를 고르면 그 조건만 판정하고 나머지 조건만 남긴다
-      const ord = c.manual && calcOrderOf(pre);
-      if (ord) { c.order = ord.order; c.orderRest = ord.pre.replace(CALC_REST_RE, "") ? calcManualText(ord.pre) : ""; }
+      // 상황 조건: 이번 턴 카드 사용 순서(1번 '이번 턴 사용 순서'), 직전 턴 카드 공격 여부(1번 '직전 턴 카드 공격')
+      // 1번에서 고른 값으로 그 조건만 판정하고, 남는 조건 문구만 조건부(*)로 둔다
+      if (c.manual) {
+        let p2 = pre;
+        const ord = calcOrderOf(p2); if (ord) { c.order = ord.order; p2 = ord.pre; }
+        const idle = calcIdleOf(p2); if (idle !== null) { c.idle = true; p2 = idle; }
+        if (c.order || c.idle) c.sitRest = p2.replace(CALC_REST_RE, "") ? calcManualText(p2) : "";
+      }
       // '[진화하는 전장]: 치명피해 +10%'처럼 다른 줄의 조건으로 얻는 효과는 조건부로 본다 (전장의 진화)
       const tag = raw.match(/^\s*\[([^\]]+)\]\s*:/);
       if (tag && !c.manual) c.manual = `[${tag[1]}] 획득 시`;
@@ -1637,6 +1644,12 @@ function calcOrderOf(pre) {
   if (/처음\s*(?:발동|사용)하는\s*(?:자신의\s*)?공격\s*카드|첫\s*번째\s*공격\s*카드/.test(pre)) return { order: "first", pre: pre.replace(/(?:턴\s*시작\s*시\s*)?(?:처음\s*(?:발동|사용)하는|첫\s*번째)/, " ") };
   if (/두\s*번째\s*공격\s*카드부터/.test(pre)) return { order: "second", pre: pre.replace(/(?:턴마다\s*)?두\s*번째\s*(공격\s*카드)부터/, " $1 ") };
   return null;
+}
+// 직전 턴에 카드로 공격하지 않아야 받는 효과 ('1턴간 아군이 적에게 카드로 피해를 입히지 않았다면 다음 턴 시작 시 1턴간', 흐릿한 가시)
+// 맞으면 그 조건 문구를 지운 나머지를 돌려준다
+function calcIdleOf(pre) {
+  const re = /^[\s\S]*?(?:피해를\s*입히지\s*않았다면|공격하지\s*않았다면)\s*(?:다음\s*턴\s*시작\s*시\s*)?(?:1\s*턴간\s*)?/;
+  return re.test(pre) ? pre.replace(re, " ") : null;
 }
 // 장비 효과: 공격력%는 장비 이름으로 그룹을 정하고, 무기는 기본 공격력(C)을 더한다.
 const calcItemCompCache = {};
@@ -1674,7 +1687,7 @@ const calcFragComps = text => calcParse(text).map(c => c.stat === "atk" ? { ...c
 // 스테이터스 화면에 이미 들어 있는 상시 능력치인지 (조건 없는 공격력·치명·속성·추가 피해량)
 function calcIsStatComp(comp) {
   const c = comp.c;
-  const plain = !c.manual && !(c.attrs || []).length && !(c.types || []).length && !c.cost && !c.bind && !c.basic && !c.weak;
+  const plain = !c.manual && !(c.attrs || []).length && !(c.types || []).length && !c.cost && !c.bind && !c.basic && !c.exhaust && !c.weak;
   return plain && ["atkA", "atkB", "atkFlat", "atkN", "cr", "cd", "el", "fu", "dot"].includes(comp.stat);
 }
 function calcCost() { const c = String(calcSel.cost).trim(); return c === "" || isNaN(Number(c)) ? null : Number(c); }
@@ -1689,16 +1702,22 @@ function calcAutoOk(c) {
   }
   if (c.bind && !calcSel.bind) return false;
   if (c.basic && !calcSel.basic) return false;
+  if (c.exhaust && !calcSel.exhaust) return false;
   if (c.weak && !calcWeakOn()) return false;
-  if (calcOrderMiss(c)) return false;
+  if (calcSitMiss(c)) return false;
   return true;
 }
 // 1번 '이번 턴 사용 순서' (빈 값 = 모름: 순서 조건 효과는 지금처럼 조건부)
 const CALC_ORDERS = [["", "모름 (조건부로 둠)"], ["first", "첫 공격 카드"], ["after", "두 번째 이후"], ["last", "마지막 카드"]];
 const calcOrderLabel = () => (CALC_ORDERS.find(o => o[0] === calcSel.order) || CALC_ORDERS[0])[1];
 const calcOrderMiss = c => !!(c.order && calcSel.order && (c.order === "first" ? calcSel.order !== "first" : calcSel.order === "first"));
-// 조건부 판정에 쓰는 조건 문구: 순서를 골랐으면 순서 조건을 뺀 나머지만 (남는 게 없으면 조건 없이 적용)
-const calcManual = c => c.order && calcSel.order ? c.orderRest : c.manual;
+// 1번 '직전 턴 카드 공격': 빈 값 = 함(기본, 매 턴 공격 → 흐릿한 가시 효과 빠짐) · "1" = 안 함(한 턴 쉬고 공격 → 조건 없이 적용)
+const CALC_IDLES = [["", "함 (매 턴 공격)"], ["1", "안 함 (한 턴 쉬고 공격)"]];
+const calcIdleMiss = c => !!(c.idle && calcSel.idle !== "1");
+const calcSitMiss = c => calcOrderMiss(c) || calcIdleMiss(c);
+// 조건부 판정에 쓰는 조건 문구: 상황 조건을 1번에서 정했으면 그 조건을 뺀 나머지만 (남는 게 없으면 조건 없이 적용)
+const calcSitDecided = c => !!(c.order || c.idle) && (!c.order || !!calcSel.order);
+const calcManual = c => calcSitDecided(c) ? c.sitRest : c.manual;
 const calcActive = (comp, withCond) => calcAutoOk(comp.c) && (!calcManual(comp.c) || withCond);
 
 // 버프 한 줄을 상태에 더하거나(sign 1) 뺀다(sign -1)
@@ -1966,6 +1985,7 @@ function calcPickCard(key) {
   calcSel.cost = /^\d+$/.test(String(c.v.cost)) ? String(c.v.cost) : "";
   calcSel.type = "card";
   calcSel.potKind = "unique"; // 고유 카드·번뜩임 목록이므로
+  calcSel.exhaust = (c.v.tags || []).some(t => /^소멸/.test(t)); // 카드 태그 '소멸 n'이면 소멸 카드
   const d = byId[calcSel.char];
   if (d) calcSel.attr = d.attr;
 }
@@ -2098,7 +2118,7 @@ function calcCompWhere(c) {
   const dest = isStat
     ? (/^atk/.test(c.stat) ? "A그룹 (스테이터스 공격력에 포함)" : "스테이터스에 포함")
     : ({ atkA: "전투 중 공격력 A그룹", atkB: "전투 중 공격력 B그룹", atkX: "기타 전투 공격력 (별도 곱)", inc: "피해량 n% 증가 (곱연산)", add: "피해량 +n% (합연산)", fin: "최종 피해량 (별도 곱)", cr: "치명확률", cd: "치명피해", el: "속성 피해량" }[c.stat] || "계산");
-  const state = calcOrderMiss(c.c) ? ` · 카드 순서(${calcOrderLabel()})가 안 맞아 빠짐` : !calcAutoOk(c.c) ? " · 카드 조건이 안 맞아 빠짐" : calcManual(c.c) ? ` · 조건부*${calcSel.cond ? "" : " (조건부 체크 시 반영)"}` : "";
+  const state = calcOrderMiss(c.c) ? ` · 카드 순서(${calcOrderLabel()})가 안 맞아 빠짐` : calcIdleMiss(c.c) ? " · 직전 턴에 카드로 공격해서 빠짐" : !calcAutoOk(c.c) ? " · 카드 조건이 안 맞아 빠짐" : calcManual(c.c) ? ` · 조건부*${calcSel.cond ? "" : " (조건부 체크 시 반영)"}` : "";
   return `${label} → ${dest}${state}`;
 }
 // 2번 아군 장비 줄
@@ -2261,11 +2281,12 @@ const calcComboHead = label => `<div class="ccombo chead"><span class="cno">#</s
 // 카드 순서가 조건인 장비: 1번 '이번 턴 사용 순서'에 따라 빠지는지·조건 없이 들어가는지 (모름이면 표시 안 함)
 const calcOrderEquips = () => equips.filter(e => calcItemComps(e).some(c => c.c.order));
 const calcOrderHit = e => !calcItemComps(e).some(c => calcOrderMiss(c.c));
-function calcOrderNote(e) {
-  if (!e || !calcSel.order || !calcItemComps(e).some(c => c.c.order)) return "";
-  return calcOrderHit(e)
-    ? `<span class="ceff" style="color:var(--gold)">카드 순서(${esc(calcOrderLabel())})에 맞아 순서 조건 효과를 조건 없이 넣었습니다.</span>`
-    : `<span class="ceff" style="color:#e08a5a">카드 순서(${esc(calcOrderLabel())})가 안 맞아 순서 조건 효과는 빠집니다.</span>`;
+function calcSitNote(e) {
+  if (!e) return "";
+  const cs = calcItemComps(e), out = [];
+  if (calcSel.order && cs.some(c => c.c.order)) out.push(calcOrderHit(e) ? [1, `카드 순서(${calcOrderLabel()})에 맞아 순서 조건 효과를 조건 없이 넣었습니다.`] : [0, `카드 순서(${calcOrderLabel()})가 안 맞아 순서 조건 효과는 빠집니다.`]);
+  if (cs.some(c => c.c.idle)) out.push(calcSel.idle === "1" ? [1, "직전 턴에 카드로 공격하지 않았다고 보고(1번 설정) 조건 없이 넣었습니다."] : [0, "매 턴 카드로 공격한다고 보고(1번 '직전 턴 카드 공격') 이 효과는 빠집니다."]);
+  return out.map(([ok, t]) => `<span class="ceff" style="color:${ok ? "var(--gold)" : "#e08a5a"}">${esc(t)}</span>`).join("");
 }
 // 순위 정렬 고르기 (8번·9번 공통). 모바일은 표 머리글이 숨겨져 있어 표 위에 버튼으로 둔다
 const calcSortBar = () => `<div class="cbar csort"><span class="note">정렬</span>${[[0, "기본 (조건부 효과 없이)"], [1, "조건 충족 (* 조건을 모두 만족할 때)"]].map(([v, l]) => `<button class="btn${(calcSel.rankSort ? 1 : 0) === v ? " gold" : ""}" data-act="calcRankSort" data-v="${v}" aria-pressed="${(calcSel.rankSort ? 1 : 0) === v}">${l}</button>`).join("")}</div>`;
@@ -2280,10 +2301,12 @@ function calcEquipHtml() {
   const ms = Math.round(performance.now() - t0);
   const oe = calcOrderEquips();
   const ord = calcSel.order && oe.length ? ` · 카드 순서: ${esc(calcOrderLabel())} 기준 (빠짐: ${oe.filter(e => !calcOrderHit(e)).map(e => esc(e.name)).join(" · ") || "없음"} / 조건 없이 적용: ${oe.filter(calcOrderHit).map(e => esc(e.name)).join(" · ") || "없음"})` : "";
+  const ie = equips.filter(e => calcItemComps(e).some(c => c.c.idle));
+  const idleTxt = ie.length ? ` · 직전 턴 카드 공격: ${calcSel.idle === "1" ? "안 함" : "함"} 기준 (${ie.map(e => esc(e.name)).join(" · ")} ${calcSel.idle === "1" ? "조건 없이 적용" : "빠짐"})` : "";
   const cov = r.covered.length ? ` · 아군이 이미 껴서 효과가 중첩되지 않는 장비는 후보에서 뺌 (${r.covered.map(esc).join(" · ")})` : "";
   return `${calcSortBar()}<div class="crk ccombos">${calcComboHead("무기 · 방어구 · 장신구")}${rows || '<p class="note">후보 없음</p>'}
     ${r.list.length > 10 ? `<button class="btn cmore" data-act="calcMore" data-slot="eq">${calcSel.more.eq ? "접기" : "상위 30개 보기"}</button>` : ""}</div>
-    <p class="note" style="margin:6px 0 0">${r.hasCur ? "2번에서 고른 현재 장비 조합 대비" : "장비 없는 상태 대비"} 기대 피해 변화 · 칸마다 기본·조건 충족 상위 ${CALC_COMBO_PER_SLOT}개와 추천·현재 장비로 조합 ${r.list.length.toLocaleString("ko-KR")}개 계산 (무기 ${r.size[0]} × 방어구 ${r.size[1]} × 장신구 ${r.size[2]}, 신화 2개 이상 제외${ms > 50 ? `, ${ms}ms` : ""})${cov}${ord} · 정렬: ${calcSel.rankSort ? "조건 충족" : "기본"} (위 정렬 버튼으로 바꿈)</p>`;
+    <p class="note" style="margin:6px 0 0">${r.hasCur ? "2번에서 고른 현재 장비 조합 대비" : "장비 없는 상태 대비"} 기대 피해 변화 · 칸마다 기본·조건 충족 상위 ${CALC_COMBO_PER_SLOT}개와 추천·현재 장비로 조합 ${r.list.length.toLocaleString("ko-KR")}개 계산 (무기 ${r.size[0]} × 방어구 ${r.size[1]} × 장신구 ${r.size[2]}, 신화 2개 이상 제외${ms > 50 ? `, ${ms}ms` : ""})${cov}${ord}${idleTxt} · 정렬: ${calcSel.rankSort ? "조건 충족" : "기본"} (위 정렬 버튼으로 바꿈)</p>`;
 }
 // 기억의 조각 추천 표시: 전투원 데이터의 '베일에 싸인 광휘*4', '치명 피해*2'(분류) 같은 표기와 맞춰 본다
 const CALC_SET2_KIND = { "치명 피해": /치명피해/, "공격력": /^공격력/, "체력": /체력/, "방어력": /방어력/, "저주": /저주/, "기본 공격": /기본 카드/ };
@@ -2410,7 +2433,7 @@ function viewCalc() {
     const e = eqByName[calcSel.cur[slot]];
     const warn = (lock && e && e.rarity === "신화" ? '<span class="ceff" style="color:#e08a5a">신화 장비는 1개만 낄 수 있습니다. 다른 칸의 신화를 빼 주세요.</span>' : "")
       + (e && allyNames.has(e.name) && calcItemComps(e).some(calcOnceComp) ? '<span class="ceff" style="color:#e08a5a">아군 장비에도 있는 장비라 중첩되지 않는 효과(중첩 불가·최대 n중첩)는 한 번만 넣었습니다.</span>' : "")
-      + calcOrderNote(e);
+      + calcSitNote(e);
     return `<label class="cf"><span>${slot}</span><select class="csel" data-calccur="${slot}"><option value="">(없음 · 모름)</option>${list.map(opt).join("")}</select>${e ? `<span class="ceff">${esc(e.effect)}</span>` : ""}${warn}</label>`;
   };
   // 카드 고르기
@@ -2442,6 +2465,7 @@ function viewCalc() {
         <label class="cf"><span>카드 비용</span><input type="text" inputmode="numeric" data-calc="cost" value="${esc(calcSel.cost)}" placeholder="X면 비움"></label>
         ${calcSelect("type", "공격 종류", CALC_TYPES)}
         ${calcSelect("order", "이번 턴 사용 순서", CALC_ORDERS, "순서 조건 장비")}
+        ${calcSelect("idle", "직전 턴 카드 공격", CALC_IDLES, "흐릿한 가시")}
       </div>
       <div class="cgrid" style="margin-top:10px">
         ${calcSelect("potKind", "잠재력 카드 강화", CALC_POT_KINDS)}
@@ -2452,7 +2476,7 @@ function viewCalc() {
         ${calcNum("bPer", "스택당 배율", "%p · 잠재력 곱 뒤에 더함")}
         ${calcSel.defBased ? calcNum("def", "방어력", "방어 기반 피해") : ""}
       </div>
-      <div class="cchks">${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}${calcChk("defBased", "방어 기반 피해")}</div>
+      <div class="cchks">${calcChk("bind", "결속 카드")}${calcChk("basic", "기본 카드")}${calcChk("exhaust", "소멸 카드")}${calcChk("defBased", "방어 기반 피해")}</div>
     </div></div>
 
     <div class="sec"><h3>2. 파트너 · 장비 · 기억의 조각 <span class="note" style="font-family:inherit;font-weight:400">고른 장비의 전투 효과는 자동으로 계산에 들어갑니다</span></h3><div class="cbox">
