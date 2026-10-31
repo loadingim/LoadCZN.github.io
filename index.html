@@ -1467,7 +1467,9 @@ function viewDb(sub, arg) {
 
 /* ---------- 피해량 계산기 ---------- */
 // 계산식은 js/calc-core.js(CZNCalc), 단계별 근거·검증 상태·실측 사례는 data/formula.json 에 있다.
-//   공격력   = {N × (1 + A그룹) × (1 + B그룹) + 무기 기본 공격력} × (1 + 심록) × (1 + 숲의 클로버)   (디시 2026-06 실측)
+//   공격력   = {N × (1 + A그룹) × (1 + B그룹) + 무기 기본 공격력} × (1 + 기타)
+//              시즌 4(2026-07-29) 공식 개발자 노트: 숲의 클로버·심록의 낮/밤/굴레 등의 공격력%는 A그룹과 합연산
+//              (그 전에는 최종 곱으로 들어갔다: 디시 2026-06 실측). 전투 중에만 붙는 공격력%는 스테이터스 역산 뒤에 더한다.
 //   핸드 계수 = (카드 % + 잠재력 가산) × (1 + 잠재력) × (1 + Σ'피해량 n% 증가') + Σ'피해량 +n%'          (아카라이브 2026-07 실측 6건 일치)
 //   대상 계수 = (핸드 계수 + Σ'받는 피해량 +n%') × Π(받는 피해 곱) × 약점 × 최종 피해 × (1 − 피해 감소) × 약화
 //   예상 피해 = 대상 계수 × 공격력 × 0.35 × (1 + 속성 피해량) × (1 + 추가·지속 피해량) × 적 방어 계수 × 치명
@@ -1484,13 +1486,14 @@ const CALC_KINDS = [
 ];
 const CALC_POT_KINDS = [["unique", "고유 카드"], ["basic", "기본 카드"], ["common", "중립 카드"], ["none", "해당 없음"]];
 const CALC_POT_ID = { basic: "02", common: "03", unique: "04" };
-// 공격력% 장비의 계산 그룹 (디시 2026-06 실측). 여기 없는 공격력% 장비는 A그룹(장비·파트너 합연산)으로 본다.
-const CALC_ATK_GROUP = { "심록의 낮": "atkD", "심록의 밤": "atkD", "심록의 굴레": "atkD", "숲의 클로버": "atkG", "최후의 명령어": "atkX" };
+// 공격력% 장비의 계산 그룹. 여기 없는 공격력% 장비는 A그룹(장비·파트너 합연산)으로 본다.
+// 심록·숲의 클로버는 시즌 4부터 A그룹 (공식 개발자 노트 2026-07-21). 최후의 명령어는 위치 미확인이라 별도 곱으로 둔다.
+const CALC_ATK_GROUP = { "최후의 명령어": "atkX" };
 const CALC_DEF = {
   char: "", card: "", attr: "", cost: "", bind: false, basic: false, weak: false, type: "card",
   base: 0, hits: 1, defBased: false, weakMul: 125, potKind: "unique", potLv: 0, potAdd: 0,
   cr: 0, cd: 150, amp: 1, el: 0, fu: 0, dot: 0, def: 0,
-  atk: 0, pAtk: 0, pDmg: 0, fAtk: 0, wAtk: "", dAtk: 0, gAtk: 0, xAtk: 0,
+  atk: 0, pAtk: 0, pDmg: 0, fAtk: 0, wAtk: "", gAtk: 0, xAtk: 0,
   partner: "", pLv: 1, set4: "", enemyAttr: "", dr: 0, weaken: false, defMul: 1,
   step: 10, cond: false
 };
@@ -1598,10 +1601,9 @@ function calcApply(st, comps, sign, withCond, filter) {
     if (!calcActive(comp, withCond)) return;
     const v = comp.v * sign;
     switch (comp.stat) {
-      case "atkA": s.aA += v; break;
-      case "atkB": s.aB += v; break;
-      case "atkD": s.aD += v; break;
-      case "atkG": s.aG += v; break;
+      // 전투 중에만 붙는 공격력%(조건부)는 스테이터스 화면 값에 없으므로 aAb·aBb 에 따로 모아 역산 뒤에 더한다
+      case "atkA": if (filter === "battle") s.aAb += v; else s.aA += v; break;
+      case "atkB": if (filter === "battle") s.aBb += v; else s.aB += v; break;
       case "atkX": s.aX += v; break;
       case "atkFlat": s.aC += v; break;
       case "atkN": s.nAdd += v; break;
@@ -1625,7 +1627,7 @@ const calcSet4 = () => frags && calcSel.set4 ? frags.sets.find(s => s.name === c
 function calcState(skipId) {
   let s = {
     N: 0, nAdd: 0, aA: calcNum0(calcSel.pAtk), aB: calcNum0(calcSel.fAtk), aC: 0,
-    aD: calcNum0(calcSel.dAtk), aG: calcNum0(calcSel.gAtk), aX: calcNum0(calcSel.xAtk),
+    aAb: calcNum0(calcSel.gAtk), aBb: 0, aX: calcNum0(calcSel.xAtk),
     cr: calcNum0(calcSel.cr), cd: calcNum0(calcSel.cd), el: calcNum0(calcSel.el), fu: calcNum0(calcSel.fu), dot: calcNum0(calcSel.dot),
     M: calcNum0(calcSel.pDmg), A: 0, E: 0, V: 1, fin: 1
   };
@@ -1659,7 +1661,7 @@ function calcCoef(st) {
     weak: calcWeakApplies() ? calcNum0(calcSel.weakMul) / 100 : 1,
     dr: calcSel.dr, weaken: calcSel.weaken, cr: st.cr, cd: st.cd, amp: calcSel.amp
   });
-  const atk = CZNCalc.attack({ base: st.N + st.nAdd, a: st.aA, b: st.aB, c: st.aC, d: st.aD, g: st.aG, x: st.aX });
+  const atk = CZNCalc.attack({ base: st.N + st.nAdd, a: st.aA + st.aAb, b: st.aB + st.aBb, c: st.aC, x: st.aX });
   const mech = calcMechPct(st);
   const hasAtk = calcNum0(calcSel.atk) > 0;
   const dOpt = { atk: hasAtk ? atk.final : 0, def: calcSel.def, defBased: calcSel.defBased, el: st.el, mech, defMul: calcSel.defMul };
@@ -1839,9 +1841,10 @@ function calcOutHtml() {
   const steps = [];
   if (d.hasAtk) {
     steps.push(li("1. 기본 공격력 N <small>스테이터스에서 역산</small>", calcNumFmt(a.N)));
-    steps.push(li(`2. × (1 + A그룹 ${pctx(st.aA)}) × (1 + B그룹 ${pctx(st.aB)})`, calcNumFmt(a.N * (1 + a.A) * (1 + a.B))));
-    steps.push(li(`3. + 무기 기본 공격력 ${calcNumFmt(st.aC)}`, `${calcNumFmt(a.status)} <small>스테이터스</small>`));
-    steps.push(li(`4. × 심록 ${pctx(st.aD)} · 클로버 ${pctx(st.aG)}${st.aX ? ` · 기타 ${pctx(st.aX)}` : ""}`, `${calcNumFmt(a.final)} <small>최종 공격력</small>`, "tot"));
+    const nAB = a.N * (1 + st.aA / 100) * (1 + st.aB / 100); // 스테이터스 화면 기준 (전투 중 공격력% 제외)
+    steps.push(li(`2. × (1 + A그룹 ${pctx(st.aA)}) × (1 + B그룹 ${pctx(st.aB)})`, calcNumFmt(nAB)));
+    steps.push(li(`3. + 무기 기본 공격력 ${calcNumFmt(st.aC)}`, `${calcNumFmt(nAB + st.aC)} <small>스테이터스</small>`));
+    steps.push(li(`4. 전투 중 공격력% A그룹 +${pctx(st.aAb)} · B그룹 +${pctx(st.aBb)} (합연산)${st.aX ? ` · 기타 × ${pctx(st.aX)}` : ""}`, `${calcNumFmt(a.final)} <small>최종 공격력</small>`, "tot"));
   }
   steps.push(li("5. 카드 피해", `${calcNumFmt(calcNum0(calcSel.base))}%${hits > 1 ? ` × ${hits}타` : ""}`));
   steps.push(li(`6. 잠재력 (+${calcNumFmt(potAdd)}%p) × (1 + ${calcNumFmt(potMul)}%)`, `${calcNumFmt(d.base)}% <small>카드 기본 배율</small>`));
@@ -1894,7 +1897,7 @@ function calcCmpHtml() {
   const rows = [
     [`피해량 ${n}% 증가 (곱연산)`, "inc"], [`피해량 +${n}% (합연산)`, "add"], [`적 받는 피해량 +${n}% (합연산)`, "eadd"],
     [`적 받는 피해 ${n}% 증가 (곱연산)`, "emul"], [`공격력 +${n}% (A그룹 · 장비·파트너)`, "atkA"], [`공격력 +${n}% (B그룹 · 기억의 조각)`, "atkB"],
-    [`공격력 +${n}% (심록처럼 최종 곱)`, "atkD"], [`치명확률 +${n}%`, "cr"], [`치명피해 +${n}%`, "cd"], [`속성 피해량 +${n}%`, "el"]
+    [`치명확률 +${n}%`, "cr"], [`치명피해 +${n}%`, "cd"], [`속성 피해량 +${n}%`, "el"]
   ].map(([name, stat]) => {
     const off = /^atk/.test(stat) && !(calcSel.atk > 0);
     const g = off ? 0 : calcGain([{ stat, v: n, c: { attrs: [], types: [], manual: "" } }], true);
@@ -2071,8 +2074,7 @@ function viewCalc() {
         ${calcNum("pAtk", "A그룹 공격력%", "파트너 + 기타 · 장비분은 자동")}
         ${calcNum("fAtk", "B그룹 공격력%", "기억의 조각 합")}
         <label class="cf"><span>무기 기본 공격력 <em>비우면 무기 등급으로 자동</em></span><input type="text" inputmode="decimal" data-calc="wAtk" value="${esc(calcSel.wAtk)}" placeholder="희귀 74 · 전설 82 · 신화 90"></label>
-        ${calcNum("dAtk", "심록 공격력%", "장비 고르면 자동 · 최종 곱")}
-        ${calcNum("gAtk", "숲의 클로버%", "아군 효과 · 최종 곱")}
+        ${calcNum("gAtk", "전투 중 공격력%", "숲의 클로버 등 아군 효과 · A그룹 합연산")}
         ${calcNum("xAtk", "기타 전투 공격력%", "위치 미확인 · 별도 곱")}
         ${calcNum("cr", "치명확률", "% · 버프 포함")}${calcNum("cd", "치명피해", "% · 버프 포함")}
         ${calcNum("el", "속성 피해량", "%")}
